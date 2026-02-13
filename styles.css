@@ -713,6 +713,26 @@ main:has(#tag-personal:checked) .post[data-tags~="personal"] {
     background: #333;
 }
 
+[data-theme="dark"] .profile-links a:hover {
+    color: var(--ink);
+}
+
+/* Profile links (GitHub, Google Scholar) */
+.profile-links {
+    display: flex;
+    gap: 12px;
+}
+
+.profile-links a {
+    color: inherit;
+    text-decoration: none;
+    font-size: 0.9rem;
+}
+
+.profile-links a:hover {
+    text-decoration: underline;
+}
+
 /* Desktop: bottom left of sidebar */
 @media (min-width: 721px) {
     .theme-toggle {
@@ -720,8 +740,13 @@ main:has(#tag-personal:checked) .post[data-tags~="personal"] {
         align-self: flex-start;
     }
 
+    .profile-links {
+        margin-top: 8px;
+    }
+
     .theme-toggle-mobile,
-    .sidebar-header-buttons {
+    .sidebar-header-buttons,
+    .menu-profile-links {
         display: none;
     }
 }
@@ -815,6 +840,11 @@ main:has(#tag-personal:checked) .post[data-tags~="personal"] {
         z-index: 1001;
     }
 
+    /* Hide sidebar profile links on mobile; they appear in the dropdown instead */
+    .profile-links {
+        display: none;
+    }
+
     /* Show name (links home) and tagline in the topbar */
     .brand {
         display: inline-block;
@@ -868,6 +898,7 @@ main:has(#tag-personal:checked) .post[data-tags~="personal"] {
     /* Full-window takeover when menu is open, but leave sticky topbar visible */
     .sidebar.is-menu-open .nav {
         display: flex;
+        flex-direction: column;
         position: fixed;
         inset: 0;
         padding: 96px 24px 24px;
@@ -881,8 +912,27 @@ main:has(#tag-personal:checked) .post[data-tags~="personal"] {
         /* below the sticky header */
     }
 
-    .sidebar.is-menu-open .nav a {
+    .sidebar.is-menu-open .nav > a {
         font-size: 1.25rem;
+    }
+
+    /* Profile links at bottom of menu, distinct from page links */
+    .sidebar.is-menu-open .nav .menu-profile-links {
+        display: flex;
+        gap: 12px;
+        margin-top: auto;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--rule);
+    }
+
+    .sidebar.is-menu-open .nav .menu-profile-links a {
+        font-size: 0.9rem;
+        color: inherit;
+        text-decoration: none;
+    }
+
+    .sidebar.is-menu-open .nav .menu-profile-links a:hover {
+        text-decoration: underline;
     }
 
     /* Disable body scrolling when menu is open */
