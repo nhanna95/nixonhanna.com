@@ -46,6 +46,10 @@ tags: [Tag1, Tag2]
   ```yaml
   substack: https://substack.com/@username/post-slug
   ```
+- **`lesswrong`** - URL to the LessWrong version of the post (displays a notice at the top of the post)
+  ```yaml
+  lesswrong: https://www.lesswrong.com/posts/...
+  ```
 
 ### Example Front Matter
 
@@ -57,6 +61,7 @@ date: 2025-03-15
 updated: 2025-03-20
 tags: [Introduction, Personal]
 substack: https://substack.com/@username/post-slug
+lesswrong: https://www.lesswrong.com/posts/...
 ---
 ```
 

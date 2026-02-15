@@ -113,6 +113,13 @@
             </div>
             {% endif %}
 
+            {% if page.lesswrong %}
+            <div class="lesswrong-link">
+                <p>This post is also available on <a href="{{ page.lesswrong }}" target="_blank"
+                        rel="noopener noreferrer">LessWrong</a>.</p>
+            </div>
+            {% endif %}
+
             {{ content }}
 
             <hr class="rule">

@@ -57,6 +57,11 @@
     border-left-color: var(--link);
 }
 
+[data-theme="dark"] .lesswrong-link {
+    background: #252525;
+    border-left-color: var(--link);
+}
+
 [data-theme="dark"] #filters input:checked+label.tag {
     border-color: #166534;
     background: #14532d;
@@ -402,6 +407,25 @@ body {
 }
 
 .substack-link a {
+    color: var(--link);
+    font-weight: 500;
+}
+
+.lesswrong-link {
+    margin: 1rem 0 1.5rem 0;
+    padding: 0.75rem 1rem;
+    background: #f9fafb;
+    border-left: 3px solid var(--link);
+    border-radius: 4px;
+    font-size: 0.95em;
+}
+
+.lesswrong-link p {
+    margin: 0;
+    color: var(--muted);
+}
+
+.lesswrong-link a {
     color: var(--link);
     font-weight: 500;
 }
