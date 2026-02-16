@@ -2,7 +2,6 @@
 layout: post
 title: "EA and AI Safety's Humility Problem"
 date: 2026-02-15
-lesswrong: https://www.lesswrong.com/posts/dCGNruaqL9GdpvkX9/ea-and-ai-safety-s-humility-problem
 tags: [EA, AI Safety, Reflections]
 ---
 **Note:** All anecdotes used are not meant to represent any group or movement in its entirety, but rather to provide more concrete context for certain situations.
