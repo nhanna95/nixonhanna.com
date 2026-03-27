@@ -741,7 +741,7 @@ main:has(#tag-personal:checked) .post[data-tags~="personal"] {
     color: var(--ink);
 }
 
-/* Profile links (GitHub, Google Scholar) */
+/* Profile links (LinkedIn, GitHub) */
 .profile-links {
     display: flex;
     gap: 12px;
