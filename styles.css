@@ -183,6 +183,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    font-family: "Noto Serif", Georgia, "Times New Roman", serif;
     font-size: 1.075rem;
     align-items: center;
     /* center the content window */
@@ -933,7 +934,7 @@ main:has(#tag-personal:checked) .post[data-tags~="personal"] {
         /* below the sticky header */
     }
 
-    .sidebar.is-menu-open .nav > a {
+    .sidebar.is-menu-open .nav>a {
         font-size: 1.25rem;
     }
 
