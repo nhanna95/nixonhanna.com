@@ -713,13 +713,34 @@ main:has(#tag-personal:checked) .post[data-tags~="personal"] {
     border: 1px solid var(--rule);
     background: #fff;
     border-radius: 6px;
-    font-size: 18px;
     cursor: pointer;
     color: var(--ink);
     -webkit-tap-highlight-color: transparent;
     -webkit-appearance: none;
     appearance: none;
     transition: background-color 0.2s ease;
+}
+
+.theme-icon-wrap {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+}
+
+.theme-icon-wrap svg {
+    display: none;
+    flex-shrink: 0;
+}
+
+[data-theme="dark"] .theme-icon-wrap .theme-icon-to-light {
+    display: block;
+}
+
+[data-theme="light"] .theme-icon-wrap .theme-icon-to-dark {
+    display: block;
 }
 
 .theme-toggle:hover {

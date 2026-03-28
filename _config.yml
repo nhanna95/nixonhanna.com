@@ -30,6 +30,7 @@ defaults:
 # Include static assets explicitly
 include:
   - styles.css
+  - theme-ui.js
   - headshop.jpeg
   - monogram.png
   - favicon.ico
