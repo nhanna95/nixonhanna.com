@@ -4,10 +4,13 @@
     --ink: #111;
     --muted: #6b7280;
     --rule: #e5e7eb;
-    --link: #0a4;
-    --link-hover: #083;
     --sidebar-bg: #FAFAF9;
     --maxw: 820px;
+    --link: #2c5282;
+    --link-hover: #1a365d;
+    --tagline: #4a6fa5;
+    --tag-checked-border: #a8bde0;
+    --tag-checked-bg: #e8f0fb;
     /* content width per screenshot */
 }
 
@@ -17,13 +20,12 @@
     --ink: #e5e5e5;
     --muted: #9ca3af;
     --rule: #374151;
-    --link: #4ade80;
-    --link-hover: #22c55e;
     --sidebar-bg: #1f1f1f;
-}
-
-[data-theme="dark"] .tagline {
-    color: #a6d09b;
+    --link: #90b8e8;
+    --link-hover: #b8d4f6;
+    --tagline: #94a8c8;
+    --tag-checked-border: #2d4a6f;
+    --tag-checked-bg: #1e2d44;
 }
 
 
@@ -60,11 +62,6 @@
 [data-theme="dark"] .lesswrong-link {
     background: #252525;
     border-left-color: var(--link);
-}
-
-[data-theme="dark"] #filters input:checked+label.tag {
-    border-color: #166534;
-    background: #14532d;
 }
 
 * {
@@ -119,7 +116,7 @@ body {
 }
 
 .tagline {
-    color: #4f7942;
+    color: var(--tagline);
     margin: 0;
     font-size: .95rem;
 }
@@ -573,8 +570,8 @@ button.reset {
 }
 
 #filters input:checked+label.tag {
-    border-color: #b8e3c6;
-    background: #e9f8ee;
+    border-color: var(--tag-checked-border);
+    background: var(--tag-checked-bg);
 }
 
 /* When ANY checkbox is checked, start hidden… */

@@ -9,7 +9,7 @@ A Jekyll-powered personal website hosted on GitHub Pages.
 - `_posts/` - Blog posts in Markdown format
 - `index.html`, `about.html`, `contact.html`, `blog.html` - Main pages
 - `styles.css` - Site stylesheet
-- `headshot.jpg`, `monogram.png` - Assets
+- `headshop.jpeg`, `monogram.png` - Assets
 - `CNAME` - Custom domain configuration
 
 ## Local Development
