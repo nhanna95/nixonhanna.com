@@ -30,7 +30,7 @@ defaults:
 # Include static assets explicitly
 include:
   - styles.css
-  - headshot.jpg
+  - headshop.jpeg
   - monogram.png
   - favicon.ico
   - robots.txt

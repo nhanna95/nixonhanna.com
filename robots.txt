@@ -4,7 +4,7 @@ Allow: /
 # Ensure favicon and images are accessible
 Allow: /favicon.ico
 Allow: /monogram.png
-Allow: /headshot.jpg
+Allow: /headshop.jpeg
 
 Sitemap: https://nixonhanna.com/sitemap.xml
 

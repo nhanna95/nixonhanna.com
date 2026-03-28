@@ -68,7 +68,7 @@ jobs:
           echo "CSS link:"
           grep -o 'href="[^"]*styles.css[^"]*"' _site/index.html || echo "No styles.css link found"
           echo "Headshot images:"
-          grep -o 'src="[^"]*headshot.jpg[^"]*"' _site/index.html || echo "No headshot.jpg found"
+          grep -o 'src="[^"]*headshop.jpeg[^"]*"' _site/index.html || echo "No headshop.jpeg found"
           echo "Monogram:"
           grep -o 'href="[^"]*monogram.png[^"]*"' _site/index.html || echo "No monogram.png found"
           echo ""
