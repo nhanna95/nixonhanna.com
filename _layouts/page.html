@@ -31,10 +31,10 @@
 
         <nav class="nav" id="site-nav" aria-label="Primary">
             <a href="{{ '/' | relative_url }}" {% if page.url=='/' %}class="is-active" {% endif %}>Hello</a>
-            <a href="{{ '/about.html' | relative_url }}" {% if page.url=='/about.html' %}class="is-active" {% endif
-                %}>About</a>
             <a href="{{ '/blog.html' | relative_url }}" {% if page.url=='/blog.html' %}class="is-active" {% endif
                 %}>Blog</a>
+            <a href="{{ '/about.html' | relative_url }}" {% if page.url=='/about.html' %}class="is-active" {% endif
+                %}>About</a>
             <a href="{{ '/contact.html' | relative_url }}" {% if page.url=='/contact.html' %}class="is-active" {% endif
                 %}>Contact me</a>
             <div class="menu-profile-links" aria-label="Contact links">
