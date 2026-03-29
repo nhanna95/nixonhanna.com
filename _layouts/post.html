@@ -17,11 +17,14 @@
         rel="stylesheet">
     <link rel="stylesheet" href="{{ site.baseurl }}/styles.css" />
     {% include theme-head-fouc.html %}
+    {% include turbo-meta.html %}
+    {% include scripts-deferred.html %}
 </head>
 
 <body>
     {% include skip-link.html %}
-    <aside class="sidebar" aria-label="Site identity and navigation">
+    {% include mobile-nav-backdrop.html %}
+    <aside class="sidebar" id="site-sidebar" data-turbo-permanent aria-label="Site identity and navigation">
         <img src="{{ site.baseurl }}/headshop.jpeg" alt="Headshot" class="sidebar-headshot">
         <a class="brand" href="{{ '/' | relative_url }}">Nixon Hanna</a>
         <p class="tagline">Safety, writings, and side quests</p>
@@ -108,7 +111,6 @@
         </article>
     </main>
 
-    {% include theme-ui-script.html %}
 </body>
 
 </html>

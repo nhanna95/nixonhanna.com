@@ -1360,3 +1360,13 @@ sup[id^="fnref"] a.footnote:hover {
     margin-bottom: 0.5em;
     display: block;
 }
+
+/* Same-document view transitions (Turbo + meta view-transition) */
+@media (prefers-reduced-motion: no-preference) {
+    @supports (view-transition-name: none) {
+        ::view-transition-old(root),
+        ::view-transition-new(root) {
+            animation-duration: 0.12s;
+        }
+    }
+}
