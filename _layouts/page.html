@@ -12,7 +12,7 @@
 
     <title>{% if page.title %}{{ page.title }} — {% endif %}Nixon Hanna</title>
     {% include fonts-head.html %}
-    <link rel="stylesheet" href="{{ site.baseurl }}/styles.css" />
+    <link rel="stylesheet" href="{{ site.baseurl }}/styles.css?v={% include build-asset-v.html %}" />
     {% include theme-head-fouc.html %}
     {% include turbo-meta.html %}
     {% include scripts-deferred.html %}
@@ -22,7 +22,7 @@
     {% include skip-link.html %}
     {% include mobile-nav-backdrop.html %}
     <aside class="sidebar" id="site-sidebar" data-turbo-permanent aria-label="Site identity and navigation">
-        <img src="{{ site.baseurl }}/headshop.jpeg" alt="Headshot" class="sidebar-headshot">
+        <img src="{{ site.baseurl }}/headshop.jpeg?v={% include build-asset-v.html %}" alt="Headshot" class="sidebar-headshot">
         <a class="brand" href="{{ '/' | relative_url }}">Nixon Hanna</a>
         <p class="tagline">Safety, writings, and side quests</p>
 

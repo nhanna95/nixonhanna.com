@@ -9,7 +9,7 @@ permalink: /resume/
 <head>
     <meta charset="utf-8" />
     <title>Resume</title>
-    <link rel="stylesheet" href="{{ '/styles.css' | relative_url }}" />
+    <link rel="stylesheet" href="{{ '/styles.css' | relative_url }}?v={% include build-asset-v.html %}" />
     {% include theme-head-fouc.html %}
     <style>
         * {
@@ -41,7 +41,7 @@ permalink: /resume/
                 instead.</p>
         </iframe>
     </main>
-    <script src="{{ '/theme-ui.js' | relative_url }}"></script>
+    <script src="{{ '/theme-ui.js' | relative_url }}?v={% include build-asset-v.html %}"></script>
 </body>
 
 </html>
