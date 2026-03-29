@@ -262,10 +262,14 @@ permalink: /blog.html
         // jshint ignore:start
         const posts = [
             {% for post in site.posts %}
+            {% assign post_word_count = post.content | strip_html | number_of_words %}
+            {% assign post_read_mins = post_word_count | divided_by: 225.0 | ceil %}
+            {% if post_read_mins < 1 %}{% assign post_read_mins = 1 %}{% endif %}
             {
                 title: {{ post.title | jsonify }},
                 url: "{{ post.url | relative_url }}",
                 date: "{{ post.date | date: '%Y-%m-%d' }}",
+                readTime: {{ post_read_mins }},
                 {% if post.updated %}updated: "{{ post.updated | date: '%Y-%m-%d' }}",{% endif %}
                 tags: {{ post.tags | jsonify }}
             }{% unless forloop.last %},{% endunless %}
@@ -362,8 +366,9 @@ permalink: /blog.html
         const wfmt = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
         const wformatted = wfmt.format(wd);
         const wdateHTML = `<time class="post-date" datetime="${welcomePost.date}">${wformatted}</time>`;
+        const wReadMins = Math.max(1, Number(welcomePost.readTime) || 1);
         art.innerHTML = `
-                <div class="post-head"><a class="post-title" href="${welcomePost.url}">${welcomePost.title}</a><span class="post-readtime" aria-label="Estimated read time"></span></div>
+                <div class="post-head"><a class="post-title" href="${welcomePost.url}">${welcomePost.title}</a><span class="post-readtime" aria-label="Estimated read time">· ${wReadMins} min read</span></div>
                 ${wdateHTML}
             `;
         // Make entire post clickable
@@ -376,25 +381,6 @@ permalink: /blog.html
             window.location.href = welcomePost.url;
         });
         welcome.appendChild(art);
-
-        // Compute read time for welcome post
-        (async () => {
-            try {
-                const r = await fetch(welcomePost.url);
-                if (!r.ok) throw new Error('failed');
-                const html = await r.text();
-                const tmp = document.createElement('div');
-                tmp.innerHTML = html;
-                const entry = tmp.querySelector('article.entry') || tmp;
-                const text = (entry.textContent || '').trim();
-                const words = text.split(/\s+/).filter(Boolean).length;
-                const minutes = Math.max(1, Math.ceil(words / 225));
-                const rt = art.querySelector('.post-readtime');
-                if (rt) rt.textContent = `· ${minutes} min read`;
-            } catch (e) {
-                // ignore failures
-            }
-        })();
     }
 
     // Show message if no regular posts yet
@@ -433,7 +419,8 @@ permalink: /blog.html
         // Store tags as JSON array for proper multi-word tag handling
         art.setAttribute('data-tags', JSON.stringify((p.tags || []).map(t => t.toLowerCase())));
         const dateHTML = `<time class="post-date" datetime="${p.date}">${fmt.format(d)}</time>`;
-        const readHTML = `<span class="post-readtime" aria-label="Estimated read time"></span>`;
+        const readMins = Math.max(1, Number(p.readTime) || 1);
+        const readHTML = `<span class="post-readtime" aria-label="Estimated read time">· ${readMins} min read</span>`;
         const tagsHTML = p.tags && p.tags.length ?
             `<ul class="taglist">${p.tags.map(t => `<li>${t}</li>`).join('')}</ul>` : '';
         art.innerHTML = `
@@ -451,25 +438,6 @@ permalink: /blog.html
             window.location.href = p.url;
         });
         list.appendChild(art);
-
-        // Compute read time asynchronously
-        (async () => {
-            try {
-                const r = await fetch(p.url);
-                if (!r.ok) throw new Error('failed');
-                const html = await r.text();
-                const tmp = document.createElement('div');
-                tmp.innerHTML = html;
-                const entry = tmp.querySelector('article.entry') || tmp;
-                const text = (entry.textContent || '').trim();
-                const words = text.split(/\s+/).filter(Boolean).length;
-                const minutes = Math.max(1, Math.ceil(words / 225));
-                const rt = art.querySelector('.post-readtime');
-                if (rt) rt.textContent = `· ${minutes} min read`;
-            } catch (e) {
-                // ignore failures
-            }
-        })();
     });
 
     function applyFilter() {

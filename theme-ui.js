@@ -37,7 +37,7 @@
         html.setAttribute('data-theme', newTheme);
         try {
             localStorage.setItem(STORAGE_THEME, newTheme);
-        } catch (e) {}
+        } catch (e) { }
         updateToggleAccessibility(newTheme);
     }
 
