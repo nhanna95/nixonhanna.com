@@ -19,6 +19,10 @@
         });
     }
 
+    function applyColorScheme(theme) {
+        document.documentElement.style.colorScheme = theme === 'dark' ? 'dark' : 'light';
+    }
+
     function syncThemeFromStorage() {
         var html = document.documentElement;
         var saved;
@@ -29,12 +33,14 @@
         }
         var theme = saved || DEFAULT_THEME;
         html.setAttribute('data-theme', theme);
+        applyColorScheme(theme);
         updateToggleAccessibility(theme);
     }
 
     function applyThemeToDOM(newTheme) {
         var html = document.documentElement;
         html.setAttribute('data-theme', newTheme);
+        applyColorScheme(newTheme);
         try {
             localStorage.setItem(STORAGE_THEME, newTheme);
         } catch (e) { }

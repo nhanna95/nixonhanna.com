@@ -1,6 +1,8 @@
     <script>
         (function () {
             var savedTheme = localStorage.getItem('theme') || 'dark';
-            document.documentElement.setAttribute('data-theme', savedTheme);
+            var root = document.documentElement;
+            root.setAttribute('data-theme', savedTheme);
+            root.style.colorScheme = savedTheme === 'dark' ? 'dark' : 'light';
         })();
     </script>
