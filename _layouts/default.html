@@ -20,12 +20,13 @@
 </head>
 
 <body>
-    <aside class="sidebar">
+    {% include skip-link.html %}
+    <aside class="sidebar" aria-label="Site identity and navigation">
         <img src="{{ site.baseurl }}/headshop.jpeg" alt="Headshot" class="sidebar-headshot">
         <a class="brand" href="{{ '/' | relative_url }}">Nixon Hanna</a>
         <p class="tagline">Safety, writings, and side quests</p>
 
-        <nav class="nav" id="site-nav">
+        <nav class="nav" id="site-nav" aria-label="Primary">
             <a href="{{ '/' | relative_url }}" {% if page.url=='/' %}class="is-active" {% endif %}>Hello</a>
             <a href="{{ '/about.html' | relative_url }}" {% if page.url=='/about.html' %}class="is-active" {% endif
                 %}>About</a>
@@ -33,16 +34,17 @@
                 %}>Blog</a>
             <a href="{{ '/contact.html' | relative_url }}" {% if page.url=='/contact.html' %}class="is-active" {% endif
                 %}>Contact me</a>
-            <div class="menu-profile-links" aria-label="Profiles">
+            <div class="menu-profile-links" aria-label="Contact links">
                 <a href="https://www.linkedin.com/in/nixon-hanna" target="_blank" rel="noopener noreferrer" title="LinkedIn">LinkedIn</a>
                 <a href="https://github.com/nhanna95" target="_blank" rel="noopener noreferrer" title="GitHub">GitHub</a>
+                <a href="mailto:noxin@mit.edu" title="Email">Email</a>
             </div>
         </nav>
 
         {% include theme-toggle-markup.html %}
     </aside>
 
-    <main class="content">
+    <main class="content" id="main-content" tabindex="-1">
         {{ content }}
     </main>
 

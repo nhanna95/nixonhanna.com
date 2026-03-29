@@ -20,7 +20,7 @@ permalink: /blog.html
     <button type="reset" class="tag reset">Reset</button>
 </form>
 
-<div class="substack-notice">
+<div class="callout callout--notice">
     <p>If you'd like email notifications when I release new posts, you can <a
             href="https://noxin.substack.com/subscribe" target="_blank" rel="noopener noreferrer"><em>subscribe to my
                 Substack</em></a>.</p>
@@ -31,8 +31,29 @@ permalink: /blog.html
     <!-- Posts will be injected from Jekyll collections -->
 </section>
 
+<p id="blog-empty-feedback" class="blog-empty-feedback" role="status" aria-live="polite" hidden>No posts match your
+    search or filters. Try different keywords, adjust tags, or reset filters.</p>
+
 <script>
-    // Menu toggle - remove duplicate since default layout handles it
+    function updateBlogListEmptyState() {
+        const feedback = document.getElementById('blog-empty-feedback');
+        const q = document.getElementById('q');
+        const filters = document.getElementById('filters');
+        const listEl = document.getElementById('post-list');
+        if (!feedback || !listEl) return;
+
+        const hasSearch = !!(q && q.value.trim());
+        const hasTags = !!(filters && filters.querySelectorAll('input[type="checkbox"]:checked').length);
+        if (!hasSearch && !hasTags) {
+            feedback.hidden = true;
+            return;
+        }
+
+        const anyVisible = [...listEl.querySelectorAll('.post')].some(function (post) {
+            return window.getComputedStyle(post).display !== 'none';
+        });
+        feedback.hidden = anyVisible;
+    }
 
     // Client-side search on blog list (searches titles, tags, and content)
     (function () {
@@ -97,6 +118,7 @@ permalink: /blog.html
                 if (comingSoonMsg && listEl.querySelectorAll('.post').length === 0) {
                     comingSoonMsg.style.display = '';
                 }
+                updateBlogListEmptyState();
                 return;
             }
 
@@ -184,6 +206,7 @@ permalink: /blog.html
                 }
                 yearHeader.style.display = hasVisiblePost ? '' : 'none';
             });
+            updateBlogListEmptyState();
         }
 
         // Wait for posts to be rendered before setting up the filter
@@ -470,6 +493,7 @@ permalink: /blog.html
             if (comingSoonMsg && rows.length === 0) {
                 comingSoonMsg.style.display = '';
             }
+            updateBlogListEmptyState();
             return;
         }
 
@@ -512,6 +536,7 @@ permalink: /blog.html
             }
             yearHeader.style.display = hasVisiblePost ? '' : 'none';
         });
+        updateBlogListEmptyState();
     }
 
     filters.addEventListener('change', applyFilter);

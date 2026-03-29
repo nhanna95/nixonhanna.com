@@ -9,6 +9,8 @@ permalink: /resume/
 <head>
     <meta charset="utf-8" />
     <title>Resume</title>
+    <link rel="stylesheet" href="{{ '/styles.css' | relative_url }}" />
+    {% include theme-head-fouc.html %}
     <style>
         * {
             margin: 0;
@@ -32,10 +34,14 @@ permalink: /resume/
 </head>
 
 <body>
-    <iframe src="{{ '/resume.pdf' | relative_url }}" title="Resume PDF">
-        <p>Your browser does not support PDFs. <a href="{{ '/resume.pdf' | relative_url }}">Download the PDF</a>
-            instead.</p>
-    </iframe>
+    {% include skip-link.html %}
+    <main id="main-content" tabindex="-1" aria-label="Resume" style="height: 100%; width: 100%; margin: 0;">
+        <iframe src="{{ '/resume.pdf' | relative_url }}" title="Resume PDF" style="width: 100%; height: 100vh; border: none;">
+            <p>Your browser does not support PDFs. <a href="{{ '/resume.pdf' | relative_url }}">Download the PDF</a>
+                instead.</p>
+        </iframe>
+    </main>
+    <script src="{{ '/theme-ui.js' | relative_url }}"></script>
 </body>
 
 </html>

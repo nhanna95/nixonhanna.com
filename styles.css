@@ -11,6 +11,7 @@
     --tagline: #4a6fa5;
     --tag-checked-border: #a8bde0;
     --tag-checked-bg: #e8f0fb;
+    --callout-bg: #f9fafb;
     /* content width per screenshot */
 }
 
@@ -26,6 +27,7 @@
     --tagline: #94a8c8;
     --tag-checked-border: #2d4a6f;
     --tag-checked-bg: #1e2d44;
+    --callout-bg: #252525;
 }
 
 
@@ -54,16 +56,6 @@
     background: #333;
 }
 
-[data-theme="dark"] .substack-link {
-    background: #252525;
-    border-left-color: var(--link);
-}
-
-[data-theme="dark"] .lesswrong-link {
-    background: #252525;
-    border-left-color: var(--link);
-}
-
 * {
     box-sizing: border-box;
 }
@@ -83,6 +75,93 @@ body {
     color: var(--ink);
     background: var(--bg);
     line-height: 1.6;
+}
+
+.skip-link {
+    position: absolute;
+    top: -100px;
+    left: 0.75rem;
+    z-index: 2000;
+    padding: 0.3rem 0.5rem;
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.7rem;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+    background: var(--link);
+    color: #fff;
+    border-radius: 4px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+}
+
+.skip-link:hover {
+    color: #fff;
+}
+
+.skip-link:focus,
+.skip-link:focus-visible {
+    top: 0.5rem;
+    outline: 2px solid var(--link-hover);
+    outline-offset: 1px;
+}
+
+#main-content:focus {
+    outline: 3px solid var(--link);
+    outline-offset: 4px;
+}
+
+/* Theme cross-fade when using View Transitions API */
+@media (prefers-reduced-motion: no-preference) {
+
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+        animation-duration: 0.38s;
+        animation-timing-function: ease;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+        animation-duration: 0.001ms !important;
+    }
+}
+
+/* Smooth color surfaces when theme changes (complements view transitions) */
+@media (prefers-reduced-motion: no-preference) {
+
+    body,
+    .sidebar,
+    .content,
+    .searchbar,
+    .searchbar input,
+    .menu-toggle,
+    .theme-toggle,
+    .callout,
+    .blog-empty-feedback,
+    .post,
+    blockquote,
+    .tag-filter .tag,
+    .taglist li {
+        transition:
+            background-color 0.22s ease,
+            color 0.22s ease,
+            border-color 0.22s ease;
+    }
+
+    .brand,
+    .tagline,
+    .nav a,
+    .profile-links a,
+    .menu-profile-links a {
+        transition: color 0.22s ease;
+    }
+}
+
+.mobile-nav-backdrop {
+    display: none;
 }
 
 /* ====== Layout (sidebar + content) ====== */
@@ -221,7 +300,7 @@ body {
     margin-bottom: 0.5rem;
 }
 
-.note + .last-updated {
+.note+.last-updated {
     margin-top: 2rem;
 }
 
@@ -231,6 +310,15 @@ body {
 
 .lead {
     font-size: 1.125rem;
+}
+
+.last-updated+.lead {
+    margin-bottom: 1.25rem;
+    line-height: 1.65;
+}
+
+.last-updated+.lead+.h2 {
+    margin-top: 0.75rem;
 }
 
 /* ====== Rules & footer ====== */
@@ -266,6 +354,7 @@ body {
 
 .post-list {
     display: block;
+    --post-row-pad-inline: 0.75rem;
 }
 
 .post {
@@ -285,6 +374,7 @@ body {
 
 .post-head {
     display: block;
+    padding-left: var(--post-row-pad-inline);
 }
 
 .post:last-of-type {
@@ -307,6 +397,7 @@ body {
 .post-date {
     color: var(--muted);
     white-space: nowrap;
+    padding-right: var(--post-row-pad-inline);
 }
 
 .post-updated {
@@ -329,6 +420,10 @@ body {
     display: flex;
     flex-wrap: wrap;
     gap: .35rem;
+}
+
+.post .taglist {
+    padding-left: var(--post-row-pad-inline);
 }
 
 /* On mobile, override taglist to be inline with date */
@@ -395,72 +490,33 @@ body {
     color: var(--ink);
 }
 
-.substack-link {
-    margin: 1rem 0 1.5rem 0;
+/* Aside-style boxes (cross-post links, blog subscribe, etc.) */
+.callout {
+    margin: 1.25rem 0;
     padding: 0.75rem 1rem;
-    background: #f9fafb;
+    background: var(--callout-bg);
     border-left: 3px solid var(--link);
     border-radius: 4px;
     font-size: 0.95em;
 }
 
-.substack-link p {
+.callout p {
     margin: 0;
     color: var(--muted);
 }
 
-.substack-link a {
+.callout a {
     color: var(--link);
     font-weight: 500;
 }
 
-.lesswrong-link {
-    margin: 1rem 0 1.5rem 0;
-    padding: 0.75rem 1rem;
-    background: #f9fafb;
-    border-left: 3px solid var(--link);
-    border-radius: 4px;
-    font-size: 0.95em;
-}
-
-.lesswrong-link p {
-    margin: 0;
-    color: var(--muted);
-}
-
-.lesswrong-link a {
-    color: var(--link);
-    font-weight: 500;
-}
-
-.substack-notice {
-    margin: 1.5rem 0 1.5rem 0;
-    padding: 0.75rem 1rem;
-    background: #f9fafb;
-    border-left: 3px solid var(--link);
-    border-radius: 4px;
-    font-size: 0.95em;
-}
-
-.substack-notice p {
-    margin: 0;
-    color: var(--muted);
-}
-
-.substack-notice a {
-    color: var(--link);
-    font-weight: 500;
+.callout--notice a {
     font-style: italic;
     text-decoration: none;
 }
 
-.substack-notice a:hover {
+.callout--notice a:hover {
     text-decoration: underline;
-}
-
-[data-theme="dark"] .substack-notice {
-    background: #252525;
-    border-left-color: var(--link);
 }
 
 /* ====== Links ====== */
@@ -494,7 +550,7 @@ blockquote {
     margin: 1.5rem 0;
     padding: 1rem 1.25rem;
     border-left: 3px solid var(--link);
-    background: #f9fafb;
+    background: var(--callout-bg);
     border-radius: 4px;
     font-style: italic;
     color: var(--ink);
@@ -507,11 +563,6 @@ blockquote p {
 
 blockquote p:not(:last-child) {
     margin-bottom: 0.5rem;
-}
-
-[data-theme="dark"] blockquote {
-    background: #252525;
-    border-left-color: var(--link);
 }
 
 /* ====== Tag Filter (UNION / OR) ====== */
@@ -723,7 +774,7 @@ main:has(#tag-personal:checked) .post[data-tags~="personal"] {
     -webkit-tap-highlight-color: transparent;
     -webkit-appearance: none;
     appearance: none;
-    transition: background-color 0.2s ease;
+    transition: background-color 0.2s ease, transform 0.12s ease;
 }
 
 .theme-icon-wrap {
@@ -752,6 +803,20 @@ main:has(#tag-personal:checked) .post[data-tags~="personal"] {
     background: #fafafa;
 }
 
+@media (prefers-reduced-motion: no-preference) {
+    .theme-toggle:active,
+    .theme-toggle-mobile:active {
+        transform: scale(0.96);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .theme-toggle,
+    .theme-toggle-mobile {
+        transition: background-color 0.2s ease;
+    }
+}
+
 [data-theme="dark"] .theme-toggle {
     background: #2a2a2a;
     border-color: var(--rule);
@@ -765,7 +830,7 @@ main:has(#tag-personal:checked) .post[data-tags~="personal"] {
     color: var(--ink);
 }
 
-/* Profile links (LinkedIn, GitHub) */
+/* Profile / contact links (sidebar) */
 .profile-links {
     display: flex;
     gap: 12px;
@@ -852,6 +917,21 @@ main:has(#tag-personal:checked) .post[data-tags~="personal"] {
     margin: 0;
 }
 
+.blog-empty-feedback {
+    margin: 1.25rem 0 0;
+    padding: 0.65rem 0.85rem;
+    color: var(--muted);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    border: 1px dashed var(--rule);
+    border-radius: 6px;
+    background: var(--callout-bg);
+}
+
+.blog-empty-feedback[hidden] {
+    display: none !important;
+}
+
 @media (max-width:720px) {
     .sidebar {
         position: sticky;
@@ -929,39 +1009,116 @@ main:has(#tag-personal:checked) .post[data-tags~="personal"] {
         margin: 0;
     }
 
-    .nav {
-        display: none;
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 100%;
-        background: var(--sidebar-bg);
-        border-bottom: 1px solid var(--rule);
-        padding: 12px 16px;
-        flex-direction: column;
-        gap: .5rem;
-        z-index: 20;
+    .mobile-nav-backdrop {
+        display: block;
+        position: fixed;
+        inset: 0;
+        z-index: 910;
+        background: rgba(15, 23, 42, 0.38);
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition:
+            opacity 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+            visibility 0s linear 0.28s;
     }
 
-    /* Full-window takeover when menu is open, but leave sticky topbar visible */
-    .sidebar.is-menu-open .nav {
+    .mobile-nav-backdrop.is-visible {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transition:
+            opacity 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+            visibility 0s;
+    }
+
+    [data-theme="dark"] .mobile-nav-backdrop {
+        background: rgba(0, 0, 0, 0.52);
+    }
+
+    /* Full-screen nav panel: always layered; fade/slide when open (no display toggle) */
+    .nav {
         display: flex;
         flex-direction: column;
         position: fixed;
         inset: 0;
         padding: 96px 24px 24px;
-        /* offset topbar height */
         border: 0;
         background: var(--sidebar-bg);
         align-items: flex-start;
         justify-content: flex-start;
         gap: 1rem;
-        z-index: 900;
-        /* below the sticky header */
+        z-index: 920;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transform: translateY(-12px);
+        transition:
+            opacity 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+            transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+            visibility 0s linear 0.28s;
+    }
+
+    .sidebar.is-menu-open .nav {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transform: none;
+        transition:
+            opacity 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+            transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+            visibility 0s;
     }
 
     .sidebar.is-menu-open .nav>a {
         font-size: 1.25rem;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+        .mobile-nav-backdrop,
+        .nav {
+            transition-duration: 0.01ms !important;
+            transition-delay: 0s !important;
+        }
+
+        .nav {
+            transform: none !important;
+        }
+    }
+
+    @keyframes nav-link-in {
+        from {
+            opacity: 0;
+            transform: translateY(-6px);
+        }
+
+        to {
+            opacity: 1;
+            transform: none;
+        }
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+        .sidebar.is-menu-open .nav>a {
+            animation: nav-link-in 0.32s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+        }
+
+        .sidebar.is-menu-open .nav>a:nth-child(1) {
+            animation-delay: 0.02s;
+        }
+
+        .sidebar.is-menu-open .nav>a:nth-child(2) {
+            animation-delay: 0.05s;
+        }
+
+        .sidebar.is-menu-open .nav>a:nth-child(3) {
+            animation-delay: 0.08s;
+        }
+
+        .sidebar.is-menu-open .nav>a:nth-child(4) {
+            animation-delay: 0.11s;
+        }
     }
 
     /* Profile links at bottom of menu, distinct from page links */
@@ -1031,7 +1188,7 @@ main:has(#tag-personal:checked) .post[data-tags~="personal"] {
     .post-date {
         order: 2;
         display: inline-block;
-        margin-right: .5rem;
+        margin-right: .35rem;
         margin-top: .25rem;
         white-space: nowrap;
     }

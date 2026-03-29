@@ -47,7 +47,8 @@ permalink: /meet/
 </head>
 
 <body>
-  <main class="redirect-card">
+  {% include skip-link.html %}
+  <main id="main-content" class="redirect-card" tabindex="-1" aria-label="Scheduling redirect">
     <h1>Redirecting to Calendly…</h1>
     <p>You’ll be taken to my scheduling page in a moment.</p>
     <p>
@@ -57,6 +58,18 @@ permalink: /meet/
       </a>.
     </p>
   </main>
+  <script>
+    (function () {
+      var skip = document.querySelector('.skip-link');
+      var mainEl = document.getElementById('main-content');
+      if (!skip || !mainEl) return;
+      skip.addEventListener('click', function () {
+        requestAnimationFrame(function () {
+          mainEl.focus();
+        });
+      });
+    })();
+  </script>
 </body>
 
 </html>
