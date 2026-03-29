@@ -1116,6 +1116,8 @@ body {
     background-color: var(--sidebar-bg);
     object-fit: cover;
     aspect-ratio: 675 / 900;
+    transform: translateZ(0);
+    backface-visibility: hidden;
 }
 
 .content {
@@ -2141,6 +2143,8 @@ main:has(#tag-personal:checked) .post[data-tags~="personal"] {
         shape-outside: margin-box;
         background-color: var(--bg);
         aspect-ratio: 675 / 900;
+        transform: translateZ(0);
+        backface-visibility: hidden;
     }
 }
 
