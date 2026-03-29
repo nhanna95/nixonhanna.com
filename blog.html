@@ -22,7 +22,7 @@ permalink: /blog.html
 
 <!-- Tag Filter Bar (UNION) -->
 <form id="filters" class="tag-filter" aria-label="Filter posts by tag">
-    <!-- Tags will be injected dynamically -->
+    <div id="filter-tag-controls" class="tag-filter-tags"></div>
     <button type="reset" class="tag reset">Reset</button>
 </form>
 
@@ -276,19 +276,18 @@ permalink: /blog.html
     const list = document.getElementById('post-list');
     const welcome = document.getElementById('welcome-post');
     const filters = document.getElementById('filters');
+    const filterTagControls = document.getElementById('filter-tag-controls');
 
-    if (!list || !filters) {
-        console.error('Missing required elements: list or filters');
+    if (!list || !welcome || !filters || !filterTagControls) {
+        console.error('Missing required elements: list, welcome-post, filters, or filter-tag-controls');
         return;
     }
-
-    // Debug: log posts array
-    console.log('Posts array:', posts);
-    console.log('Posts array length:', posts.length);
 
     // Handle empty posts array
     if (!posts || posts.length === 0) {
         console.warn('No posts found!');
+        welcome.replaceChildren();
+        list.replaceChildren();
         const messageEl = document.createElement('p');
         messageEl.style.color = 'var(--muted)';
         messageEl.style.marginTop = '2rem';
@@ -297,6 +296,9 @@ permalink: /blog.html
         list.appendChild(messageEl);
         return;
     }
+
+    welcome.replaceChildren();
+    list.replaceChildren();
 
     // Aggregate tag counts (exclude empty strings)
     const tagToCount = new Map();
@@ -311,8 +313,7 @@ permalink: /blog.html
         .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
         .map(([name, count]) => ({ name, count }));
 
-    const resetBtn = filters.querySelector('.reset');
-    if (resetBtn) filters.removeChild(resetBtn);
+    filterTagControls.replaceChildren();
     sortedTags.forEach(({ name, count }) => {
         const id = `tag-${name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
         const input = document.createElement('input');
@@ -323,15 +324,9 @@ permalink: /blog.html
         label.htmlFor = id;
         label.className = 'tag';
         label.textContent = `${name} (${count})`;
-        filters.appendChild(input);
-        filters.appendChild(label);
+        filterTagControls.appendChild(input);
+        filterTagControls.appendChild(label);
     });
-    // Re-add reset at end and wire up behavior
-    const reset = document.createElement('button');
-    reset.type = 'reset';
-    reset.className = 'tag reset';
-    reset.textContent = 'Reset';
-    filters.appendChild(reset);
 
     // Pull out the welcome post and render it separately
     // Check both URL and title for "welcome" to be more robust
@@ -343,9 +338,6 @@ permalink: /blog.html
         !p.url.includes('welcome') &&
         !(p.title && p.title.toLowerCase().includes('welcome'))
     );
-
-    console.log('Welcome post found:', welcomePost);
-    console.log('Regular posts count:', regularPosts.length);
 
     if (welcomePost) {
         const h2 = document.createElement('h2');

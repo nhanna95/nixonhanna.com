@@ -576,6 +576,14 @@ blockquote p:not(:last-child) {
     /* Make room for reset button */
 }
 
+.tag-filter-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .5rem;
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
 .tag-filter input {
     position: absolute;
     opacity: 0;
