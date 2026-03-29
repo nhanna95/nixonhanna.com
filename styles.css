@@ -681,8 +681,18 @@ main:has(#tag-personal:checked) .post[data-tags~="personal"] {
 }
 
 .searchbar .icon {
-    font-size: 1.1rem;
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    color: var(--ink);
     opacity: .6;
+}
+
+.searchbar .icon svg {
+    width: 1.1rem;
+    height: 1.1rem;
+    display: block;
 }
 
 .searchbar input {
