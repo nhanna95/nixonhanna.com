@@ -1,0 +1,100 @@
+# date_added: YYYY-MM-DD (sorted newest-first on the page). Edit as you like.
+- date_added: "2025-11-20"
+  type: video
+  url: "https://www.youtube.com/watch?v=rq6qPf5pOlU"
+  title: "The Most Beautiful line Sylvia Plath ever wrote (Balbec)"
+
+- date_added: "2025-10-15"
+  type: video
+  url: "https://www.youtube.com/watch?v=yF7wP7--nls"
+  title: "You will lose | Roger Federer (dandelionaq)"
+
+- date_added: "2025-03-29"
+  type: video
+  url: "https://www.youtube.com/watch?v=N8xpAZJp0fU"
+  title: "an astronomer meets a violinist (akezu)"
+
+- date_added: "2025-09-25"
+  type: video
+  url: "https://www.youtube.com/watch?v=q9Figerh89g"
+  title: "The Power of Intelligence (Rational Animations)"
+  blurb: "This was the main thing that convinced me AI could be something other than next token prediction"
+
+- date_added: "2024-11-26"
+  type: video
+  url: "https://www.youtube.com/watch?v=sZ60bY2pJfo"
+  title: "It Only Takes Two Weeks (The Math Sorcerer)"
+  blurb: "Discusses how quickly you can make huge progress in most things"
+
+- date_added: "2025-10-20"
+  type: video
+  url: "https://www.youtube.com/watch?v=25LUF8GmbFU"
+  title: "I Was An MIT Educated Neurosurgeon Now I’m Unemployed And Alone In The Mountains How Did I Get Here? (Goobie and Doobie)"
+
+- date_added: "2025-11-14"
+  type: video
+  url: "https://www.youtube.com/watch?v=a1zDuOPkMSw"
+  title: "You and Your Research (Richard Hamming)"
+  blurb: "Advice on doing important/impactful work "
+
+- date_added: "2025-10-27"
+  type: podcast
+  url: "https://open.spotify.com/episode/2UbLQm7WImaNPq4KfYTCke"
+  title: "Daniel Kokotajlo on what a hyperspeed robot economy might look like (80,000 Hours)"
+  blurb: "I mean I'm just a big fan of a lot of Daniel Kokotajlo's work"
+
+- date_added: "2025-10-07"
+  type: podcast
+  url: "https://open.spotify.com/episode/4TeGozjFgTLlQjwTiphZdz"
+  title: "Ryan Greenblatt on four likely paths to AI takeover, and AGI in under eight years (80,000 Hours)"
+  blurb: "This podcast is one of the main things that got me into AI safety"
+
+- date_added: "2025-10-08"
+  type: podcast
+  url: "https://open.spotify.com/episode/69snGCNXulTS0fsBNMErkY"
+  title: "Toby Ord on graphs AI companies would prefer you didn’t (fully) understand (80,000 Hours)"
+
+- date_added: "2025-10-10"
+  type: podcast
+  url: "https://open.spotify.com/episode/3590DJv3jRNPUGqVVphwUY"
+  title: "Buck Shlegeris on controlling AI that wants to take over (80,000 Hours)"
+
+- date_added: "2026-03-29"
+  type: essay
+  url: "https://www.darioamodei.com/essay/machines-of-loving-grace"
+  title: "Machines of Loving Grace (Dario Amodei)"
+  blurb: "A good overview of the potential upsides of powerful AI"
+
+- date_added: "2025-12-15"
+  type: podcast
+  url: "https://open.spotify.com/episode/6AatK36KwHIkD3x7Fe5HpO"
+  title: "Hamish McArthur — Olympic path, motivation, Paris 2024 (The Testpiece Podcast)"
+  blurb: "Has a ton of great spiritual and psychological insights"
+
+- date_added: "2023-11-18"
+  type: book
+  url: "https://en.wikipedia.org/wiki/Siddhartha_(novel)"
+  title: "Siddhartha (Hermann Hesse)"
+  blurb: "There's a reason I reread this every year"
+
+- date_added: "2025-06-19"
+  type: book
+  url: "https://en.wikipedia.org/wiki/My_Ishmael"
+  title: "My Ishmael (Daniel Quinn)"
+
+- date_added: "2025-01-09"
+  type: book
+  url: "https://en.wikipedia.org/wiki/Bhagavad_Gita"
+  title: "The Bhagavad Gita"
+
+- date_added: "2024-10-28"
+  type: book
+  url: "https://en.wikipedia.org/wiki/Thinking,_Fast_and_Slow"
+  title: "Thinking, Fast and Slow (Daniel Kahneman)"
+  blurb: "The best psychology book I've read"
+
+- date_added: "2024-11-11"
+  type: book
+  url: "https://en.wikipedia.org/wiki/Deep_Work"
+  title: "Deep Work (Cal Newport)"
+  blurb: "The best productivity book I've read"

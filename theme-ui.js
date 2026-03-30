@@ -3,6 +3,7 @@
 
     var STORAGE_THEME = 'theme';
     var DEFAULT_THEME = 'dark';
+    var MOBILE_NAV_MQ = '(max-width: 720px)';
 
     function prefersReducedMotion() {
         return window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -167,14 +168,286 @@
         });
     }
 
+    var mediaCardFlowResizeObserver = null;
+    var mediaCardFlowResizeTimer = null;
+    var mediaCardLayoutLock = false;
+    var mediaCardFirstRevealDone = false;
+
+    function parseMediaCardDateMs(li) {
+        var t = li.querySelector('time[datetime]');
+        if (!t) return 0;
+        var s = t.getAttribute('datetime') || '';
+        var ms = Date.parse(s);
+        return isNaN(ms) ? 0 : ms;
+    }
+
+    /** Newest first; tie-break by title. */
+    function reorderMediaCardsByDate(flow) {
+        var items = [].slice.call(flow.querySelectorAll('.media-card-flow__item'));
+        if (items.length < 2) return;
+
+        items.sort(function (a, b) {
+            var db = parseMediaCardDateMs(b) - parseMediaCardDateMs(a);
+            if (db !== 0) return db;
+            var ta = a.querySelector('.media-card__title');
+            var tb = b.querySelector('.media-card__title');
+            return (ta && ta.textContent || '').localeCompare(tb && tb.textContent || '');
+        });
+
+        // Skip DOM manipulation if the order is already correct.
+        // Detaching/reattaching elements resets running CSS animations.
+        var domOrder = flow.querySelectorAll('.media-card-flow__item');
+        var needsReorder = false;
+        for (var k = 0; k < items.length; k++) {
+            if (items[k] !== domOrder[k]) {
+                needsReorder = true;
+                break;
+            }
+        }
+        if (!needsReorder) return;
+
+        var frag = document.createDocumentFragment();
+        items.forEach(function (li) {
+            frag.appendChild(li);
+        });
+        flow.appendChild(frag);
+    }
+
+    function remToPx(rem) {
+        var base = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+        return rem * base;
+    }
+
+    /**
+     * Seeded greedy masonry: first C items seed one card per column, then each remaining item
+     * goes to the currently shortest column (lowest accumulated height; ties keep lower index).
+     */
+    function layoutMediaCards(flow) {
+        reorderMediaCardsByDate(flow);
+        var items = [].slice.call(flow.querySelectorAll('.media-card-flow__item'));
+        if (!items.length) {
+            flow.style.height = '';
+            flow.classList.remove('media-card-flow--js-layout');
+            return 'empty';
+        }
+
+        var colMin = remToPx(11.25);
+        var gap = remToPx(1);
+        var innerW = flow.clientWidth;
+        if (innerW < 2) {
+            var retries = (flow._mediaLayoutRetries || 0) + 1;
+            flow._mediaLayoutRetries = retries;
+            if (retries < 10) {
+                requestAnimationFrame(function () {
+                    if (flow.isConnected) layoutMediaCards(flow);
+                });
+            }
+            return 'pending';
+        }
+        flow._mediaLayoutRetries = 0;
+        var C = Math.max(1, Math.floor((innerW + gap) / (colMin + gap)));
+        var colW = (innerW - (C - 1) * gap) / C;
+
+        var hadJsLayout = flow.classList.contains('media-card-flow--js-layout');
+        items.forEach(function (li) {
+            if (!hadJsLayout) {
+                li.style.position = '';
+                li.style.left = '';
+                li.style.top = '';
+            }
+            li.style.width = colW + 'px';
+        });
+        if (!hadJsLayout) {
+            flow.style.height = 'auto';
+        }
+
+        var heights = items.map(function (li) {
+            return li.offsetHeight;
+        });
+
+        flow.classList.add('media-card-flow--js-layout');
+        var colHeights = [];
+        var c;
+        for (c = 0; c < C; c++) {
+            colHeights[c] = 0;
+        }
+
+        items.forEach(function (li, i) {
+            if (i < C) {
+                c = i;
+            } else {
+                c = 0;
+                for (var k = 1; k < C; k++) {
+                    if (colHeights[k] < colHeights[c]) {
+                        c = k;
+                    }
+                }
+            }
+            var h = heights[i];
+            var top = colHeights[c];
+            li.style.position = 'absolute';
+            li.style.left = (c * (colW + gap)) + 'px';
+            li.style.top = top + 'px';
+            li.style.width = colW + 'px';
+            colHeights[c] = top + h + gap;
+        });
+
+        var maxH = 0;
+        for (c = 0; c < C; c++) {
+            if (colHeights[c] > maxH) {
+                maxH = colHeights[c];
+            }
+        }
+        var finalHeight = Math.max(0, maxH - gap);
+        flow.style.height = finalHeight + 'px';
+        return [innerW, C, Math.round(colW * 1000), Math.round(finalHeight)].join(':');
+    }
+
+    function withMediaCardLayoutLock(fn) {
+        if (mediaCardLayoutLock) return null;
+        mediaCardLayoutLock = true;
+        try {
+            return fn();
+        } finally {
+            mediaCardLayoutLock = false;
+        }
+    }
+
+    function runMediaCardLayout(flow) {
+        return withMediaCardLayoutLock(function () {
+            return layoutMediaCards(flow);
+        });
+    }
+
+    function setMediaCardIndices(flow) {
+        var arr = [].slice.call(flow.querySelectorAll('.media-card-flow__item'));
+        arr.forEach(function (li, idx) {
+            li.style.setProperty('--media-card-i', String(idx));
+        });
+    }
+
+    function setMediaCardReady(flow) {
+        flow.classList.add('media-card-flow--ready');
+        flow.classList.remove('media-card-flow--booting');
+    }
+
+    function attachMediaCardFlowResize(flow) {
+        if (!window.ResizeObserver) return;
+        if (mediaCardFlowResizeObserver) {
+            mediaCardFlowResizeObserver.disconnect();
+        }
+        mediaCardFlowResizeObserver = new ResizeObserver(function () {
+            clearTimeout(mediaCardFlowResizeTimer);
+            mediaCardFlowResizeTimer = setTimeout(function () {
+                if (!flow.isConnected) return;
+                runMediaCardLayout(flow);
+            }, 100);
+        });
+        mediaCardFlowResizeObserver.observe(flow);
+    }
+
+    function disconnectMediaCardFlowResize() {
+        if (mediaCardFlowResizeObserver) {
+            mediaCardFlowResizeObserver.disconnect();
+            mediaCardFlowResizeObserver = null;
+        }
+        clearTimeout(mediaCardFlowResizeTimer);
+    }
+
+    function staggerMediaCardsReadingOrder() {
+        var flow = document.querySelector('.media-card-flow');
+        if (!flow) {
+            disconnectMediaCardFlowResize();
+            return;
+        }
+
+        requestAnimationFrame(function () {
+            var firstReveal = !mediaCardFirstRevealDone;
+            if (firstReveal) {
+                flow.classList.add('media-card-flow--booting');
+                flow.classList.remove('media-card-flow--ready');
+                flow.classList.remove('media-card-flow--stagger-done');
+            } else {
+                flow.classList.add('media-card-flow--ready');
+                flow.classList.remove('media-card-flow--booting');
+            }
+
+            var clearEls = flow.querySelectorAll('.media-card-flow__item');
+            for (var j = 0; j < clearEls.length; j++) {
+                clearEls[j].style.removeProperty('--media-card-i');
+            }
+
+            var initialSignature = runMediaCardLayout(flow);
+
+            function finalizeReveal() {
+                if (!flow.isConnected) return;
+                if (prefersReducedMotion()) {
+                    flow.classList.add('media-card-flow--stagger-done');
+                    setMediaCardReady(flow);
+                    mediaCardFirstRevealDone = true;
+                    attachMediaCardFlowResize(flow);
+                    return;
+                }
+
+                if (!firstReveal) {
+                    setMediaCardIndices(flow);
+                    flow.classList.add('media-card-flow--stagger-done');
+                    mediaCardFirstRevealDone = true;
+                    attachMediaCardFlowResize(flow);
+                    return;
+                }
+                setMediaCardIndices(flow);
+                flow.classList.add('media-card-flow--stagger-done');
+                setMediaCardReady(flow);
+                mediaCardFirstRevealDone = true;
+                // Defer resize observer until stagger animations are done,
+                // so the initial observation cannot interfere with the reveal.
+                setTimeout(function () {
+                    if (flow.isConnected) attachMediaCardFlowResize(flow);
+                }, 1000);
+            }
+
+            if (firstReveal &&
+                document.fonts &&
+                document.fonts.ready &&
+                document.fonts.status !== 'loaded') {
+                document.fonts.ready.then(function () {
+                    if (!flow.isConnected) return;
+                    var nextSig = runMediaCardLayout(flow);
+                    if (!nextSig || nextSig === 'pending' || nextSig !== initialSignature) {
+                        // Fonts changed metrics; keep the latest geometry before reveal.
+                    }
+                    finalizeReveal();
+                }).catch(function () {
+                    finalizeReveal();
+                });
+                return;
+            }
+
+            finalizeReveal();
+        });
+    }
+
     function onTurboLoad() {
         closeMobileMenu();
         syncNavActive();
+        staggerMediaCardsReadingOrder();
+    }
+
+    function onMobileNavBreakpointChange() {
+        closeMobileMenu();
+    }
+
+    function bindMobileNavBreakpointListener() {
+        if (!window.matchMedia) return;
+        var mq = window.matchMedia(MOBILE_NAV_MQ);
+        mq.addEventListener('change', onMobileNavBreakpointChange);
     }
 
     syncThemeFromStorage();
     document.addEventListener('click', onDocumentClick);
     document.addEventListener('keydown', onDocumentKeydown);
     document.addEventListener('turbo:load', onTurboLoad);
+    bindMobileNavBreakpointListener();
     syncNavActive();
 })();

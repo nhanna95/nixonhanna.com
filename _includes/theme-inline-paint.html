@@ -49,4 +49,9 @@
                 backface-visibility: hidden;
             }
         }
+
+        /* Pre-paint guard: keep media cards hidden until JS/CSS init completes. */
+        .media-card-flow.media-card-flow--booting {
+            visibility: hidden;
+        }
     </style>

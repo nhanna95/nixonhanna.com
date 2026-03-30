@@ -1,0 +1,12 @@
+<a class="media-card media-card--{{ include.item.type }}" href="{{ include.item.url }}" target="_blank" rel="noopener noreferrer">
+  <div class="media-card__body">
+    <h3 class="media-card__title">{{ include.item.title }}</h3>
+    {% if include.item.blurb != blank %}
+    <p class="media-card__blurb">{{ include.item.blurb }}</p>
+    {% endif %}
+    <div class="media-card__meta">
+      <time class="media-card__date" datetime="{{ include.item.date_added }}">{{ include.item.date_added | date: "%b %d, %Y" }}</time>
+      <span class="media-card__chip">{{ include.item.type | capitalize }}</span>
+    </div>
+  </div>
+</a>

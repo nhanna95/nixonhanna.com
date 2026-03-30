@@ -1,0 +1,14 @@
+---
+layout: page
+title: Media Log
+permalink: /media-log.html
+---
+
+<p class="page-media-intro">Videos, essays, podcasts, and books I recommend or return to often.</p>
+
+{% assign media = site.data.media_log | sort: 'date_added' | reverse %}
+<ul class="media-card-flow media-card-flow--booting">
+  {% for item in media %}
+  <li class="media-card-flow__item">{% include media-card.html item=item %}</li>
+  {% endfor %}
+</ul>
