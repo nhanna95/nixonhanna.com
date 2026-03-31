@@ -31,52 +31,17 @@ jobs:
         run: bundle exec jekyll build
         env:
           JEKYLL_ENV: production
-      - name: Debug - List build output
+          LANG: en_US.UTF-8
+          LC_ALL: en_US.UTF-8
+      - name: Verify build output
         run: |
-          echo "=== Checking _site directory ==="
-          ls -la _site/ | head -20
-          echo ""
-          echo "=== Checking if index.html is processed ==="
-          if [ -f _site/index.html ]; then
-            echo "index.html exists, checking contents:"
-            head -50 _site/index.html
-            echo ""
-            echo "=== Checking for Liquid tags ==="
-            if grep -q "{{ content }}" _site/index.html; then
-              echo "ERROR: index.html still contains Liquid tags - Jekyll did not process it!"
-            else
-              echo "SUCCESS: index.html appears to be processed (no {{ content }} found)"
-            fi
-          else
-            echo "ERROR: index.html not found in _site"
+          test -f _site/index.html || { echo "ERROR: _site/index.html missing"; exit 1; }
+          test -f _site/styles.css || { echo "ERROR: _site/styles.css missing"; exit 1; }
+          test -f _site/theme-ui.js || { echo "ERROR: _site/theme-ui.js missing"; exit 1; }
+          if grep -q '{{ content }}' _site/index.html; then
+            echo "ERROR: index.html still contains unprocessed Liquid"
+            exit 1
           fi
-          echo ""
-          echo "=== Checking CSS file ==="
-          if [ -f _site/styles.css ]; then
-            echo "styles.css exists:"
-            ls -lh _site/styles.css
-            echo "First 20 lines of CSS:"
-            head -20 _site/styles.css
-          else
-            echo "ERROR: styles.css not found in _site/"
-          fi
-          echo ""
-          echo "=== Checking all CSS/JS/image files ==="
-          find _site -type f \( -name "*.css" -o -name "*.js" -o -name "*.jpg" -o -name "*.png" \) | head -10
-          echo ""
-          echo "=== Checking asset paths in built HTML ==="
-          echo "CSS link:"
-          grep -o 'href="[^"]*styles.css[^"]*"' _site/index.html || echo "No styles.css link found"
-          echo "Headshot images:"
-          grep -o 'src="[^"]*headshop.jpeg[^"]*"' _site/index.html || echo "No headshop.jpeg found"
-          echo "Monogram:"
-          grep -o 'href="[^"]*monogram.png[^"]*"' _site/index.html || echo "No monogram.png found"
-          echo ""
-          echo "=== Full head section of index.html ==="
-          sed -n '/<head>/,/<\/head>/p' _site/index.html
-          echo ""
-          echo "=== Checking if assets exist in _site root ==="
-          ls -la _site/*.css _site/*.jpg _site/*.png 2>&1 | head -5
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
 
