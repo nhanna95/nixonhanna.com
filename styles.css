@@ -1135,6 +1135,8 @@ body {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    /* Old CSS used Zain but it was never loaded; effective face was generic sans-serif (UA default, e.g. SF on macOS, Segoe UI on Windows). */
+    font-family: ui-sans-serif, system-ui, sans-serif;
 }
 
 /* Reduce brand→tagline spacing on desktop only */
@@ -1145,6 +1147,7 @@ body {
 }
 
 .brand {
+    font-family: ui-sans-serif, system-ui, sans-serif;
     font-size: 1.25rem;
     font-weight: 600;
     letter-spacing: .2px;
