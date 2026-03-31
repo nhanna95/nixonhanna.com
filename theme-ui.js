@@ -78,7 +78,7 @@
         if (sidebar) sidebar.classList.remove('is-menu-open');
         if (toggle) {
             toggle.setAttribute('aria-expanded', 'false');
-            toggle.textContent = 'Menu';
+            toggle.setAttribute('aria-label', 'Open menu');
         }
         document.body.style.overflow = '';
         if (backdrop) {
@@ -94,7 +94,7 @@
         if (sidebar) sidebar.classList.add('is-menu-open');
         if (toggle) {
             toggle.setAttribute('aria-expanded', 'true');
-            toggle.textContent = 'Close';
+            toggle.setAttribute('aria-label', 'Close menu');
         }
         document.body.style.overflow = 'hidden';
         if (backdrop) {

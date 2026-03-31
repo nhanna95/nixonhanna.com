@@ -990,6 +990,10 @@
     border-color: var(--rule);
 }
 
+[data-theme="dark"] .menu-toggle:hover {
+    background: #333;
+}
+
 [data-theme="dark"] .searchbar input::placeholder {
     color: #6b7280;
 }
@@ -1727,8 +1731,9 @@ main:has(#tag-personal:checked) .post[data-tags~="personal"] {
     display: none;
     align-items: center;
     justify-content: center;
+    width: 36px;
     height: 36px;
-    padding: 0 .75rem;
+    padding: 0;
     border: 1px solid var(--rule);
     background: #fff;
     border-radius: 6px;
@@ -1738,6 +1743,53 @@ main:has(#tag-personal:checked) .post[data-tags~="personal"] {
     -webkit-tap-highlight-color: transparent;
     -webkit-appearance: none;
     appearance: none;
+}
+
+.menu-toggle:hover {
+    background: #fafafa;
+}
+
+.menu-toggle-icon {
+    position: relative;
+    display: flex;
+    width: 18px;
+    height: 14px;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: stretch;
+    pointer-events: none;
+}
+
+.menu-toggle-bar {
+    display: block;
+    height: 2px;
+    width: 100%;
+    border-radius: 1px;
+    background: currentColor;
+    transform-origin: center;
+    transition:
+        transform 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+        opacity 0.2s ease;
+}
+
+.menu-toggle[aria-expanded="true"] .menu-toggle-bar:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+}
+
+.menu-toggle[aria-expanded="true"] .menu-toggle-bar:nth-child(2) {
+    opacity: 0;
+    transform: scaleX(0);
+}
+
+.menu-toggle[aria-expanded="true"] .menu-toggle-bar:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .menu-toggle-bar {
+        transition-duration: 0.01ms;
+    }
 }
 
 .theme-toggle {
@@ -1985,10 +2037,9 @@ main:has(#tag-personal:checked) .post[data-tags~="personal"] {
         align-items: center;
     }
 
-    /* Menu button on the right spanning both rows, centered vertically */
+    /* Menu control on the right spanning both rows, centered vertically */
     .menu-toggle {
         display: inline-flex;
-        width: max-content;
         margin: 0;
     }
 
