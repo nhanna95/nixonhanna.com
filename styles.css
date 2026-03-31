@@ -2231,14 +2231,17 @@ main:has(#tag-personal:checked) .post[data-tags~="personal"] {
     .content-headshot {
         display: block;
         float: right;
-        width: 30%;
-        max-width: 150px;
+        width: 38vw !important;
+        min-width: 110px;
+        max-width: 170px !important;
         margin: 0 0 16px 16px;
         border-radius: 2rem;
+        height: auto;
+        aspect-ratio: 675 / 900;
         object-fit: cover;
+        object-position: center 20%;
         shape-outside: margin-box;
         background-color: var(--bg);
-        aspect-ratio: 675 / 900;
         transform: translateZ(0);
         backface-visibility: hidden;
     }
