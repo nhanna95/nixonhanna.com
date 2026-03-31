@@ -1577,6 +1577,8 @@ blockquote p:not(:last-child) {
     right: 0;
     margin-left: 0;
     color: var(--ink);
+    font-family: inherit;
+    font-weight: inherit;
     -webkit-tap-highlight-color: transparent;
     -webkit-appearance: none;
     appearance: none;
