@@ -1478,6 +1478,12 @@ body {
     font-weight: 500;
 }
 
+.post-feedback {
+    margin: 1.5rem 0 0;
+    color: var(--muted);
+    font-size: 0.95em;
+}
+
 .callout--notice a {
     font-style: italic;
     text-decoration: none;
