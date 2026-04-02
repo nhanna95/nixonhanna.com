@@ -16,10 +16,11 @@
     <meta property="og:title" content="{% if page.title %}{{ page.title | xml_escape }} — {% endif %}Nixon Hanna" />
     <meta property="og:description" content="{{ _og_desc | xml_escape }}" />
     <meta property="og:url" content="{{ page.url | absolute_url }}" />
-    <meta property="og:image" content="{{ '/monogram.png' | absolute_url }}" />
+    <!-- 144px og:image: Apple TN3156 — images under 150px wide may show as a small icon in Messages instead of a large preview -->
+    <meta property="og:image" content="{{ '/og-link-icon.png' | absolute_url }}" />
     <meta property="og:image:type" content="image/png" />
-    <meta property="og:image:width" content="462" />
-    <meta property="og:image:height" content="414" />
+    <meta property="og:image:width" content="144" />
+    <meta property="og:image:height" content="144" />
     {% if page.layout == 'post' %}
     <meta property="og:type" content="article" />
     <meta property="article:published_time" content="{{ page.date | date_to_xmlschema }}" />
@@ -29,7 +30,7 @@
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="{% if page.title %}{{ page.title | xml_escape }} — {% endif %}Nixon Hanna" />
     <meta name="twitter:description" content="{{ _og_desc | xml_escape }}" />
-    <meta name="twitter:image" content="{{ '/monogram.png' | absolute_url }}" />
+    <meta name="twitter:image" content="{{ '/og-link-icon.png' | absolute_url }}" />
     {% include theme-head-fouc.html %}
     {% include theme-inline-paint.html %}
     {% include font-preloads.html %}
