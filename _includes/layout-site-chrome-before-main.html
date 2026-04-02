@@ -11,6 +11,25 @@
     <link rel="apple-touch-icon" href="/monogram.png" />
 
     <title>{% if page.title %}{{ page.title }} — {% endif %}Nixon Hanna</title>
+    {% assign _og_desc = page.description | default: site.description %}
+    <meta property="og:site_name" content="Nixon Hanna" />
+    <meta property="og:title" content="{% if page.title %}{{ page.title | xml_escape }} — {% endif %}Nixon Hanna" />
+    <meta property="og:description" content="{{ _og_desc | xml_escape }}" />
+    <meta property="og:url" content="{{ page.url | absolute_url }}" />
+    <meta property="og:image" content="{{ '/monogram.png' | absolute_url }}" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="462" />
+    <meta property="og:image:height" content="414" />
+    {% if page.layout == 'post' %}
+    <meta property="og:type" content="article" />
+    <meta property="article:published_time" content="{{ page.date | date_to_xmlschema }}" />
+    {% else %}
+    <meta property="og:type" content="website" />
+    {% endif %}
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="{% if page.title %}{{ page.title | xml_escape }} — {% endif %}Nixon Hanna" />
+    <meta name="twitter:description" content="{{ _og_desc | xml_escape }}" />
+    <meta name="twitter:image" content="{{ '/monogram.png' | absolute_url }}" />
     {% include theme-head-fouc.html %}
     {% include theme-inline-paint.html %}
     {% include font-preloads.html %}
