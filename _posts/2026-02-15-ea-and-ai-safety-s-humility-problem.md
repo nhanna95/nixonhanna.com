@@ -2,7 +2,7 @@
 layout: post
 title: "EA and AI Safety's Humility Problem"
 date: 2026-02-15
-tags: [EA, AI Safety, Reflections]
+tags: [Effective Altruism, AI Safety, Reflections]
 ---
 **Note:** All anecdotes used are not meant to represent any group or movement in its entirety, but rather to provide more concrete context for certain situations.
 

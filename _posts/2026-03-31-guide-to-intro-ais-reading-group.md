@@ -2,7 +2,7 @@
 layout: post
 title: "An Opinionated Guide to Running an Introductory AI Safety Reading Group"
 date: 2026-03-31
-tags: [AI Safety, Advice, Living Document]
+tags: [AI Safety, Capacity Building, Living Document]
 ---
 
 I believe introductory AI Safety reading groups are some of the highest-impact programs you can run. Yet there isn't a ton of time, energy, and intention being put into these programs. So I'm writing this post to distill what I have learned through the time, energy, and intention I've put into the reading group I lead.

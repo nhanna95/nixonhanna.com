@@ -1420,6 +1420,47 @@ body {
     color: var(--link);
 }
 
+/* Custom tag tooltip: faster than native title and fully styleable */
+[data-tooltip] {
+    position: relative;
+}
+
+[data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 0.45rem);
+    transform: translate(-50%, 0.2rem);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 25;
+    width: max-content;
+    max-width: min(34ch, 80vw);
+    padding: 0.42rem 0.56rem;
+    border-radius: 8px;
+    background: var(--ink);
+    color: var(--bg);
+    border: 1px solid var(--rule);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.16);
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.78rem;
+    font-weight: 500;
+    line-height: 1.35;
+    text-align: left;
+    white-space: normal;
+    transition:
+        opacity 0.1s ease,
+        transform 0.1s ease;
+    transition-delay: 0s;
+}
+
+[data-tooltip]:hover::after,
+[data-tooltip]:focus-visible::after {
+    opacity: 1;
+    transform: translate(-50%, 0);
+    transition-delay: 0.12s;
+}
+
 /* ====== Entry (single post) ====== */
 .entry-head {
     margin-bottom: 1rem;

@@ -3,7 +3,7 @@ layout: post
 title: "20 Lessons I’ve Learned by My 20th Birthday"
 date: 2025-11-22
 substack: https://noxin.substack.com/p/20-lessons-ive-learned-by-my-20th
-tags: [Advice, Reflections]
+tags: [Personal Advice, Reflections]
 ---
 
 Today is my birthday! I'm not much of a holiday or birthday person but I figured I should do something for it. I've been reflecting a lot lately, so I figured assembling a list of 20 lessons I've learned by my 20th birthday would be a great way of celebrating my birthday. So here it is! Many of these are about finding what you want to spend your limited time and energy on, how to do so effectively, and how to not regret doing so. You might find thinking of the lessons through this lens is helpful. But a few disclaimers before we jump in:

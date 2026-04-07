@@ -22,7 +22,9 @@
                     {% if page.tags.size > 0 %}
                     <ul class="taglist">
                         {% for tag in page.tags %}
+                        {% assign tag_description = site.data.tag_descriptions[tag] %}
                         <li><a href="{{ '/blog.html' | relative_url }}#tag-{{ tag | downcase }}" class="tag-link"
+                                {% if tag_description %}data-tooltip="{{ tag_description | escape }}"{% endif %}
                                 data-tag="{{ tag }}">{{ tag }}</a></li>
                         {% endfor %}
                     </ul>

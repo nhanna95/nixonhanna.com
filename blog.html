@@ -275,6 +275,7 @@ permalink: /blog.html
             }{% unless forloop.last %},{% endunless %}
             {% endfor %}
         ];
+        const tagDescriptions = {{ site.data.tag_descriptions | jsonify }};
     // jshint ignore:end
 
     const list = document.getElementById('post-list');
@@ -328,6 +329,10 @@ permalink: /blog.html
         label.htmlFor = id;
         label.className = 'tag';
         label.textContent = `${name} (${count})`;
+        const filterDescription = tagDescriptions && tagDescriptions[name] ? String(tagDescriptions[name]) : '';
+        if (filterDescription) {
+            label.setAttribute('data-tooltip', filterDescription);
+        }
         filterTagControls.appendChild(input);
         filterTagControls.appendChild(label);
     });
@@ -396,6 +401,14 @@ permalink: /blog.html
 
     let currentYear = null;
     const fmt = new Intl.DateTimeFormat(undefined, { month: 'short', day: 'numeric' });
+    function escapeHtmlAttribute(value) {
+        return String(value)
+            .replace(/&/g, '&amp;')
+            .replace(/"/g, '&quot;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;');
+    }
+
     regularPosts.forEach(p => {
         // Parse date as local time to avoid timezone issues
         let d;
@@ -422,7 +435,11 @@ permalink: /blog.html
         const readMins = Math.max(1, Number(p.readTime) || 1);
         const readHTML = `<span class="post-readtime" aria-label="Estimated read time">· ${readMins} min read</span>`;
         const tagsHTML = p.tags && p.tags.length ?
-            `<ul class="taglist">${p.tags.map(t => `<li>${t}</li>`).join('')}</ul>` : '';
+            `<ul class="taglist">${p.tags.map(t => {
+                const description = tagDescriptions && tagDescriptions[t] ? String(tagDescriptions[t]) : '';
+                const tooltipAttr = description ? ` data-tooltip="${escapeHtmlAttribute(description)}"` : '';
+                return `<li${tooltipAttr}>${t}</li>`;
+            }).join('')}</ul>` : '';
         art.innerHTML = `
             <div class="post-head"><a class="post-title" href="${p.url}">${p.title}</a>${readHTML}</div>
             ${dateHTML}
