@@ -31,7 +31,7 @@ High-quality online materials that do a better job at upskilling people to do te
 
 ### Retreat-style workshops
 
-I would like to see more long-weekend retreats with on the order of thirty participants and roughly ten professionals: a relatively plug-and-play version of the kind of experience offered by [AISST × MAIA workshops](https://aisst.org/) or [Action Potential](https://www.actionpotential.org/). Workshops have been proven to be high impact, yet there aren't that many of them. Scaling this up without reinventing it each time would be valuable.
+I would like to see more long-weekend retreats with on the order of thirty participants and roughly ten professionals: a relatively plug-and-play version of the kind of experience offered by AISST × MAIA workshops or Action Potential. Workshops have been proven to be high impact, yet there aren't that many of them. Scaling this up without reinventing it each time would be valuable.
 
 ### More “Robert Miles–style” foundational content
 
