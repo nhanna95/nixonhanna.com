@@ -2,6 +2,7 @@
 layout: post
 title: "AI Safety Programs I Think Would Be Impactful But Don't Have Bandwidth to Run"
 date: 2026-04-07
+update: 2026-04-08
 tags: [AI Safety, Capacity Building, Living Document]
 ---
 
@@ -27,7 +28,7 @@ Some of the highest-impact parts of multi-day workshops are the 1-on-1 conversat
 
 ### An updated ARENA-style program
 
-High-quality online materials that do a better job at upskilling people to do technical AIS work. I do not think this has to be a large in-person program, but it would be nice to have it be something other organizations could use to run their own bootcamps.
+High-quality online materials that do a better job at upskilling people to do technical AIS work. I do not think this has to be a large in-person program, but it would be nice to have it be something other organizations could use to run their own bootcamps. I should clarify that my views are largely the result of conversations with others as I don't have extensive experience with ARENA myself (though I do think it is too heavily biased to mechinterp).
 
 ### Retreat-style workshops
 
@@ -36,3 +37,7 @@ I would like to see more long-weekend retreats with on the order of thirty parti
 ### More “Robert Miles–style” foundational content
 
 There is still a lot of room for good short videos on core ideas: instrumental convergence, different forms of misalignment, basic threat models, and so on. I would say Robert Miles has done this the best but any additional resources could lower the cost of onboarding for everyone else.
+
+### Professional AIS onboarding resources
+
+Onboarding resource for people advanced in outside specializations. This could be a paper trail/explanation of current AIS fields. Some sort of flow chart so people who already have specialties could find AIS work relevant to the previous expertise. For example, biosecurity paper trail for a masters in epidemiology; current AIS governance articles for a senior in public policy. This would involve pulling together resources from AISafety.com, various professional applications, and creating a paper trail of current research in various AIS fields. (Credit: Raen Kao)
