@@ -1,6 +1,12 @@
 # date_added: YYYY-MM-DD (sorted newest-first on the page). Edit as you like.
 - date_added: "2026-04-27"
   type: blog
+  url: "https://mindslice.substack.com/p/alignment"
+  title: "ALIGNMENT (Vincent Huang)"
+  blurb: "Did an eerily good job at portraying two parts of me which are still clashing"
+
+- date_added: "2026-04-27"
+  type: blog
   url: "https://80000hours.org/problem-profiles/"
   title: "What are the most pressing world problems?"
   blurb: "A good overview of the most pressing problems facing the world (roughly aligns with my views)"
