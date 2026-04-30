@@ -1466,6 +1466,14 @@ body {
     margin-bottom: 1rem;
 }
 
+.entry-subtitle {
+    margin: -0.35rem 0 1rem;
+    color: var(--muted);
+    font-size: 1.28rem;
+    font-weight: 500;
+    line-height: 1.5;
+}
+
 .entry-meta {
     display: flex;
     flex-wrap: wrap;
