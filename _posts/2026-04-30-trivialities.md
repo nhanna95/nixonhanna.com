@@ -33,4 +33,6 @@ is there no space for my spirituality, my love, my _wonder_ in this future i’v
 
 how can i cherish that short instance where our eyes meet if the only record of it is a 15 minute block on my time tracker?
 
+---
+
 this is my first time free writing and should not necessarily be taken as my true beliefs on the movement. thank you to vincent huang whose writing inspired much reflection.
