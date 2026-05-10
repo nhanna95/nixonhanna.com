@@ -1135,8 +1135,9 @@ body {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    /* Old CSS used Zain but it was never loaded; effective face was generic sans-serif (UA default, e.g. SF on macOS, Segoe UI on Windows). */
-    font-family: ui-sans-serif, system-ui, sans-serif;
+    /* Match .content's body face (Noto Serif). The body element declares Inter but .content overrides it,
+       so the visible reading face on the right is serif — the sidebar should share it. */
+    font-family: "Noto Serif", Georgia, "Times New Roman", serif;
 }
 
 /* Reduce brand→tagline spacing on desktop only */
@@ -1147,10 +1148,10 @@ body {
 }
 
 .brand {
-    font-family: ui-sans-serif, system-ui, sans-serif;
-    font-size: 1.25rem;
+    font-family: Fraunces, Georgia, serif;
+    font-size: 1.35rem;
     font-weight: 600;
-    letter-spacing: .2px;
+    letter-spacing: 0;
     text-decoration: none;
     color: var(--ink);
 }
@@ -1173,6 +1174,11 @@ body {
     color: inherit;
     text-decoration: none;
     border-radius: 6px;
+    /* Plain humanist sans between Fraunces (name) and Noto Serif (tagline + profile) — no caps, no mono. */
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-weight: 500;
+    font-size: 1rem;
+    line-height: 1.35;
 }
 
 .nav a:hover {
