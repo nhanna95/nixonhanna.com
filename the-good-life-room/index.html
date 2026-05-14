@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The Good Life: Room — Nixon Hanna</title>
+  <style>
+    :root {
+      --glow: 255, 220, 120;
+      --accent: 67, 120, 87;
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      background: #111;
+      color: #eee;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    .stage {
+      position: relative;
+      max-width: 1400px;
+      margin: 24px auto 160px;
+      padding: 0 16px;
+    }
+    .frame {
+      position: relative;
+      width: 100%;
+      line-height: 0;
+    }
+    .frame > img.bg {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 8px;
+    }
+
+    .hotspot {
+      position: absolute;
+      z-index: 2;
+      background: transparent;
+      border: 0;
+      padding: 0;
+      cursor: pointer;
+    }
+    .hotspot:hover, .hotspot:focus-within { z-index: 10; }
+
+    .cutout {
+      width: 100%;
+      height: 100%;
+      display: block;
+      pointer-events: none;
+      user-select: none;
+      transform-origin: center center;
+      transition: transform 260ms cubic-bezier(.2,.75,.2,1), filter 260ms ease;
+      animation: idleGlow 2.6s ease-in-out infinite;
+    }
+    @keyframes idleGlow {
+      0%, 100% {
+        filter:
+          drop-shadow(0 0 2px rgba(var(--glow), 0.55))
+          drop-shadow(0 0 8px rgba(var(--glow), 0.22));
+      }
+      50% {
+        filter:
+          drop-shadow(0 0 4px rgba(var(--glow), 0.9))
+          drop-shadow(0 0 16px rgba(var(--glow), 0.45));
+      }
+    }
+    .hotspot:hover .cutout,
+    .hotspot:focus-within .cutout {
+      transform: scale(var(--scale, 1.7));
+      animation: none;
+      filter:
+        drop-shadow(0 0 3px rgba(var(--glow), 1))
+        drop-shadow(0 0 14px rgba(var(--glow), 0.55))
+        drop-shadow(0 12px 28px rgba(0, 0, 0, 0.55));
+    }
+
+    .tooltip {
+      position: absolute;
+      left: 50%;
+      top: calc(100% + 12px);
+      transform: translateX(-50%);
+      min-width: 432px;
+      max-width: min(1215px, 96vw);
+      max-height: min(70vh, 420px);
+      overflow-y: auto;
+      background: rgba(20, 20, 24, 0.96);
+      color: #f5f5f5;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      font-size: 14px;
+      line-height: 1.4;
+      pointer-events: none;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 160ms ease, top 240ms ease, bottom 240ms ease;
+      text-align: left;
+      z-index: 3;
+    }
+    .tooltip h3 {
+      margin: 0 0 4px 0;
+      font-size: 14px;
+      font-weight: 600;
+      color: rgb(var(--accent));
+    }
+    .tooltip p { margin: 0 0 10px 0; }
+    .tooltip p:last-child { margin: 0; }
+    .tooltip em { font-style: italic; }
+    .tooltip a {
+      color: rgb(var(--accent));
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .hotspot:hover .tooltip,
+    .hotspot:focus-within .tooltip {
+      pointer-events: auto;
+      opacity: 1;
+      visibility: visible;
+      top: calc(100% + 14px + (var(--scale, 1.7) - 1) * 50%);
+    }
+    .hotspot.flip-up .tooltip {
+      top: auto;
+      bottom: calc(100% + 12px);
+    }
+    .hotspot.flip-up:hover .tooltip,
+    .hotspot.flip-up:focus-within .tooltip {
+      top: auto;
+      bottom: calc(100% + 14px + (var(--scale, 1.7) - 1) * 50%);
+    }
+    .hotspot.align-left  .tooltip { left: 0; transform: none; }
+    .hotspot.align-right .tooltip { left: auto; right: 0; transform: none; }
+
+    .caption {
+      text-align: center;
+      font-size: 13px;
+      color: #888;
+      margin-top: 18px;
+    }
+
+    .about-toggle {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      z-index: 20;
+      background: rgba(20, 20, 24, 0.92);
+      color: #f5f5f5;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      padding: 8px 14px;
+      border-radius: 999px;
+      font: inherit;
+      font-size: 13px;
+      cursor: pointer;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      transition: background 160ms ease, border-color 160ms ease, color 160ms ease;
+    }
+    .about-toggle:hover,
+    .about-toggle:focus-visible {
+      background: rgba(40, 40, 48, 0.96);
+      border-color: rgba(var(--accent), 0.7);
+      color: rgb(var(--accent));
+      outline: none;
+    }
+
+    .about-modal {
+      max-width: 620px;
+      width: calc(100% - 32px);
+      margin: auto;
+      background: rgba(20, 20, 24, 0.98);
+      color: #f0f0f0;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 12px;
+      padding: 32px 32px 24px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.65;
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.7);
+      position: relative;
+    }
+    .about-modal[open] {
+      animation: aboutIn 240ms cubic-bezier(.2, .75, .2, 1);
+    }
+    @keyframes aboutIn {
+      from { opacity: 0; transform: translateY(10px) scale(0.98); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .about-modal::backdrop {
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+    .about-modal h2 {
+      margin: 0 0 16px 0;
+      font-size: 22px;
+      font-weight: 600;
+      color: rgb(var(--accent));
+      letter-spacing: 0.01em;
+    }
+    .about-modal p {
+      margin: 0 0 14px 0;
+      font-size: 15px;
+      color: #e6e6e6;
+    }
+    .about-modal p:last-of-type {
+      margin-bottom: 22px;
+    }
+    .about-modal em {
+      font-style: italic;
+      color: #fff;
+    }
+    .about-note {
+      margin: 0 0 22px 0;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 13px;
+      font-style: italic;
+      color: #9a9a9a;
+    }
+    .about-note em {
+      color: #c4c4c4;
+    }
+    .about-close {
+      position: absolute;
+      top: 10px;
+      right: 14px;
+      background: transparent;
+      border: 0;
+      color: #999;
+      font-size: 26px;
+      line-height: 1;
+      cursor: pointer;
+      padding: 6px 10px;
+      border-radius: 6px;
+      transition: color 160ms ease, background 160ms ease;
+    }
+    .about-close:hover,
+    .about-close:focus-visible {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.06);
+      outline: none;
+    }
+    .about-enter {
+      display: inline-block;
+      background: rgb(var(--accent));
+      color: #0f1a14;
+      border: 0;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font: inherit;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: filter 160ms ease, transform 160ms ease;
+    }
+    .about-enter:hover,
+    .about-enter:focus-visible {
+      filter: brightness(1.1);
+      outline: none;
+    }
+    .about-enter:active {
+      transform: translateY(1px);
+    }
+  </style>
+</head>
+<body>
+  <button type="button" id="aboutToggle" class="about-toggle" aria-haspopup="dialog" aria-controls="aboutModal">About</button>
+
+  <dialog id="aboutModal" class="about-modal" aria-labelledby="aboutTitle">
+    <button type="button" class="about-close" data-close aria-label="Close about note">&times;</button>
+    <h2 id="aboutTitle">About this project</h2>
+    <p>This project was done as the final project for my <em>What is The Good Life? Popular Culture and Narrative</em> class, and is supposed to communicate what I think the good life is.</p>
+    <p>What is the good life? is a question I&rsquo;ve wrestled with a lot, and to be to honest, I still feel quite far from finding a solid answer. I might even be further from an answer than I was at the beginning of the course.</p>
+    <p>And what do we do when theory is lacking? Look empirically!</p>
+    <p>So the following is a short tour of my room in which I&rsquo;ll briefly analyze how some of the items I own portray what I believe to be the good life, whether I like it or not. That is, I'll be reflecting on how some of the things in my life don't necessarily line up with that I would claim to be the good life. As you&rsquo;ll soon realize there is currently quite a bit of conflict between the different sides of me, which is likely the cause for my struggle to answer this great question in a satisfying way.</p>
+    <p>Perhaps, that is what the good life is: finding balance in the things you love. But until I find that balance, I&rsquo;ll <em>find what I love and let it kill me</em>.</p>
+    <p class="about-note">A note on the photo: the only staging I did was putting my laptop and some letters on my bed. Everything else is where it was naturally.</p>
+    <button type="button" class="about-enter" data-close>Explore the room</button>
+  </dialog>
+
+  <div class="stage">
+    <div class="frame" id="frame">
+      <img class="bg" src="image.jpg" alt="A dorm room." />
+    </div>
+    <p class="caption">Hover the glowing objects.</p>
+  </div>
+
+  <script>
+    // ---------------------------------------------------------------------
+    // EDIT ME — each entry is one object cutout + blurb.
+    //   src     — path to the masked PNG (in /cutouts)
+    //   bbox    — [x%, y%, w%, h%] in the room image. Must match the bbox
+    //             the PNG was cropped from in build_cutouts.sh.
+    //   title   — short label shown in the tooltip header
+    //   html    — blurb markup (paragraphs, links, emphasis)
+    //   scale   — pop-out size on hover (default 1.7)
+    //   flipUp  — true for items near the bottom (tooltip goes above)
+    //   align   — "left" or "right" for items near the side edges
+    // ---------------------------------------------------------------------
+    const HOTSPOTS = [
+      {
+        src: "cutouts/blond.png",
+        bbox: [15.782, 19.298, 11.414, 20.833],
+        title: "Blond Poster",
+        html: `<p>Blond has always had a special place in my heart as I remember one night in high school during my freshman year winter break listening to Blond as I bawled my eyes out. This period is quite definitively the lowest point in my life. Yet, I look back at it with some level of romanticism. I was a naive kid who thought he understand the world and the world challenged him. While it is difficult to stomach sometimes, I do believe this naivety is romantic; I believe humans' pursuit for understanding is beautiful given how little we know and how consistently we are proven wrong.</p>`,
+        scale: 1.5
+      },
+      {
+        src: "cutouts/sleeping_painting.png",
+        bbox: [55.261, 23.07, 3.524, 5.965],
+        title: "Painting",
+        html: `<p>As soon as I saw this painting, I knew I needed to get it. It reminded me so much of the feeling of waking up on the weekend and rolling around in bed when you don't have anything urgent to attend to. I used to adore this feeling, but I haven't felt it in a while. I've loaded my life with so many responsibilities that I no longer possess the ability to take down time, time to collect myself, time to sit with myself. Perhaps this is one of the most urgent things for me to work on.</p>`,
+        scale: 2.0
+      },
+      {
+        src: "cutouts/camera.png",
+        bbox: [26.551, 45.088, 2.382, 2.939],
+        title: "Film Camera",
+        html: `<p>I love my two film cameras. I don't use them often, but this makes the photos I have even more valuable to me in two ways. Firstly, looking at seemingly mundane photos of random perspectives of my room from a year ago provides such a strong emotional response despite the seemingly simple nature of the photos. Secondly, the fact that I don't take many photos makes it even more surprising to me how many photos I have taken that I cherish so much. Such simple and sporadic photos can provide so much depth in retrospection which has led to me developing a great sense of romanticism.</p><p>It is hard to notice all the little importances in the moment, but keeping records have allowed me to appreciate the ever presence of these things. Notably, I actively don't use my camera very often or journal or these things, as I feel if you are always just keeping records you will never truly be present in that moment to appreciate what is going on around you.</p>`,
+        scale: 1.9
+      },
+      {
+        src: "cutouts/piano.png",
+        bbox: [53.598, 40.702, 3.027, 6.535],
+        title: "Piano",
+        html: `<p>I feel like my piano keyboard represents my passion for change and in some sense improvement. As a kid, I hated music. So naturally, I did not grow up to be a very talented musician. Yet, starting around 10th grade, I've been getting into music more and more. This developed a great desire in me to be able to play an instrument, which led to me trying to learn the piano. While I'm still quite bad, I value the process of simply improving at things. This generalizes quite well to how I think about most things in life; I typically value how much I'm changing at any given moment much more than how absolutely good I am at something.</p>`,
+        scale: 1.9
+      },
+      {
+        src: "cutouts/laptop.png",
+        bbox: [47.99, 45.658, 6.65, 9.737],
+        title: "Laptop",
+        html: `<p>Ironically the one item that goes against my love for physical media is the one that gives me the most turmoil.</p><p>I have two windows open: my time tracker and my recent <a href="https://www.nixonhanna.com/posts/trivialities/">blog post</a> about my struggle to balance altruism with my own happiness. I started my time tracker due to the same issue. I'm still uncertain about whether tracking my time in such a Lockean manner is really compatible with my original goal of increasing my altruism as the result of the love ethic I claim to live by.</p>`,
+        scale: 1.7
+      },
+      {
+        src: "cutouts/porsche.png",
+        bbox: [81.092, 52.193, 8.065, 6.053],
+        title: "Porsche",
+        html: `<p>Over the past few years, I've developed a deep love for design in many of its different avenues. I see design as such a sincere appreciation for humanity. But even before this appreciation for design developed, I loved Porsches. There was something so beautiful about them to me, even in spite of my hatred for cars and car-centric urban planning. Now that I'm older, I see the contradiction in it all; the output of an act I view as an appreciation for humanity has become more and more inaccessible for the average person. It reminds me of one of my favorite poems:</p><p><em>"In order for me to write poetry that isn't political, I must listen to the birds, and in order to hear the birds, the warplanes must be silent"</em> -Marwan Makhoul</p><p>Thus, I view the lego Porsche in my room as a symbol of the active conflict between personal enjoyment and ethical behavior in today's exploitative global society.</p>`,
+        scale: 1.7,
+        align: "right"
+      },
+      {
+        src: "cutouts/vinyl.png",
+        bbox: [18.536, 55.614, 11.241, 11.974],
+        title: "Turntable",
+        html: `<p>I love physical media, largely for the intentionality of it all. Listening to vinyl requires active participation, you cannot let it idle go for more than 20 minutes without it stopping. I believe this intentionality adds a lot to the experience. Not to say I necessarily agree with Absurdism, but I do believe being mindfully present is incredibly impactful on our lived experience.</p>`,
+        scale: 1.5
+      },
+      {
+        src: "cutouts/letters.png",
+        bbox: [56.005, 52.544, 6.352, 5.614],
+        title: "Letters",
+        html: `<p>I'm often quite poor at keeping up with the people I care about if they aren't near, with the exception of writing letters. This stack of letters, the many more in the drawers of my desk, and the many many letters in the homes of those I love represent my value of the people in my life. I think one of the most intimate things one can do is take a little bit of time out of their day to express love for someone in their life. So, it is incredibly important to me that I continue this habit and hopefully increase how often I do so.</p>`,
+        scale: 1.7
+      },
+      {
+        src: "cutouts/books_middle.png",
+        bbox: [76.526, 57.675, 4.938, 8.289],
+        title: "Non-fiction Books",
+        html: `<p>Ever since I've gotten into reading, I've read a mix of fiction and non-fiction, and in contrast to my laptop, I feel this mix has been quite beneficial. While some of the non-fiction I read may be more Lockean than I'd like to admit, most of these books have greatly impacted the way I understand the world. I believe this understanding has led to a much greater appreciation for those around me and deeper sense of empathy as I better understand the world around me and by extension the people that encompass it.</p>`,
+        scale: 1.7,
+        align: "right"
+      },
+      {
+        src: "cutouts/books_bottom.png",
+        bbox: [73.797, 63.947, 7.246, 11.535],
+        title: "Fiction Books",
+        html: `<p>I love fiction; while non-fiction leads to an arguably better understanding of the world, fiction has consistently developed my sense of empathy with those around me and even people who are far removed from my day-to-day life.</p><p><em>we live three times as long since man invented movies</em></p><p>All forms of art, including novels and films, allow us to experience far more life than we could otherwise. This experience has taught me many lessons which I now cherish and have led to me claiming to have an ethic of love.</p>`,
+        scale: 1.7,
+        align: "right",
+        flipUp: true
+      }
+    ];
+
+    const frame = document.getElementById("frame");
+    for (const h of HOTSPOTS) {
+      const [x, y, w, hgt] = h.bbox;
+      const scale = h.scale || 1.7;
+
+      const hot = document.createElement("button");
+      hot.type = "button";
+      hot.className = "hotspot";
+      hot.setAttribute("aria-label", h.title);
+      hot.style.left   = x + "%";
+      hot.style.top    = y + "%";
+      hot.style.width  = w + "%";
+      hot.style.height = hgt + "%";
+      hot.style.setProperty("--scale", scale);
+      if (h.flipUp) hot.classList.add("flip-up");
+      if (h.align === "left")  hot.classList.add("align-left");
+      if (h.align === "right") hot.classList.add("align-right");
+
+      const img = document.createElement("img");
+      img.className = "cutout";
+      img.src = h.src;
+      img.alt = "";
+      img.draggable = false;
+      hot.appendChild(img);
+
+      const tip = document.createElement("div");
+      tip.className = "tooltip";
+      const h3 = document.createElement("h3");
+      h3.textContent = h.title;
+      tip.appendChild(h3);
+      tip.insertAdjacentHTML("beforeend", h.html);
+      hot.appendChild(tip);
+
+      frame.appendChild(hot);
+    }
+
+    const aboutModal = document.getElementById("aboutModal");
+    const aboutToggle = document.getElementById("aboutToggle");
+
+    function openAbout() {
+      if (aboutModal.open) return;
+      if (typeof aboutModal.showModal === "function") {
+        aboutModal.showModal();
+      } else {
+        aboutModal.setAttribute("open", "");
+      }
+    }
+    function closeAbout() {
+      if (typeof aboutModal.close === "function") {
+        aboutModal.close();
+      } else {
+        aboutModal.removeAttribute("open");
+      }
+    }
+
+    openAbout();
+
+    aboutToggle.addEventListener("click", openAbout);
+
+    aboutModal.addEventListener("click", (e) => {
+      if (e.target.closest("[data-close]")) {
+        closeAbout();
+        return;
+      }
+      const rect = aboutModal.getBoundingClientRect();
+      const clickedOutside =
+        e.clientX < rect.left ||
+        e.clientX > rect.right ||
+        e.clientY < rect.top  ||
+        e.clientY > rect.bottom;
+      if (clickedOutside) closeAbout();
+    });
+  </script>
+</body>
+</html>

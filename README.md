@@ -23,11 +23,16 @@ A Jekyll-powered personal website hosted on GitHub Pages.
 # Install dependencies (may require updating Ruby version)
 bundle install
 
-# Run Jekyll server
+# Run Jekyll server (preferred; forces UTF-8 encoding)
+rake serve
+
+# Or run Jekyll directly
 bundle exec jekyll serve
 
 # Site will be available at http://localhost:4000
 ```
+
+**Note**: The `Rakefile` sets `RUBYOPT='-Eutf-8:utf-8'` before invoking Jekyll. This works around a UTF-8 encoding crash in the `jekyll-sass-converter 1.5.2` shipped by `github-pages` when the shell locale is `C` / US-ASCII. If you prefer `bundle exec jekyll serve` directly, either set `LANG=en_US.UTF-8` in your shell or use the rake tasks (`rake build`, `rake serve`, `rake clean`).
 
 **Note**: If you have an older Ruby version (< 3.1), you can either:
 1. Use Ruby version manager (rbenv, rvm) to install Ruby 3.1+
