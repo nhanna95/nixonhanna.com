@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>The River Feels Colder This Time — Nixon Hanna</title>
+  <meta name="description" content="A photo series. Summer 2026, Boston." />
+  <style>
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      background: #fff;
+      color: #111;
+    }
+
+    body {
+      font-family: Georgia, "Times New Roman", serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 5rem 1.5rem 7rem;
+    }
+
+    header {
+      text-align: center;
+      margin: 0 0 5rem;
+    }
+
+    h1 {
+      margin: 0 0 0.75rem;
+      font-size: clamp(1.85rem, 1.5rem + 1vw, 2.4rem);
+      font-weight: 400;
+      letter-spacing: -0.015em;
+      line-height: 1.2;
+    }
+
+    .lede {
+      margin: 0;
+      font-size: 1.05rem;
+      color: #6b7280;
+      font-style: italic;
+    }
+
+    .photos {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 4.5rem 2rem;
+    }
+
+    .photo {
+      margin: 0;
+      line-height: 0;
+      opacity: 0;
+      animation: fade-in 1.2s ease forwards;
+    }
+
+    .photo:nth-child(1) { animation-delay: 0.1s; }
+    .photo:nth-child(2) { animation-delay: 0.25s; }
+    .photo:nth-child(3) { animation-delay: 0.4s; }
+    .photo:nth-child(4) { animation-delay: 0.55s; }
+    .photo:nth-child(5) { animation-delay: 0.7s; }
+    .photo:nth-child(6) { animation-delay: 0.85s; }
+    .photo:nth-child(7) { animation-delay: 1s; }
+    .photo:nth-child(8) { animation-delay: 1.15s; }
+
+    @media (min-width: 720px) {
+      .photos {
+        grid-template-columns: 1fr 1fr;
+        align-items: start;
+      }
+
+      .photo.wide {
+        grid-column: 1 / -1;
+      }
+
+      .photo.wide.tall {
+        justify-self: center;
+        width: min(640px, 100%);
+      }
+    }
+
+    @keyframes fade-in {
+      to { opacity: 1; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .photo {
+        opacity: 1;
+        animation: none;
+      }
+    }
+
+    .photo img {
+      display: block;
+      width: 100%;
+      height: auto;
+      background: #f3f4f6;
+    }
+
+    @media (max-width: 560px) {
+      .page {
+        padding: 3rem 1rem 4.5rem;
+      }
+
+      header {
+        margin-bottom: 3.5rem;
+      }
+
+      .photos {
+        gap: 3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <h1>The River Feels Colder This Time</h1>
+      <p class="lede">A photo series. Summer 2026, Boston.</p>
+    </header>
+
+    <div class="photos">
+      <figure class="photo">
+        <img src="IMG_1575.jpg" alt="" width="1200" height="1600" loading="eager" decoding="async">
+      </figure>
+      <figure class="photo">
+        <img src="IMG_1593.jpg" alt="" width="1200" height="1600" loading="eager" decoding="async">
+      </figure>
+      <figure class="photo wide">
+        <img src="IMG_1589.jpg" alt="" width="1600" height="1200" loading="lazy" decoding="async">
+      </figure>
+      <figure class="photo">
+        <img src="IMG_1598.jpg" alt="" width="1200" height="1600" loading="lazy" decoding="async">
+      </figure>
+      <figure class="photo">
+        <img src="IMG_1576.jpg" alt="" width="1200" height="1600" loading="lazy" decoding="async">
+      </figure>
+      <figure class="photo wide">
+        <img src="IMG_1580.jpg" alt="" width="1600" height="1200" loading="lazy" decoding="async">
+      </figure>
+      <figure class="photo wide">
+        <img src="IMG_1595.jpg" alt="" width="1600" height="1200" loading="lazy" decoding="async">
+      </figure>
+      <figure class="photo wide tall">
+        <img src="IMG_1604.jpg" alt="" width="1200" height="1600" loading="lazy" decoding="async">
+      </figure>
+    </div>
+  </main>
+</body>
+</html>

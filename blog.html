@@ -272,9 +272,18 @@ permalink: /blog.html
                 readTime: {{ post_read_mins }},
                 {% if post.updated %}updated: "{{ post.updated | date: '%Y-%m-%d' }}",{% endif %}
                 tags: {{ post.tags | jsonify }}
-            }{% unless forloop.last %},{% endunless %}
+            },
             {% endfor %}
-        ];
+            // Standalone photo series page (not a Jekyll post)
+            {
+                title: "The River Feels Colder This Time",
+                url: "{{ '/the-river-feels-colder-this-time/' | relative_url }}",
+                date: "2026-07-25",
+                readTime: 1,
+                tags: ["Photography"],
+                turbo: false
+            }
+        ].sort((a, b) => b.date.localeCompare(a.date) || a.title.localeCompare(b.title));
         const tagDescriptions = {{ site.data.tag_descriptions | jsonify }};
     // jshint ignore:end
 
@@ -440,8 +449,9 @@ permalink: /blog.html
                 const tooltipAttr = description ? ` data-tooltip="${escapeHtmlAttribute(description)}"` : '';
                 return `<li${tooltipAttr}>${t}</li>`;
             }).join('')}</ul>` : '';
+        const turboAttr = p.turbo === false ? ' data-turbo="false"' : '';
         art.innerHTML = `
-            <div class="post-head"><a class="post-title" href="${p.url}">${p.title}</a>${readHTML}</div>
+            <div class="post-head"><a class="post-title" href="${p.url}"${turboAttr}>${p.title}</a>${readHTML}</div>
             ${dateHTML}
             ${tagsHTML}
         `;
