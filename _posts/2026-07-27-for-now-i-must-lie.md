@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "For Bow, I Must Lie"
+title: "For Now, I Must Lie"
 date: 2026-07-27
 tags: [Free Writing, Poetry]
 hide_feedback: true
