@@ -13,7 +13,7 @@ my husk of a body wakes up with the thought of a screeching saxophone
 in that moment the melody from down below breaks through the commotion  
 there is no show tonight so I make my way to the street performer  
 my mind is eager but my body moves slowly nonetheless  
-as I walk through the final set of doors I see the saxophone laying in the case  
+as I walk through the final set of doors I see the saxophone lying in the case  
 the performer is counting the scattered bills below  
 his face does a poor job hiding the disappointment  
 just a minute ago, his lips were firm around his reed  
@@ -30,7 +30,7 @@ I hope the bus brings him back to me someday
 but for now I sit here alone, with only annoyances around  
 the plaza is much busier by the time I look up again  
 I wonder now if these people would have given more to the man  
-once in a while a coworker of mine finds their way into the crowd hurrying in each direction  
+once in a while a coworker of mine finds their way into the crowd hurrying in all directions  
 none of them notice me, even those I’d consider a friend  
 my body must have shrunk from the regret of inaction  
 I guess it’s only fair, as I don’t think they would’ve looked at the performer either
