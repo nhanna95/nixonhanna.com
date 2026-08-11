@@ -32,7 +32,7 @@ the plaza is much busier by the time I look up again
 I wonder now if these people would have given more to the man  
 once in a while a coworker of mine finds their way into the crowd hurrying in each direction  
 none of them notice me, even those I’d consider a friend  
-my body must have shrunken from the regret of inaction  
+my body must have shrunk from the regret of inaction  
 I guess it’s only fair, as I don’t think they would’ve looked at the performer either
 
 _Summer 2026, Berkeley._
