@@ -1,0 +1,34 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { BUILD_V } from '../lib/site';
+---
+
+<BaseLayout title="Hello" path="/">
+    <img src={`/headshop-900w.jpg?v=${BUILD_V}`} width="675" height="900" alt="Headshot"
+        class="content-headshot" decoding="sync">
+
+    <div>
+        <h1 class="h1">Hello</h1>
+
+        <p>I'm Nixon Hanna, an AI safety field-builder passionate about mitigating catastrophic risk from advanced AI and ensuring that AI goes well for all of humanity.</p>
+        <p>I've previously helped run <a href="https://aialignment.mit.edu/">MIT AI Alignment</a> (mainly focusing on our intro reading group fellowship). This summer I took part in the <a href="https://generatorresidency.org/">Generator Residency</a> and was lead organizer for OASIS 7.0, a workshop for top university AI safety group organizers.</p>
+        <p>In terms of personal interests, I spend love movies, climbing, music (mostly soul, jazz,
+            hip-hop, r&b), physical media, reading, philosophy, stationery, and many other things.</p>
+        <p>You can read more about my background and interests on the <a href="/about.html">about
+                page</a> of this site, if you're interested.
+        </p>
+        <p>Feel free to <a href="/contact.html">reach out</a> for any reason; I'm always happy to chat with new people. You can also <a
+                href="/feedback" data-turbo="false">leave anonymous feedback</a>
+            for me on Admonymous.</p>
+    </div>
+
+    <section class="note">
+        <h2 class="h2">This site…</h2>
+        <p>was created largely for the purpose of starting a <a href="/blog.html">personal blog</a>.</p>
+        <p>I believe writing about things is an incredibly effective way of developing one's own beliefs. Yet I rarely
+            found myself writing about the things I care about before making this site.</p>
+        <p>So I started this blog to give myself a place to more often write about the things I'm thinking about.</p>
+    </section>
+
+    <p class="last-updated"><em>Last updated: May 10, 2026</em></p>
+</BaseLayout>

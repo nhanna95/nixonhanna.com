@@ -1,0 +1,188 @@
+---
+import '../styles/tailwind.css';
+import ThemeToggle from '../components/ThemeToggle.astro';
+import { SITE_DESCRIPTION, BUILD_V, absoluteUrl } from '../lib/site';
+
+interface Props {
+    title?: string;
+    description?: string;
+    /** Page URL path, e.g. '/', '/blog.html', '/posts/welcome/' — used for og:url and nav active state. */
+    path: string;
+    /** Set for blog posts: renders og:type=article with published_time. */
+    articleDate?: Date;
+    mainAriaLabelledby?: string;
+}
+
+const { title, description, path, articleDate, mainAriaLabelledby } = Astro.props;
+const fullTitle = title ? `${title} — Nixon Hanna` : 'Nixon Hanna';
+const ogDesc = description ?? SITE_DESCRIPTION;
+
+const navLinks = [
+    { href: '/', label: 'Hello' },
+    { href: '/blog.html', label: 'Blog' },
+    { href: '/about.html', label: 'About' },
+    { href: '/contact.html', label: 'Contact' },
+    { href: '/media-log.html', label: 'Media Log' },
+    { href: '/archive.html', label: 'Archive' },
+];
+---
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+    <!-- Favicon for browsers and Google Search -->
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="icon" href="/monogram.png" type="image/png" />
+    <link rel="apple-touch-icon" href="/monogram.png" />
+
+    <title>{fullTitle}</title>
+    <meta property="og:site_name" content="Nixon Hanna" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={ogDesc} />
+    <meta property="og:url" content={absoluteUrl(path)} />
+    <!-- 144px og:image: Apple TN3156 — images under 150px wide may show as a small icon in Messages instead of a large preview -->
+    <meta property="og:image" content={absoluteUrl('/og-link-icon.png')} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="144" />
+    <meta property="og:image:height" content="144" />
+    {articleDate ? (
+        <>
+            <meta property="og:type" content="article" />
+            <meta property="article:published_time" content={articleDate.toISOString()} />
+        </>
+    ) : (
+        <meta property="og:type" content="website" />
+    )}
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={ogDesc} />
+    <meta name="twitter:image" content={absoluteUrl('/og-link-icon.png')} />
+    <script is:inline>
+        (function () {
+            var savedTheme = localStorage.getItem('theme') || 'dark';
+            var root = document.documentElement;
+            root.setAttribute('data-theme', savedTheme);
+            root.style.colorScheme = savedTheme === 'dark' ? 'dark' : 'light';
+        })();
+    </script>
+    <style is:inline>
+        /* Sync with :root / [data-theme="dark"] in styles.css */
+        html[data-theme="dark"] {
+            background-color: #1a1a1a;
+            color: #e5e5e5;
+        }
+
+        html[data-theme="light"] {
+            background-color: #ffffff;
+            color: #111;
+        }
+
+        /* Headshot: same as .sidebar-headshot / mobile .content-headshot but in-document before styles.css to avoid a frame of unstyled image */
+        html[data-theme="dark"] .sidebar-headshot {
+            background-color: #1f1f1f;
+            border-radius: 2rem;
+            object-fit: cover;
+            aspect-ratio: 675 / 900;
+            box-shadow: 0 2px 8px rgba(60, 60, 70, 0.07);
+            transform: translateZ(0);
+            backface-visibility: hidden;
+        }
+
+        html[data-theme="light"] .sidebar-headshot {
+            background-color: #FAFAF9;
+            border-radius: 2rem;
+            object-fit: cover;
+            aspect-ratio: 675 / 900;
+            box-shadow: 0 2px 8px rgba(60, 60, 70, 0.07);
+            transform: translateZ(0);
+            backface-visibility: hidden;
+        }
+
+        @media (max-width: 720px) {
+            html[data-theme="dark"] .content-headshot {
+                background-color: #1a1a1a;
+            }
+
+            html[data-theme="light"] .content-headshot {
+                background-color: #ffffff;
+            }
+
+            .content-headshot {
+                border-radius: 2rem;
+                object-fit: cover;
+                aspect-ratio: 675 / 900;
+                box-shadow: 0 2px 8px rgba(60, 60, 70, 0.07);
+                transform: translateZ(0);
+                backface-visibility: hidden;
+            }
+        }
+
+        /* Pre-paint guard: keep media cards hidden until JS/CSS init completes. */
+        .media-card-flow.media-card-flow--booting {
+            visibility: hidden;
+        }
+    </style>
+    <link rel="preload" as="font" type="font/woff2" crossorigin
+        href="/fonts/6NUu8FyLNQOQZAnv9bYEvDiIdE9Ea92uemAk_WBq8U_9v0c2Wa0K7iN7iQcIfJD58njt0oc7qv8oRcTn.woff2" />
+    <link rel="preload" as="font" type="font/woff2" crossorigin
+        href="/fonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2" />
+    <link rel="preload" as="image" href={`/headshop-900w.jpg?v=${BUILD_V}`} fetchpriority="high" />
+    <link rel="stylesheet" href={`/styles.css?v=${BUILD_V}`} />
+    <!-- No view-transition meta: default Turbo nav used root snapshots and caused font/headshot glitches. Theme toggle still uses startViewTransition in theme-ui.js. -->
+    <meta name="turbo-cache-control" content="no-preview">
+    <script is:inline>
+        (function () {
+            var urls = ['/', '/about.html', '/blog.html', '/contact.html'];
+            function addPrefetch() {
+                urls.forEach(function (href) {
+                    var link = document.createElement('link');
+                    link.rel = 'prefetch';
+                    link.href = href;
+                    link.as = 'document';
+                    document.head.appendChild(link);
+                });
+            }
+            if (document.readyState === 'complete') {
+                addPrefetch();
+            } else {
+                window.addEventListener('load', addPrefetch, { once: true });
+            }
+        })();
+    </script>
+    <script is:inline src={`/theme-ui.js?v=${BUILD_V}`} defer></script>
+    <script is:inline src="https://cdn.jsdelivr.net/npm/@hotwired/turbo@8.0.13/dist/turbo.es2017-umd.js" defer></script>
+</head>
+
+<body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <div id="mobile-nav-backdrop" class="mobile-nav-backdrop" aria-hidden="true"></div>
+    <aside class="sidebar" id="site-sidebar" data-turbo-permanent aria-label="Site identity and navigation">
+        <img src={`/headshop-900w.jpg?v=${BUILD_V}`} width="675" height="900" alt="Headshot"
+            class="sidebar-headshot" fetchpriority="high" decoding="sync">
+        <a class="brand" href="/">Nixon Hanna</a>
+        <p class="tagline">Safety, writings, and side quests</p>
+
+        <nav class="nav" id="site-nav" aria-label="Primary">
+            {navLinks.map((link) => (
+                <a href={link.href} class:list={[{ 'is-active': path === link.href }]}>{link.label}</a>
+            ))}
+            <div class="menu-profile-links" aria-label="Contact links">
+                <a href="https://www.linkedin.com/in/nixon-hanna" target="_blank" rel="noopener noreferrer" title="LinkedIn">LinkedIn</a>
+                <a href="/feedback" title="Feedback" data-turbo="false">Feedback</a>
+            </div>
+        </nav>
+
+        <ThemeToggle />
+    </aside>
+
+    <main class="content" id="main-content" tabindex="-1" aria-labelledby={mainAriaLabelledby}>
+        <slot />
+    </main>
+
+</body>
+
+</html>

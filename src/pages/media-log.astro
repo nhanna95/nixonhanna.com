@@ -1,0 +1,41 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import { getMediaLog } from '../lib/data';
+
+const media = getMediaLog();
+
+// Jekyll media-card date: {{ date_added | date: "%b %d, %Y" }} — zero-padded day.
+function cardDate(dateStr: string): string {
+    return new Intl.DateTimeFormat('en-US', {
+        month: 'short',
+        day: '2-digit',
+        year: 'numeric',
+        timeZone: 'UTC',
+    }).format(new Date(dateStr));
+}
+
+function capitalize(s: string): string {
+    return s.charAt(0).toUpperCase() + s.slice(1).toLowerCase();
+}
+---
+
+<PageLayout title="Media Log" path="/media-log.html">
+    <p class="page-media-intro">Videos, essays, podcasts, and books I recommend or return to often.</p>
+
+    <ul class="media-card-flow media-card-flow--booting">
+        {media.map((item) => (
+            <li class="media-card-flow__item">
+                <a class={`media-card media-card--${item.type}`} href={item.url} target="_blank" rel="noopener noreferrer">
+                    <div class="media-card__body">
+                        <h3 class="media-card__title">{item.title}</h3>
+                        {item.blurb && <p class="media-card__blurb">{item.blurb}</p>}
+                        <div class="media-card__meta">
+                            <time class="media-card__date" datetime={item.date_added}>{cardDate(item.date_added)}</time>
+                            <span class="media-card__chip">{capitalize(item.type)}</span>
+                        </div>
+                    </div>
+                </a>
+            </li>
+        ))}
+    </ul>
+</PageLayout>

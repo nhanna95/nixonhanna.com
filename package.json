@@ -1,0 +1,25 @@
+{
+  "name": "nixonhanna.com",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "deploy": "astro build && wrangler deploy",
+    "cf:dev": "astro build && wrangler dev"
+  },
+  "devDependencies": {
+    "astro": "^7.2.9",
+    "wrangler": "^4.127.1",
+    "yaml": "^2.9.0"
+  },
+  "dependencies": {
+    "@astrojs/markdown-remark": "^7.2.4",
+    "@astrojs/svelte": "^9.0.1",
+    "@tailwindcss/vite": "^4.3.3",
+    "svelte": "^5.57.0",
+    "tailwindcss": "^4.3.3"
+  }
+}

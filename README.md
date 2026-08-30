@@ -1,97 +1,83 @@
 # Personal Website & Blog
 
-A Jekyll-powered personal website hosted on GitHub Pages.
+An [Astro](https://astro.build) static site deployed to [Cloudflare Workers](https://developers.cloudflare.com/workers/) (static assets + a small router Worker). Uses [Bun](https://bun.sh) as the package manager/runner, with [Tailwind CSS v4](https://tailwindcss.com) and [Svelte](https://svelte.dev) islands available.
+
+> **Migration note:** This repo was previously a Jekyll site on GitHub Pages. The old Jekyll
+> sources (`_layouts/`, `_includes/`, `_posts/`, `_config.yml`, the root `*.html` pages,
+> `Gemfile*`, `Rakefile`, `sitemap.xml`, `CNAME`) are still present for reference and can be
+> deleted once the Cloudflare deployment is live. The Jekyll build no longer works — its
+> static assets moved to `public/`.
 
 ## Structure
 
-- `_config.yml` - Jekyll configuration
-- `_layouts/` - Page layouts (default, post, page)
-- `_posts/` - Blog posts in Markdown format
-- `index.html`, `about.html`, `contact.html`, `blog.html` - Main pages
-- `styles.css` - Site stylesheet
-- `headshop.jpeg`, `monogram.png` - Assets
-- `CNAME` - Custom domain configuration
+- `src/pages/` — pages (`about.astro` → `/about.html`, matching the old Jekyll URLs)
+- `src/pages/posts/[slug]/` — blog post pages (`/posts/<slug>/`)
+- `src/content/posts/` — blog posts in Markdown; **the filename is the URL slug**
+- `src/layouts/` — `BaseLayout` (site chrome) and `PageLayout` (simple pages)
+- `src/data/` — `media_log.yml` (Media Log page) and `tag_descriptions.yml` (tag tooltips)
+- `public/` — static assets served as-is (styles.css, theme-ui.js, fonts, images, PDFs,
+  and the standalone pages `/meet`, `/feedback`, `/resume`, photo projects)
+- `worker/index.js` — request router: custom `/api/*` endpoints, directory indexes,
+  extensionless fallbacks, and the 404 page, mirroring GitHub Pages behavior so no old URL breaks
+- `wrangler.jsonc` — Cloudflare Workers config
 
-## Local Development
+## Tailwind, Svelte, API endpoints
 
-### Prerequisites
-- Ruby 3.1+ (required for Jekyll 4)
-- Bundler
+- **Tailwind v4** is wired through `@tailwindcss/vite` and imported in `BaseLayout`
+  ([src/styles/tailwind.css](src/styles/tailwind.css)) — **without preflight**, so the existing
+  `public/styles.css` design is untouched. Utility classes work in any template.
+- **Svelte islands**: put components in `src/components/*.svelte` and mount with
+  `<MyComponent client:load />` (see [Counter.svelte](src/components/Counter.svelte) for an
+  example). Pages without islands ship zero JS.
+- **Custom endpoints**: add handlers to the `apiRoutes` table in
+  [worker/index.js](worker/index.js) (`'GET /api/health'` is a working example). `/api/*`
+  never collides with static assets, so those requests always reach the Worker.
+- Markdown uses the classic remark pipeline (`@astrojs/markdown-remark`, opt-in since
+  Astro 7) so footnote markup keeps matching the site CSS.
 
-### Setup
+## Writing a post
+
+Add `src/content/posts/my-post-slug.md`:
+
+```markdown
+---
+title: "My Post Title"
+date: 2026-09-01
+tags: [Reflections]          # optional
+substack: https://…          # optional "also on Substack" callout
+updated: 2026-09-05          # optional
+subtitle: "…"                # optional
+hide_feedback: true          # optional, hides the feedback footer line
+---
+
+Post body in Markdown (GFM + footnotes supported).
+```
+
+It publishes at `/posts/my-post-slug/` and appears on the blog page and sitemap automatically.
+
+## Local development
+
 ```bash
-# Install dependencies (may require updating Ruby version)
-bundle install
-
-# Run Jekyll server (preferred; forces UTF-8 encoding)
-rake serve
-
-# Or run Jekyll directly
-bundle exec jekyll serve
-
-# Site will be available at http://localhost:4000
+bun install
+bun run dev        # Astro dev server at http://localhost:4321
+bun run cf:dev     # production build served by wrangler dev (tests the Worker routing)
 ```
 
-**Note**: The `Rakefile` sets `RUBYOPT='-Eutf-8:utf-8'` before invoking Jekyll. This works around a UTF-8 encoding crash in the `jekyll-sass-converter 1.5.2` shipped by `github-pages` when the shell locale is `C` / US-ASCII. If you prefer `bundle exec jekyll serve` directly, either set `LANG=en_US.UTF-8` in your shell or use the rake tasks (`rake build`, `rake serve`, `rake clean`).
+## Deploy
 
-**Note**: If you have an older Ruby version (< 3.1), you can either:
-1. Use Ruby version manager (rbenv, rvm) to install Ruby 3.1+
-2. Skip local development and use GitHub Actions to build the site automatically
+One-time setup: `bunx wrangler login`, and make sure the `nixonhanna.com` zone is on the
+Cloudflare account (the custom-domain routes in `wrangler.jsonc` attach automatically on
+deploy).
 
-## Adding New Blog Posts
-
-See **[BLOG_POSTS.md](BLOG_POSTS.md)** for a comprehensive guide on creating blog posts, including:
-- Step-by-step instructions
-- Front matter configuration (required and optional fields)
-- Complete Markdown syntax reference with examples
-- Tips and best practices
-- Troubleshooting common issues
-
-Quick start:
-1. Create a new Markdown file in `_posts/` with format: `YYYY-MM-DD-slug.md`
-2. Add front matter with `layout: post`, `title`, `date`, and optional `tags` and `updated`
-3. Write your content in Markdown below the front matter
-
-## Deploying to GitHub Pages
-
-This repository is configured for automatic deployment via GitHub Actions:
-
-1. Push your code to the `main` branch
-2. GitHub Actions will build and deploy your site
-3. Your site will be available at `https://yourusername.github.io/repo-name`
-
-**Note**: This site uses a custom domain (`nixonhanna.com`). The `url` and `baseurl` in `_config.yml` are configured accordingly.
-
-## Features
-
-- **Responsive Design**: Adapts to mobile, tablet, and desktop
-- **Dynamic Blog Listing**: Automatically generates post list with tags, dates, and read times
-- **Tag Filtering**: Filter posts by tags on the blog page
-- **Search**: Client-side search for blog posts
-- **Markdown Support**: Write posts in Markdown
-
-## Customization
-
-### Changing the Theme Colors
-Edit CSS variables in `styles.css`:
-- `--sidebar-bg`: Sidebar background color
-- `--brand`: Brand color for name
-- `--link`: Link color
-- Other design tokens
-
-### Adding Pages
-Create new HTML files in the root directory with front matter:
-```yaml
----
-layout: page
-title: Your Page Title
-permalink: /your-page/
----
+```bash
+bun run deploy     # astro build && wrangler deploy
 ```
 
-### Modifying Layouts
-Edit files in `_layouts/`:
-- `default.html`: Base layout with sidebar
-- `page.html`: Standard page layout
-- `post.html`: Blog post layout
+### Cutover from GitHub Pages
 
+1. `npm run deploy` to Cloudflare and verify at the workers.dev URL.
+2. Move `nixonhanna.com` DNS to the Cloudflare zone (the custom domain route takes over).
+3. Delete the leftover Jekyll files and disable the GitHub Pages site.
+
+**Until DNS is moved, don't push a commit that breaks GitHub Pages** — the live site still
+builds from this repo's main branch.

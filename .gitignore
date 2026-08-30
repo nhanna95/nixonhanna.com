@@ -7,3 +7,8 @@ vendor/bundle/
 vendor/cache/
 .DS_Store
 .cursor/
+# Astro / Node
+node_modules/
+dist/
+.astro/
+.wrangler/

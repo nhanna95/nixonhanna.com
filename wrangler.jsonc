@@ -1,0 +1,25 @@
+// Cloudflare Workers config: static assets + a small router Worker that keeps
+// the Jekyll-era URLs (/about.html, /posts/<slug>/, /meet …) serving exactly
+// as GitHub Pages did — no redirect rewriting of .html URLs.
+// Deploy with: npm run deploy (runs astro build && wrangler deploy)
+{
+    "$schema": "node_modules/wrangler/config-schema.json",
+    "name": "nixonhanna-com",
+    // Preview URL at https://nixonhanna-com.<account>.workers.dev — optionally set to
+    // false after the custom domain is live to avoid a duplicate public URL.
+    "workers_dev": true,
+    "main": "worker/index.js",
+    "compatibility_date": "2026-08-29",
+    "assets": {
+        "directory": "./dist",
+        "binding": "ASSETS",
+        // Exact matches only; worker/index.js handles directory indexes,
+        // extensionless fallbacks, and the 404 page.
+        "html_handling": "none",
+        "not_found_handling": "none"
+    },
+    "routes": [
+        { "pattern": "nixonhanna.com", "custom_domain": true },
+        { "pattern": "www.nixonhanna.com", "custom_domain": true }
+    ]
+}

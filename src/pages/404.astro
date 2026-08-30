@@ -1,0 +1,21 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Page Not Found" path="/404.html">
+    <h1 class="h1">404</h1>
+
+    <p>Sorry, the page you're looking for doesn't exist.</p>
+
+    <p>You might be looking for:</p>
+
+    <ul>
+        <li><a href="/meet" data-turbo="false">/meet</a> — Schedule a meeting</li>
+        <li><a href="/feedback" data-turbo="false">/feedback</a> — Anonymous feedback</li>
+        <li><a href="/resume" data-turbo="false">/resume</a> — View my resume</li>
+    </ul>
+
+    <p>For other pages, use the sidemenu to navigate.</p>
+
+    <p><a href="/" class="button">Go Home</a></p>
+</BaseLayout>

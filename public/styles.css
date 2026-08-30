@@ -2730,3 +2730,48 @@ sup[id^="fnref"] a.footnote:hover {
 .archive-list>li>p {
     margin-top: 0.45rem;
 }
+/* ====== Footnotes (remark-gfm markup compatibility) ======
+   Astro/remark renders footnotes with data-attributes instead of kramdown's
+   .footnote/.reversefootnote classes. Mirror the kramdown rules above. */
+sup:has(> a[data-footnote-ref]) {
+    font-size: 0.75em;
+    line-height: 0;
+    vertical-align: super;
+    position: relative;
+    top: -0.5em;
+}
+
+a[data-footnote-ref] {
+    text-decoration: none;
+    color: var(--link);
+    font-weight: 500;
+    padding: 0 0.1em;
+    border-radius: 2px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+a[data-footnote-ref]:hover {
+    color: var(--link-hover);
+    background-color: rgba(10, 164, 0, 0.1);
+}
+
+[data-theme="dark"] a[data-footnote-ref]:hover {
+    background-color: rgba(74, 222, 128, 0.15);
+}
+
+.footnotes li a[data-footnote-backref] {
+    text-decoration: none;
+    color: var(--link);
+    margin-left: 0.25em;
+    font-size: 0.9em;
+}
+
+.footnotes li a[data-footnote-backref]:hover {
+    color: var(--link-hover);
+    text-decoration: underline;
+}
+
+/* The injected "Footnotes" heading is redundant — .footnotes::before draws the label. */
+.footnotes .footnote-label-hidden {
+    display: none;
+}

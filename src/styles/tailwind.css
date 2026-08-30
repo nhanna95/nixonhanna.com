@@ -1,0 +1,8 @@
+/* Tailwind v4, WITHOUT preflight: the site's look is defined by public/styles.css,
+   and preflight's reset would restyle it. Utilities and theme tokens are available
+   everywhere; if the site is ever rebuilt on Tailwind proper, switch this to the
+   standard `@import "tailwindcss";`. */
+@layer theme, base, components, utilities;
+
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities);

@@ -1,0 +1,20 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+    title: string;
+    path: string;
+    description?: string;
+    showHr?: boolean;
+}
+
+const { title, path, description, showHr = true } = Astro.props;
+---
+
+<BaseLayout title={title} path={path} description={description} mainAriaLabelledby="page-heading">
+    <h1 class="h1" id="page-heading">{title}</h1>
+
+    <slot />
+
+    {showHr && <hr class="rule" />}
+</BaseLayout>
