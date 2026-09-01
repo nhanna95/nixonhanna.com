@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trends in AI: Training Costs and Diffusion Speed</title>
+<meta name="description" content="Interactive visualization of AI training costs and diffusion speed, updated with data through August 2026.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,450;9..144,600&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f5f7f7; --ink:#182530; --ink-soft:#4b5d6a; --grid:#dde4e5;
+    --cost:#b4690e; --cost-soft:#f3e4cc;
+    --access:#0e7c86; --access-soft:#d3e8ea;
+    --card:#ffffff; --maxw:58rem;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font-family:"Public Sans",system-ui,sans-serif;font-size:1rem;line-height:1.6}
+  h1,h2{font-family:"Fraunces",Georgia,serif;font-weight:600;letter-spacing:-0.01em;line-height:1.15}
+  a{color:var(--access);text-underline-offset:2px}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 1.25rem}
+
+  header{padding:3.5rem 0 2rem}
+  h1{font-size:clamp(1.7rem,4.5vw,2.6rem)}
+  .standfirst{margin-top:.9rem;color:var(--ink-soft);max-width:44rem}
+  .updated{margin-top:.6rem;font-size:.85rem;color:var(--ink-soft)}
+
+  .forces{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.75rem 0 0}
+  .force{background:var(--card);border:1px solid var(--grid);border-radius:10px;padding:1.1rem 1.2rem}
+  .force h3{font-size:1rem;font-weight:600;margin-bottom:.35rem;display:flex;align-items:center;gap:.5rem}
+  .force p{font-size:.92rem;color:var(--ink-soft)}
+  .dot{width:.65rem;height:.65rem;border-radius:50%;display:inline-block}
+
+  section{padding:2.25rem 0}
+  .panel{background:var(--card);border:1px solid var(--grid);border-radius:12px;padding:1.5rem 1.4rem 1.1rem}
+  .panel-head{display:flex;flex-wrap:wrap;gap:1rem;justify-content:space-between;align-items:flex-start;margin-bottom:.4rem}
+  .panel h2{font-size:1.35rem}
+  .panel .sub{font-size:.9rem;color:var(--ink-soft);margin-top:.25rem}
+  .controls{display:flex;flex-wrap:wrap;gap:.75rem;align-items:center}
+  select{
+    font:inherit;font-size:.9rem;color:var(--ink);background:var(--paper);
+    border:1px solid var(--grid);border-radius:8px;padding:.45rem .6rem;cursor:pointer;
+  }
+  select:focus-visible{outline:2px solid var(--access);outline-offset:1px}
+  .toggle{display:inline-flex;border:1px solid var(--grid);border-radius:99px;overflow:hidden}
+  .toggle button{
+    font:inherit;font-size:.85rem;padding:.4rem .85rem;border:none;background:transparent;
+    color:var(--ink-soft);cursor:pointer;
+  }
+  .toggle button[aria-pressed="true"]{background:var(--ink);color:#fff}
+  .toggle button:focus-visible{outline:2px solid var(--access);outline-offset:-2px}
+
+  .chart-box{position:relative;margin-top:.75rem}
+  .chart-box svg{display:block;width:100%;height:auto}
+  .axis text{font-size:11.5px;fill:var(--ink-soft);font-family:"Public Sans"}
+  .gridline{stroke:var(--grid);stroke-width:1}
+  .guide-label{font-size:10.5px;fill:var(--ink-soft)}
+  .datapt{cursor:pointer}
+  .tooltip{
+    position:absolute;pointer-events:none;opacity:0;transition:opacity .12s;
+    background:var(--ink);color:#fff;font-size:.82rem;line-height:1.45;
+    padding:.55rem .75rem;border-radius:6px;max-width:250px;z-index:5;
+  }
+  .tooltip strong{font-weight:600}
+  .tooltip .lowconf{color:#c9d5dc;font-size:.76rem;display:block;margin-top:.15rem}
+  .src{font-size:.82rem;color:var(--ink-soft);margin-top:.6rem}
+
+  .explainer{margin-top:1.25rem;border-radius:10px;padding:1.25rem 1.3rem}
+  .explainer.warm{background:var(--cost-soft)}
+  .explainer.cool{background:var(--access-soft)}
+  .explainer h3{font-family:"Fraunces";font-size:1.15rem;font-weight:600;margin-bottom:.9rem}
+  .rates{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:1rem}
+  .rate b{font-family:"Fraunces";font-size:1.35rem;font-weight:600;display:block}
+  .rate .what{font-weight:600;font-size:.92rem}
+  .rate .why{font-size:.84rem;color:var(--ink-soft)}
+  .combined{margin-top:1rem;padding-top:.9rem;border-top:1px solid rgba(24,37,48,.12);font-size:.95rem}
+
+  footer{padding:2rem 0 4rem;border-top:1px solid var(--grid);margin-top:1rem}
+  footer h2{font-size:1.2rem;margin-bottom:.75rem}
+  footer ul{margin-left:1.2rem;font-size:.88rem;color:var(--ink-soft)}
+  footer li{margin-bottom:.4rem}
+  .note{font-size:.85rem;color:var(--ink-soft);margin-top:1.25rem;max-width:44rem}
+
+  @media (max-width:640px){
+    .forces{grid-template-columns:1fr}
+    .panel-head{flex-direction:column}
+  }
+
+  /* interaction states (crosshair, snapping, keyboard focus) */
+  .chart-box svg{touch-action:pan-y;cursor:crosshair;border-radius:8px;-webkit-tap-highlight-color:transparent}
+  .chart-box svg:focus{outline:none}
+  .chart-box svg:focus-visible{outline:2px solid var(--access);outline-offset:3px}
+  .points .datapt{pointer-events:none;transition:opacity .15s,r .15s}
+  .points.dimmed .datapt{opacity:.3}
+  .points.dimmed .datapt.active{opacity:1}
+  .hover-layer line{stroke-width:1.2;stroke-dasharray:3 4;opacity:.8}
+  .chip rect{fill:var(--ink)}
+  .chip text{font-size:11px;font-weight:600;fill:#fff;font-family:"Public Sans",system-ui,sans-serif}
+  .tooltip .tier{display:block;margin-top:.15rem;color:#9fd3d8}
+  .kbd-hint{font-size:.78rem;color:var(--ink-soft);margin-top:.4rem}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  @media (prefers-reduced-motion:reduce){.points .datapt,.tooltip{transition:none}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <h1>Trends in AI: Training Costs and Diffusion Speed</h1>
+    <p class="standfirst">Explore trends in AI training costs and diffusion speed through the combination of exponentially increasing frontier model costs and rapidly decreasing replication costs for existing capabilities.</p>
+    <p class="updated">Data through August 2026. All figures are third-party estimates; the newest models are order-of-magnitude estimates only.</p>
+    <div class="forces">
+      <div class="force">
+        <h3><span class="dot" style="background:var(--cost)"></span>Frontier growth</h3>
+        <p>Training a state-of-the-art AI model requires exponentially more computational resources each year.</p>
+      </div>
+      <div class="force">
+        <h3><span class="dot" style="background:var(--access)"></span>Capability diffusion</h3>
+        <p>Meanwhile, achieving any given capability becomes exponentially cheaper through hardware improvements, algorithmic progress and more high-quality data.</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section>
+  <div class="wrap">
+    <div class="panel">
+      <div class="panel-head">
+        <div>
+          <h2>Frontier Model Training Trends</h2>
+          <p class="sub">Resources required to train the most capable AI models over time</p>
+        </div>
+        <div class="controls">
+          <select id="metric1" aria-label="Metric for frontier chart">
+            <option value="cost">Training Compute Spend</option>
+            <option value="flop">Training Compute (FLOP)</option>
+            <option value="energy">Energy Usage</option>
+          </select>
+          <div class="toggle" role="group" aria-label="Scale for frontier chart">
+            <button id="lin1" aria-pressed="false">Linear</button>
+            <button id="log1" aria-pressed="true">Logarithmic</button>
+          </div>
+        </div>
+      </div>
+      <div class="chart-box" id="chart1"></div>
+      <p class="kbd-hint" id="hint1">Hover or tap a point for details. Keyboard: Tab to the chart, then ← → to step through models, Esc to clear.</p>
+      <p class="src">Estimates: Epoch AI (models &amp; training-cost data), Stanford AI Index, company disclosures. Hollow points are order-of-magnitude estimates with no disclosed figures.</p>
+
+      <div class="explainer warm">
+        <h3>Why frontier AI models get exponentially more expensive</h3>
+        <div class="rates">
+          <div class="rate"><b>2.4× / year</b><span class="what">Training compute spend</span><span class="why">Bigger clusters running for longer</span></div>
+          <div class="rate"><b>5× / year</b><span class="what">Training compute (FLOP)</span><span class="why">Larger models + more training data</span></div>
+          <div class="rate"><b>~3× / year</b><span class="what">Energy usage</span><span class="why">Gigawatt-scale data centers</span></div>
+        </div>
+        <div class="combined">Each new frontier model needs to be significantly more capable than the last, requiring dramatically more resources. On current trends, the largest training runs pass <strong>$1 billion around 2026–27</strong> — and the race has widened beyond single runs to infrastructure: OpenAI alone plans roughly $50B of compute spending in 2026.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="panel">
+      <div class="panel-head">
+        <div>
+          <h2>Capability Diffusion Explorer</h2>
+          <p class="sub">Track how today's cutting-edge AI becomes dramatically cheaper to recreate each year</p>
+        </div>
+        <div class="controls">
+          <select id="model2" aria-label="Model to project"></select>
+          <select id="metric2" aria-label="Metric for diffusion chart">
+            <option value="cost">Cost to Recreate</option>
+            <option value="flop">Compute to Recreate (FLOP)</option>
+          </select>
+          <div class="toggle" role="group" aria-label="Scale for diffusion chart">
+            <button id="lin2" aria-pressed="false">Linear</button>
+            <button id="log2" aria-pressed="true">Logarithmic</button>
+          </div>
+        </div>
+      </div>
+      <div class="chart-box" id="chart2"></div>
+      <p class="kbd-hint" id="hint2">Hover or drag along the curve for a month-by-month readout. Keyboard: ← → to step a month, Shift + ← → a year, Esc to clear.</p>
+      <p class="src">Projection: recreating the model from scratch gets ~4× cheaper per year (hardware price-performance × algorithmic efficiency). Dashed guides show who can afford it.</p>
+
+      <div class="explainer cool">
+        <h3>Why AI gets ~4× cheaper each year</h3>
+        <div class="rates">
+          <div class="rate"><b>1.4× / year</b><span class="what">Better hardware</span><span class="why">Computing power per dollar keeps improving — Moore's Law plus chip efficiency gains</span></div>
+          <div class="rate"><b>3× / year</b><span class="what">Smarter algorithms</span><span class="why">The same capability needs less computation — better training methods, better data, more "thinking" at inference time</span></div>
+        </div>
+        <div class="combined">1.4× &nbsp;×&nbsp; 3× &nbsp;≈&nbsp; <strong>4× more affordable every year</strong>. This is why capabilities don't stay exclusive: a run that only a tech giant could fund becomes a startup project within a few years — and why Epoch finds frontier-level performance typically reaches consumer hardware within about a year.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <h2>Sources and notes</h2>
+    <ul>
+      <li>Epoch AI, <a href="https://epoch.ai/trends">Trends in Artificial Intelligence</a> — compute, cost, and capability trends (live dashboard).</li>
+      <li>Epoch AI, <a href="https://epoch.ai/data/ai-models">Data on AI models</a> — training compute and cost estimates per model.</li>
+      <li>Cottier et al., <a href="https://arxiv.org/abs/2405.21015">The rising costs of training frontier AI models</a> (2024).</li>
+      <li>Pilz, Heim &amp; Brown, <a href="https://arxiv.org/abs/2311.15377">Increased Compute Efficiency and the Diffusion of AI Capabilities</a> (2023) — the framework behind the diffusion projection.</li>
+      <li>Epoch AI, <a href="https://epoch.ai/gradient-updates/frontier-labs-dont-use-most-ai-compute">How much AI compute do frontier labs use?</a> (May 2026).</li>
+    </ul>
+    <p class="note">This page is an updated rebuild of Dewi Erwan's original "Trends in AI: Training Costs and Diffusion Speed," refreshed with the 2025–26 model generation. Cost figures use compute cost per training run (hardware-time or cloud-rental basis, which differ ~2×); they exclude staff and experiments. Points for models released after mid-2025 are order-of-magnitude estimates — no developer has disclosed figures. The 4×/year diffusion rate is a long-run average; the true rate varies by capability and has plausibly been faster in the reasoning-model era.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------------- data ---------------- */
+  /* cost: USD per training run · flop: training FLOP · energy: GWh · lc: low-confidence */
+  const MODELS = [
+    {name:"GPT-3",           dev:"OpenAI",    date:2020.45, label:"2020-06", cost:4.6e6,  flop:3.1e23, energy:1.3},
+    {name:"GPT-3.5",         dev:"OpenAI",    date:2022.2,  label:"2022-03", cost:6e6,    flop:2.6e24, energy:3,   lc:true},
+    {name:"GPT-4",           dev:"OpenAI",    date:2023.2,  label:"2023-03", cost:5e7,    flop:2.1e25, energy:50},
+    {name:"Gemini 1.0 Ultra",dev:"Google",    date:2023.95, label:"2023-12", cost:1.9e8,  flop:5e25,   energy:90},
+    {name:"Gemini 1.5 Pro",  dev:"Google",    date:2024.15, label:"2024-02", cost:3e7,    flop:1.6e25, energy:25,  lc:true},
+    {name:"Llama 3.1-405B",  dev:"Meta",      date:2024.55, label:"2024-07", cost:6e7,    flop:3.8e25, energy:40},
+    {name:"Grok-3",          dev:"xAI",       date:2025.12, label:"2025-02", cost:2.9e8,  flop:4.6e26, energy:200, lc:true},
+    {name:"Claude Opus 4",   dev:"Anthropic", date:2025.4,  label:"2025-05", cost:1.5e8,  flop:1.5e26, energy:100, lc:true},
+    {name:"Grok-4",          dev:"xAI",       date:2025.5,  label:"2025-07", cost:3.9e8,  flop:5e26,   energy:250, lc:true},
+    {name:"Gemini 3",        dev:"Google",    date:2025.9,  label:"2025-11", cost:6e8,    flop:8e26,   energy:400, oom:true},
+    {name:"GPT-5.2",         dev:"OpenAI",    date:2026.0,  label:"2025-12", cost:7e8,    flop:8e26,   energy:400, oom:true},
+    {name:"Claude Opus 4.6", dev:"Anthropic", date:2026.15, label:"2026-02", cost:8e8,    flop:1e27,   energy:500, oom:true}
+  ];
+
+  const METRICS = {
+    cost:  {label:"Training Compute Spend (USD)", unit:"$",    fmt:fmtUSD},
+    flop:  {label:"Training Compute (FLOP)",      unit:"FLOP", fmt:fmtFLOP},
+    energy:{label:"Energy Usage (GWh)",           unit:"GWh",  fmt:v=>fmtNum(v)+" GWh"}
+  };
+
+  const HW_RATE=1.4, ALG_RATE=3, COMBINED=HW_RATE*ALG_RATE; /* ≈4.2, presented as ~4× */
+
+  /* ---------------- formatters ---------------- */
+  function fmtNum(v){
+    if(v>=1000) return (v/1000).toFixed(v>=10000?0:1)+"K";
+    if(v>=10) return Math.round(v).toString();
+    if(v>=1) return v.toFixed(1).replace(/\.0$/,"");
+    return v.toPrecision(2);
+  }
+  function fmtUSD(v){
+    if(v>=1e9) return "$"+trim(v/1e9)+"B";
+    if(v>=1e6) return "$"+trim(v/1e6)+"M";
+    if(v>=1e3) return "$"+trim(v/1e3)+"K";
+    return "$"+trim(v);
+  }
+  function trim(x){ return (x>=100?Math.round(x):x>=10?x.toFixed(0):x.toFixed(1).replace(/\.0$/,"")).toString(); }
+  function fmtFLOP(v){
+    const p=Math.floor(Math.log10(v));
+    const m=v/Math.pow(10,p);
+    const mm=m>=9.5?1:Math.round(m*10)/10;
+    const pp=m>=9.5?p+1:p;
+    return (mm===1?"":trim(mm)+"×")+"10"+sup(pp)+" FLOP";
+  }
+  function sup(n){
+    const map={"0":"⁰","1":"¹","2":"²","3":"³","4":"⁴","5":"⁵","6":"⁶","7":"⁷","8":"⁸","9":"⁹"};
+    return String(n).split("").map(c=>map[c]||c).join("");
+  }
+
+  /* ---------------- motion helpers ---------------- */
+  const W=880,H=440,M={t:18,r:26,b:46,l:76};
+  const SVG_NS="http://www.w3.org/2000/svg";
+  const DURATION=300;
+  const motionQuery=window.matchMedia?window.matchMedia("(prefers-reduced-motion: reduce)"):null;
+  const reduceMotion=()=>!!(motionQuery&&motionQuery.matches);
+  const ease=t=>t<0.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2; /* ease-in-out cubic */
+  const lerp=(a,b,t)=>a+(b-a)*t;
+  const clamp=(v,lo,hi)=>Math.min(Math.max(v,lo),hi);
+  const MONTHS=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  function fmtDate(t){ let y=Math.floor(t), mo=Math.round((t-y)*12); if(mo===12){y++;mo=0;} return MONTHS[mo]+" "+y; }
+  function labelDate(label){ const p=label.split("-"); return MONTHS[+p[1]-1]+" "+p[0]; }
+  function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+  function svgEl(tag,attrs){ const el=document.createElementNS(SVG_NS,tag); for(const k in attrs) el.setAttribute(k,attrs[k]); return el; }
+  function pathD(pts){ return pts.length?"M"+pts.map(p=>p[0].toFixed(1)+" "+p[1].toFixed(1)).join(" L"):""; }
+  /* resample a polyline to n vertices so two lines of different length can be tweened index-by-index */
+  function resample(pts,n){
+    if(!pts.length||n===0) return null;
+    if(pts.length===n) return pts;
+    const out=[]; for(let i=0;i<n;i++){
+      const u=n===1?0:i/(n-1)*(pts.length-1), j=Math.floor(u), f=u-j, a=pts[j], b=pts[Math.min(j+1,pts.length-1)];
+      out.push([lerp(a[0],b[0],f),lerp(a[1],b[1],f)]);
+    }
+    return out;
+  }
+  /* small labelled chip (rect + text) used on the crosshair axes */
+  function chip(text,x,y,anchor){
+    const w=text.length*6.6+14, h=18;
+    let rx=anchor==="end"?x-w:anchor==="middle"?x-w/2:x;
+    rx=clamp(rx,2,W-w-2);
+    return '<g class="chip"><rect x="'+rx.toFixed(1)+'" y="'+(y-h/2).toFixed(1)+'" width="'+w.toFixed(1)+'" height="'+h+'" rx="4"/>'+
+           '<text x="'+(rx+w/2).toFixed(1)+'" y="'+(y+4).toFixed(1)+'" text-anchor="middle">'+esc(text)+'</text></g>';
+  }
+
+  /* ---------------- generic chart renderer (persistent SVG, tweened updates) ---------------- */
+  function axisMarkup(cfg,X,Y){
+    const {xmin,xmax,ymin,ymax,logScale}=cfg;
+    let s="";
+    if(logScale){
+      for(let p=Math.ceil(Math.log10(ymin));p<=Math.floor(Math.log10(ymax));p++){
+        const v=Math.pow(10,p);
+        s+='<line class="gridline" x1="'+M.l+'" x2="'+(W-M.r)+'" y1="'+Y(v)+'" y2="'+Y(v)+'"/>';
+        s+='<text x="'+(M.l-8)+'" y="'+(Y(v)+4)+'" text-anchor="end">'+cfg.fmtY(v)+'</text>';
+      }
+    } else {
+      const ticks=5;
+      for(let i=0;i<=ticks;i++){
+        const v=ymin+(ymax-ymin)*i/ticks;
+        s+='<line class="gridline" x1="'+M.l+'" x2="'+(W-M.r)+'" y1="'+Y(v)+'" y2="'+Y(v)+'"/>';
+        s+='<text x="'+(M.l-8)+'" y="'+(Y(v)+4)+'" text-anchor="end">'+(v===0?"0":cfg.fmtY(v))+'</text>';
+      }
+    }
+    for(let yr=Math.ceil(xmin);yr<=Math.floor(xmax);yr++){
+      s+='<text x="'+X(yr)+'" y="'+(H-M.b+22)+'" text-anchor="middle">'+yr+'</text>';
+    }
+    s+='<text x="'+((M.l+W-M.r)/2)+'" y="'+(H-6)+'" text-anchor="middle">Year</text>';
+    s+='<text transform="rotate(-90)" x="'+(-(H-M.b+M.t)/2)+'" y="16" text-anchor="middle">'+esc(cfg.yLabel)+'</text>';
+    return s;
+  }
+  function guideMarkup(cfg,X,Y){
+    let s="";
+    (cfg.guides||[]).forEach(g=>{
+      if(g.v<cfg.ymin||g.v>cfg.ymax) return;
+      s+='<line x1="'+M.l+'" x2="'+(W-M.r)+'" y1="'+Y(g.v)+'" y2="'+Y(g.v)+'" stroke="'+cfg.color+'" stroke-width="1" stroke-dasharray="2 5" opacity="0.55"/>';
+      s+='<text class="guide-label" x="'+(W-M.r-4)+'" y="'+(Y(g.v)-5)+'" text-anchor="end">'+esc(g.label)+'</text>';
+    });
+    return s;
+  }
+
+  function createChart(boxId,hintId){
+    const box=document.getElementById(boxId);
+    box.innerHTML="";
+    const svg=svgEl("svg",{viewBox:"0 0 "+W+" "+H,tabindex:"0",role:"group","aria-describedby":hintId});
+    const gAxis=svgEl("g",{class:"axis"});
+    const gGuides=svgEl("g",{class:"guides"});
+    const path=svgEl("path",{fill:"none","stroke-width":"2.2","stroke-dasharray":"7 5",opacity:"0.75"});
+    const gPts=svgEl("g",{class:"points"});
+    const gHover=svgEl("g",{class:"hover-layer","aria-hidden":"true"});
+    svg.appendChild(gAxis); svg.appendChild(gGuides); svg.appendChild(path); svg.appendChild(gPts); svg.appendChild(gHover);
+    box.appendChild(svg);
+    const tip=document.createElement("div"); tip.className="tooltip"; tip.setAttribute("aria-hidden","true"); box.appendChild(tip);
+    const live=document.createElement("div"); live.className="sr-only"; live.setAttribute("aria-live","polite"); box.appendChild(live);
+
+    const chart={box,svg,tip,live,gPts,gHover,cfg:null,X:null,Y:null,linePts:[],pts:new Map(),anim:null,first:true,onUpdated:null};
+
+    chart.toLocal=(clientX,clientY)=>{
+      const r=svg.getBoundingClientRect();
+      const sx=r.width?W/r.width:1, sy=r.height?H/r.height:1;
+      return [(clientX-r.left)*sx,(clientY-r.top)*sy];
+    };
+    chart.placeTip=(vx,vy,html)=>{
+      tip.innerHTML=html; tip.style.opacity=1;
+      const r=svg.getBoundingClientRect(), bb=box.getBoundingClientRect();
+      const k=r.width?r.width/W:1;
+      const px=r.left-bb.left+vx*k, py=r.top-bb.top+vy*k;
+      let left=px+14, top=py-12;
+      if(bb.width&&left>bb.width-260) left=px-258;
+      if(top<0) top=py+18;
+      tip.style.left=left+"px"; tip.style.top=top+"px";
+    };
+    chart.hideTip=()=>{ tip.style.opacity=0; };
+    chart.clearHover=()=>{ gHover.innerHTML=""; gPts.classList.remove("dimmed");
+      chart.pts.forEach(rec=>{ rec.el.classList.remove("active"); rec.el.setAttribute("r","6.5"); }); chart.hideTip(); };
+
+    chart.update=function(cfg){
+      const {xmin,xmax,ymin,ymax,logScale}=cfg;
+      const X=v=>M.l+(v-xmin)/(xmax-xmin)*(W-M.l-M.r);
+      const Y=v=>{
+        if(logScale){ const a=Math.log10(ymin),b=Math.log10(ymax); return H-M.b-(Math.log10(v)-a)/(b-a)*(H-M.t-M.b); }
+        return H-M.b-(v-ymin)/(ymax-ymin)*(H-M.t-M.b);
+      };
+      chart.cfg=cfg; chart.X=X; chart.Y=Y;
+      svg.setAttribute("aria-label",cfg.aria);
+      chart.clearHover();
+      /* axes and guides are structural — swapped immediately, no tween */
+      gAxis.innerHTML=axisMarkup(cfg,X,Y);
+      gGuides.innerHTML=guideMarkup(cfg,X,Y);
+      path.setAttribute("stroke",cfg.color);
+      /* line: tween old polyline → new polyline (resampled to matching vertex count) */
+      const target=(cfg.line||[]).map(p=>[X(p[0]),Y(clamp(p[1],ymin,ymax))]);
+      const from=resample(chart.linePts,target.length)||target;
+      /* points: keyed, so existing ones move, new ones fade in, removed ones fade out */
+      const seen=new Set(), tweens=[];
+      cfg.points.forEach((d,i)=>{
+        const tx=X(d.x), ty=Y(d.y);
+        let rec=chart.pts.get(d.key);
+        if(!rec){
+          const el=svgEl("circle",{class:"datapt",r:"6.5","stroke-width":"2",cx:tx.toFixed(1),cy:ty.toFixed(1),opacity:"0"});
+          gPts.appendChild(el);
+          rec={el,x:tx,y:ty,op:0}; chart.pts.set(d.key,rec);
+        }
+        rec.d=d; rec.i=i; rec.dead=false;
+        rec.el.setAttribute("fill",d.hollow?"#fff":cfg.color);
+        rec.el.setAttribute("stroke",d.hollow?cfg.color:"#fff");
+        rec.el.dataset.i=i;
+        seen.add(d.key);
+        tweens.push({rec,fx:rec.x,fy:rec.y,fo:rec.op,tx,ty,to:1});
+      });
+      chart.pts.forEach((rec,key)=>{ if(!seen.has(key)){ rec.dead=true; tweens.push({rec,fx:rec.x,fy:rec.y,fo:rec.op,tx:rec.x,ty:rec.y,to:0}); } });
+
+      const apply=t=>{
+        const e=ease(t);
+        chart.linePts=target.map((p,i)=>[lerp(from[i][0],p[0],e),lerp(from[i][1],p[1],e)]);
+        path.setAttribute("d",pathD(chart.linePts));
+        tweens.forEach(o=>{
+          o.rec.x=lerp(o.fx,o.tx,e); o.rec.y=lerp(o.fy,o.ty,e); o.rec.op=lerp(o.fo,o.to,e);
+          o.rec.el.setAttribute("cx",o.rec.x.toFixed(1)); o.rec.el.setAttribute("cy",o.rec.y.toFixed(1));
+          o.rec.el.setAttribute("opacity",o.rec.op.toFixed(3));
+        });
+      };
+      const finish=()=>{
+        apply(1);
+        chart.pts.forEach((rec,key)=>{ if(rec.dead){ rec.el.remove(); chart.pts.delete(key); } });
+        chart.anim=null;
+        if(chart.onUpdated) chart.onUpdated();
+      };
+      if(chart.anim){ cancelAnimationFrame(chart.anim); chart.anim=null; }
+      if(chart.first||reduceMotion()||typeof requestAnimationFrame!=="function"){ chart.first=false; finish(); return; }
+      const t0=performance.now();
+      const step=now=>{
+        const t=Math.min(1,(now-t0)/DURATION);
+        if(t<1){ apply(t); chart.anim=requestAnimationFrame(step); } else finish();
+      };
+      chart.anim=requestAnimationFrame(step);
+    };
+    return chart;
+  }
+
+  /* ---------------- panel 1: frontier trends ---------------- */
+  const state1={metric:"cost",log:true};
+  const chart1=createChart("chart1","hint1");
+  function fitTrend(metric){
+    /* least-squares on log10(y) vs x */
+    const pts=MODELS.map(d=>[d.date,Math.log10(d[metric])]);
+    const n=pts.length;
+    const sx=pts.reduce((a,p)=>a+p[0],0), sy=pts.reduce((a,p)=>a+p[1],0);
+    const sxx=pts.reduce((a,p)=>a+p[0]*p[0],0), sxy=pts.reduce((a,p)=>a+p[0]*p[1],0);
+    const slope=(n*sxy-sx*sy)/(n*sxx-sx*sx), icpt=(sy-slope*sx)/n;
+    return x=>Math.pow(10,icpt+slope*x);
+  }
+  function draw1(){
+    const met=state1.metric, Mt=METRICS[met];
+    const vals=MODELS.map(d=>d[met]);
+    const vmax=Math.max(...vals), vmin=Math.min(...vals);
+    const ymin=state1.log?Math.pow(10,Math.floor(Math.log10(vmin))):0;
+    const ymax=Math.pow(10,Math.ceil(Math.log10(vmax)));
+    const trend=fitTrend(met);
+    const line=[]; for(let x=2020;x<=2027.001;x+=0.25) line.push([x,trend(x)]);
+    chart1.update({
+      xmin:2020,xmax:2028,ymin:ymin,ymax:ymax,logScale:state1.log,
+      color:getCSS("--cost"),
+      yLabel:Mt.label, fmtY:Mt.fmt,
+      aria:"Scatter chart of "+Mt.label+" for frontier models from 2020 to 2026, rising exponentially. Use arrow keys to step through models.",
+      line:line,
+      points:MODELS.map(d=>({
+        key:d.name, x:d.date, y:d[met], hollow:!!d.oom,
+        xText:labelDate(d.label), yText:Mt.fmt(d[met]),
+        tip:"<strong>"+d.name+"</strong> · "+d.dev+" · "+d.label+"<br>"+Mt.label.split(" (")[0]+": "+Mt.fmt(d[met])+
+            (d.oom?'<span class="lowconf">Order-of-magnitude estimate — no disclosed figures</span>':
+             d.lc?'<span class="lowconf">Rough third-party estimate</span>':""),
+        text:d.name+", "+d.dev+", "+labelDate(d.label)+". "+Mt.label.split(" (")[0]+": "+Mt.fmt(d[met])+"."+
+             (d.oom?" Order-of-magnitude estimate, no disclosed figures.":d.lc?" Rough third-party estimate.":"")
+      }))
+    });
+  }
+  /* snap-to-nearest hover, crosshair with axis chips, keyboard cycling */
+  (function attach1(ch){
+    let active=null, held=false, mouseDown=false; /* held = selected via keyboard or touch, survives pointer leave */
+    const order=()=>Array.from(ch.pts.values()).filter(r=>!r.dead).sort((a,b)=>a.d.x-b.d.x);
+    function show(rec,announce){
+      const cfg=ch.cfg, x=rec.x, y=rec.y, d=rec.d;
+      ch.gPts.classList.add("dimmed");
+      ch.pts.forEach(r=>{ r.el.classList.toggle("active",r===rec); r.el.setAttribute("r",r===rec?"9.5":"6.5"); });
+      ch.gPts.appendChild(rec.el); /* bring to front */
+      ch.gHover.innerHTML=
+        '<line x1="'+x.toFixed(1)+'" x2="'+x.toFixed(1)+'" y1="'+y.toFixed(1)+'" y2="'+(H-M.b)+'" stroke="'+cfg.color+'"/>'+
+        '<line x1="'+M.l+'" x2="'+x.toFixed(1)+'" y1="'+y.toFixed(1)+'" y2="'+y.toFixed(1)+'" stroke="'+cfg.color+'"/>'+
+        chip(d.xText,x,H-M.b+11,"middle")+chip(d.yText,M.l-4,y,"end");
+      ch.placeTip(x,y,d.tip);
+      if(announce) ch.live.textContent=d.text;
+      active=rec.d.key;
+    }
+    function clear(){ ch.clearHover(); active=null; held=false; }
+    function nearest(clientX,clientY){
+      const p=ch.toLocal(clientX,clientY); let best=null, bd=Infinity;
+      ch.pts.forEach(r=>{ if(r.dead) return; const dx=r.x-p[0], dy=r.y-p[1], dd=dx*dx+dy*dy; if(dd<bd){bd=dd;best=r;} });
+      return best;
+    }
+    ch.onUpdated=()=>{ if(active!==null){ const r=ch.pts.get(active); if(r&&!r.dead) show(r,false); else clear(); } };
+    ch.svg.addEventListener("pointermove",e=>{ if(ch.anim) return; const r=nearest(e.clientX,e.clientY); if(r) show(r,false); });
+    ch.svg.addEventListener("pointerdown",e=>{
+      if(e.pointerType==="mouse"){ mouseDown=true; return; }
+      const r=nearest(e.clientX,e.clientY); if(r){ show(r,false); held=true; }
+    });
+    ch.svg.addEventListener("pointerleave",()=>{ if(!held) clear(); });
+    ch.svg.addEventListener("focus",()=>{
+      /* keyboard focus pins the selection and announces it; a mouse click just keeps hover behaviour */
+      if(mouseDown){ mouseDown=false; return; }
+      held=true; const list=order(); const r=(active!==null&&ch.pts.get(active))||list[0]; if(r) show(r,true);
+    });
+    ch.svg.addEventListener("blur",clear);
+    ch.svg.addEventListener("keydown",e=>{
+      const list=order(); if(!list.length) return;
+      let i=list.findIndex(r=>r.d.key===active);
+      switch(e.key){
+        case "ArrowRight": case "ArrowUp": i=i<0?0:Math.min(list.length-1,i+1); break;
+        case "ArrowLeft": case "ArrowDown": i=i<0?list.length-1:Math.max(0,i-1); break;
+        case "Home": i=0; break;
+        case "End": i=list.length-1; break;
+        case "Escape": clear(); e.preventDefault(); return;
+        default: return;
+      }
+      e.preventDefault(); held=true; show(list[i],true);
+    });
+  })(chart1);
+
+  /* ---------------- panel 2: diffusion explorer ---------------- */
+  const state2={model:"GPT-4",metric:"cost",log:true,proj:null};
+  const chart2=createChart("chart2","hint2");
+  function tierFor(v){
+    if(v>=1e8) return "above the big-tech guide — frontier-lab scale spending";
+    if(v>=1e6) return "big-tech scale — beyond a well-funded startup";
+    if(v>=1e4) return "within reach of a well-funded startup";
+    return "within a hobbyist budget";
+  }
+  function draw2(){
+    const d=MODELS.find(x=>x.name===state2.model);
+    const met=state2.metric;
+    const rate = met==="cost" ? COMBINED : ALG_RATE; /* FLOP needed falls via algorithms only */
+    const base = d[met];
+    const end=2030;
+    const val=t=>base/Math.pow(rate,t-d.date);
+    const line=[]; for(let t=d.date;t<=end+0.001;t+=1/12) line.push([t,val(t)]);
+    const pts=[{key:"release",x:d.date,y:base,hollow:!!d.oom,
+      tip:"<strong>"+d.name+" at release ("+d.label+")</strong><br>"+(met==="cost"?"Training cost: ":"Training compute: ")+METRICS[met].fmt(base)+
+          (d.oom?'<span class="lowconf">Order-of-magnitude estimate</span>':"")}];
+    for(let yr=Math.ceil(d.date);yr<=end;yr++){
+      if(yr-d.date<0.35) continue;
+      pts.push({key:"y"+yr,x:yr,y:val(yr),
+        tip:"<strong>Recreating "+d.name+" in "+yr+"</strong><br>Projected "+(met==="cost"?"cost":"compute")+": "+METRICS[met].fmt(val(yr))+
+            '<span class="lowconf">Assumes ~'+(met==="cost"?"4":"3")+"×/year efficiency gains continue</span>"});
+    }
+    const ymaxRaw=base*2, yminRaw=val(end)/2;
+    const ymin=state2.log?Math.pow(10,Math.floor(Math.log10(yminRaw))):0;
+    const ymax=Math.pow(10,Math.ceil(Math.log10(ymaxRaw)));
+    const guides = met==="cost" ? [
+      {v:1e8,label:"big-tech scale"},
+      {v:1e6,label:"well-funded startup"},
+      {v:1e4,label:"hobbyist budget"}
+    ]:[];
+    state2.proj={d,met,val,tmin:d.date,tmax:end,ymin,ymax,base};
+    chart2.update({
+      xmin:Math.floor(d.date),xmax:end,ymin:ymin,ymax:ymax,logScale:state2.log,
+      color:getCSS("--access"),
+      yLabel:met==="cost"?"Cost to Recreate (USD)":"Compute to Recreate (FLOP)",
+      fmtY:METRICS[met].fmt,
+      aria:"Projection of the cost to recreate "+d.name+" falling about four times per year through 2030. Use arrow keys to move along the curve by month, shift plus arrow by year.",
+      line:line, points:pts, guides:guides
+    });
+  }
+  /* continuous crosshair that rides the projection curve (hover, drag, touch, keyboard) */
+  (function attach2(ch){
+    let t=null, held=false, dragging=false, mouseDown=false;
+    function readout(tt){
+      const P=state2.proj, d=P.d, met=P.met, v=P.val(tt), atRelease=Math.abs(tt-P.tmin)<1/24;
+      const when=atRelease?labelDate(d.label):fmtDate(tt);
+      const fmt=METRICS[met].fmt;
+      const tier=met==="cost"?tierFor(v):"";
+      let html, text;
+      if(atRelease){
+        html="<strong>"+d.name+" at release ("+d.label+")</strong><br>"+(met==="cost"?"Training cost: ":"Training compute: ")+fmt(P.base)+
+             (tier?'<span class="tier">'+esc(tier)+"</span>":"")+
+             (d.oom?'<span class="lowconf">Order-of-magnitude estimate</span>':"");
+        text=d.name+" at release, "+when+". "+(met==="cost"?"Training cost ":"Training compute ")+fmt(P.base)+"."+(tier?" "+tier+".":"")+(d.oom?" Order-of-magnitude estimate.":"");
+      } else {
+        html="<strong>Recreating "+d.name+" · "+when+"</strong><br>Projected "+(met==="cost"?"cost":"compute")+": "+fmt(v)+
+             (tier?'<span class="tier">'+esc(tier)+"</span>":"")+
+             '<span class="lowconf">Assumes ~'+(met==="cost"?"4":"3")+"×/year efficiency gains continue</span>"+
+             (d.oom?'<span class="lowconf">Base figure is an order-of-magnitude estimate</span>':"");
+        text="Recreating "+d.name+", "+when+". Projected "+(met==="cost"?"cost ":"compute ")+fmt(v)+"."+(tier?" "+tier+".":"")+
+             " Assumes about "+(met==="cost"?"4":"3")+" times per year efficiency gains continue."+(d.oom?" Base figure is an order-of-magnitude estimate.":"");
+      }
+      return {html,text,when,v};
+    }
+    function show(tt,announce){
+      const P=state2.proj, cfg=ch.cfg; if(!P||!cfg) return;
+      t=clamp(tt,P.tmin,P.tmax);
+      const v=P.val(t), x=ch.X(t), y=ch.Y(clamp(v,cfg.ymin,cfg.ymax));
+      const R=readout(t);
+      ch.gHover.innerHTML=
+        '<line x1="'+x.toFixed(1)+'" x2="'+x.toFixed(1)+'" y1="'+y.toFixed(1)+'" y2="'+(H-M.b)+'" stroke="'+cfg.color+'"/>'+
+        '<line x1="'+M.l+'" x2="'+x.toFixed(1)+'" y1="'+y.toFixed(1)+'" y2="'+y.toFixed(1)+'" stroke="'+cfg.color+'"/>'+
+        '<circle cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="7.5" fill="'+cfg.color+'" stroke="#fff" stroke-width="2"/>'+
+        chip(R.when,x,H-M.b+11,"middle")+chip(METRICS[P.met].fmt(v),M.l-4,y,"end");
+      ch.gPts.classList.add("dimmed");
+      ch.placeTip(x,y,R.html);
+      if(announce) ch.live.textContent=R.text;
+    }
+    function clear(){ ch.clearHover(); t=null; held=false; dragging=false; }
+    function tFromEvent(e){ const P=state2.proj, cfg=ch.cfg; const p=ch.toLocal(e.clientX,e.clientY);
+      return cfg.xmin+(p[0]-M.l)/(W-M.l-M.r)*(cfg.xmax-cfg.xmin); }
+    ch.onUpdated=()=>{ if(t!==null) show(t,false); };
+    ch.svg.addEventListener("pointerdown",e=>{
+      dragging=true; if(e.pointerType==="mouse") mouseDown=true; else held=true;
+      if(ch.svg.setPointerCapture){ try{ ch.svg.setPointerCapture(e.pointerId); }catch(_){} }
+      show(tFromEvent(e),false);
+    });
+    ch.svg.addEventListener("pointermove",e=>{
+      if(ch.anim) return;
+      if(e.pointerType!=="mouse"&&!dragging) return; /* touch: only track while the finger is down */
+      show(tFromEvent(e),false);
+    });
+    const endDrag=()=>{ dragging=false; };
+    ch.svg.addEventListener("pointerup",endDrag);
+    ch.svg.addEventListener("pointercancel",()=>{ dragging=false; if(!held) clear(); });
+    ch.svg.addEventListener("pointerleave",()=>{ if(!dragging&&!held) clear(); });
+    ch.svg.addEventListener("focus",()=>{
+      if(mouseDown){ mouseDown=false; return; }
+      held=true; show(t===null?state2.proj.tmin:t,true);
+    });
+    ch.svg.addEventListener("blur",clear);
+    ch.svg.addEventListener("keydown",e=>{
+      const P=state2.proj; if(!P) return;
+      const cur=t===null?P.tmin:t, step=e.shiftKey?1:1/12;
+      let nt;
+      switch(e.key){
+        case "ArrowRight": case "ArrowUp": nt=cur+step; break;
+        case "ArrowLeft": case "ArrowDown": nt=cur-step; break;
+        case "Home": nt=P.tmin; break;
+        case "End": nt=P.tmax; break;
+        case "Escape": clear(); e.preventDefault(); return;
+        default: return;
+      }
+      e.preventDefault(); held=true; show(nt,true);
+    });
+  })(chart2);
+
+  /* ---------------- controls ---------------- */
+  function getCSS(v){ return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
+  function bindToggle(linId,logId,state,redraw){
+    const lin=document.getElementById(linId), log=document.getElementById(logId);
+    function set(isLog){
+      state.log=isLog;
+      lin.setAttribute("aria-pressed",String(!isLog));
+      log.setAttribute("aria-pressed",String(isLog));
+      redraw();
+    }
+    lin.addEventListener("click",()=>set(false));
+    log.addEventListener("click",()=>set(true));
+  }
+  document.getElementById("metric1").addEventListener("change",e=>{state1.metric=e.target.value;draw1();});
+  bindToggle("lin1","log1",state1,draw1);
+
+  const sel=document.getElementById("model2");
+  sel.innerHTML=MODELS.slice().reverse().map(d=>'<option value="'+d.name+'">'+d.name+" — "+d.dev+" · "+d.label+"</option>").join("");
+  sel.value="GPT-4";
+  sel.addEventListener("change",e=>{state2.model=e.target.value;draw2();});
+  document.getElementById("metric2").addEventListener("change",e=>{state2.metric=e.target.value;draw2();});
+  bindToggle("lin2","log2",state2,draw2);
+
+  draw1(); draw2();
+})();
+</script>
+</body>
+</html>
