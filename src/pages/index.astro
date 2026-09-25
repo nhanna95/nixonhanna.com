@@ -16,14 +16,15 @@ const morePosts = posts.length - recentPosts.length;
 
     <div>
         <h1 class="h1">Hello, I'm <a class="h1-name" href="https://letterboxd.com/noxinh/" target="_blank" rel="noopener">Nixon</a>!</h1>
+        {/* Hover (or tap) the quote and it dissolves into the aside; both sit in one grid cell so they wrap identically. */}
+        <div class="epigraph-wrap">
+            <p class="epigraph" tabindex="0"><em>&ldquo;Know all the theories, master all the techniques, but as you touch a human soul, be just another human soul.&rdquo;</em></p>
+            <p class="epigraph-note"><em>Yes, I know Carl Jung never actually said this. I like the saying, though, so I used it anyway.</em></p>
+        </div>
 
         <h2 class="h2">Who</h2>
         <p>Someone who's incredibly interested in the human condition, in all aspects.</p>
         {/* Hover (or tap) the quote and it dissolves into the aside; both sit in one grid cell so they wrap identically. */}
-        <div class="epigraph-wrap">
-            <p class="epigraph" tabindex="0"><em>Know all the theories, master all the techniques, but as you touch a human soul, be just another human soul.</em></p>
-            <p class="epigraph-note"><em>Yes, I know Carl Jung never actually said this. I like the saying, though, so I used it anyway.</em></p>
-        </div>
 
         <h2 class="h2">What</h2>
         <p>An AI safety field-builder passionate about mitigating catastrophic risk from advanced AI and ensuring that AI goes well for all of humanity. Recently, I joined <a href="https://bluedot.org/" target="_blank" rel="noopener">BlueDot</a> as a program manager to try to make the <a href="https://bluedot.org/courses/agi-strategy" target="_blank" rel="noopener">AGI Strategy Course</a> the best introduction to AI safety available anywhere!</p>
@@ -54,7 +55,7 @@ const morePosts = posts.length - recentPosts.length;
     </section>
 
     <section class="note">
-        <h2 class="h2">Elsewhere</h2>
+        <h2 class="h2">You can also find me on...</h2>
         <ul class="link-list">
             <li><a href="https://www.linkedin.com/in/nixon-hanna/" target="_blank" rel="noopener">LinkedIn</a></li>
             <li><a href="https://substack.com/@noxin" target="_blank" rel="noopener">Substack</a></li>

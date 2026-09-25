@@ -1508,7 +1508,8 @@ blockquote p:not(:last-child) {
    Mouse: hover only (a click can't pin it). Keyboard: focus-visible. Touch: tap (focus-within). */
 .epigraph-wrap {
     display: grid;
-    margin: 1rem 0 1.25rem;
+    /* sits directly under the greeting as its subtitle */
+    margin: -.4rem 0 1.8rem;
     /* a tiny hand-drawn asterisk for a cursor, hotspot at its centre */
     cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 20 20'><g fill='none' stroke='%232b241d' stroke-width='2.6' stroke-linecap='round'><path d='M10 2.5c.3 4.6-.2 9.6.2 15'/><path d='M3.4 6.2c4.2 2.2 8.6 5 13.3 7.5'/><path d='M16.4 6.4c-4.6 2.3-9 4.8-13 7.4'/></g></svg>") 6 6, default;
 }
@@ -1517,6 +1518,8 @@ blockquote p:not(:last-child) {
     grid-area: 1 / 1;
     margin: 0;
     color: var(--muted);
+    font-size: 1.12em;
+    line-height: 1.5;
     transition: opacity .3s ease;
 }
 
