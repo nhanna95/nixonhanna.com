@@ -1429,9 +1429,7 @@ hr {
     font: inherit;
     color: var(--link);
     text-decoration: underline;
-    text-decoration-style: dotted;
-    text-underline-offset: .15em;
-    cursor: copy;
+    cursor: pointer;
 }
 
 .copy-text:hover {
