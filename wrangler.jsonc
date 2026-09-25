@@ -31,7 +31,12 @@
             "workers_dev": true,
             "routes": [
                 { "pattern": "nixon.fyi", "custom_domain": true },
-                { "pattern": "www.nixon.fyi", "custom_domain": true }
+                { "pattern": "www.nixon.fyi", "custom_domain": true },
+                // vanity hosts: root serves the blog / contact page (see hostRoots in worker/index.js)
+                { "pattern": "nixon.blog", "custom_domain": true },
+                { "pattern": "www.nixon.blog", "custom_domain": true },
+                { "pattern": "nixon.contact", "custom_domain": true },
+                { "pattern": "www.nixon.contact", "custom_domain": true }
             ]
         }
     }

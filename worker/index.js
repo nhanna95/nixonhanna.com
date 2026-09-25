@@ -12,6 +12,15 @@ const apiRoutes = {
     'GET /api/health': () => Response.json({ ok: true }),
 };
 
+// Vanity hosts: their root serves a specific page from the same build. Every other
+// path (posts, styles, /meet …) works on them exactly as on the main host.
+const hostRoots = {
+    'nixon.blog': '/blog.html',
+    'www.nixon.blog': '/blog.html',
+    'nixon.contact': '/contact.html',
+    'www.nixon.contact': '/contact.html',
+};
+
 export default {
     async fetch(request, env) {
         const url = new URL(request.url);
@@ -21,6 +30,11 @@ export default {
             const handler = apiRoutes[`${request.method} ${pathname}`];
             if (handler) return handler(request, env, url);
             return Response.json({ error: 'not found' }, { status: 404 });
+        }
+
+        if (pathname === '/' && hostRoots[url.hostname]) {
+            const res = await env.ASSETS.fetch(new URL(hostRoots[url.hostname], url.origin));
+            return res.ok ? res : notFound(env, url);
         }
 
         if (pathname.endsWith('/')) {

@@ -1,6 +1,6 @@
 ---
 import '../styles/tailwind.css';
-import { SITE_DESCRIPTION, BUILD_V, IS_CANONICAL_HOST, absoluteUrl } from '../lib/site';
+import { SITE_DESCRIPTION, SITE_URL, BUILD_V, IS_CANONICAL_HOST, absoluteUrl } from '../lib/site';
 
 interface Props {
     title?: string;
@@ -116,7 +116,7 @@ const ogDesc = description ?? SITE_DESCRIPTION;
     {/* No site nav: the home page links out to everything. Inner pages get one way back. */}
     {path !== '/' && (
         <header class="site-header" id="site-header" aria-label="Back to the home page">
-            <a class="nav-home" href="/">&larr; hello</a>
+            <a class="nav-home" href={`${SITE_URL}/`}>&larr; hello</a>
         </header>
     )}
 
