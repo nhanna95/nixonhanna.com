@@ -9,64 +9,63 @@ const morePosts = posts.length - recentPosts.length;
 ---
 
 <BaseLayout title="Hello" path="/">
-    <div class="home">
-    <div class="home-main">
-        <div>
-            <h1 class="h1">Hello, I'm <a class="h1-name" href="https://letterboxd.com/noxinh/" target="_blank" rel="noopener">Nixon</a>!</h1>
-
-            <h2 class="h2">Who</h2>
-            <p>Someone who's incredibly interested in the human condition, in all aspects.</p>
-            {/* Hover (or tap) the quote and it dissolves into the aside; both sit in one grid cell so they wrap identically. */}
-            <div class="epigraph-wrap">
-                <p class="epigraph" tabindex="0"><em>Know all the theories, master all the techniques, but as you touch a human soul, be just another human soul.</em></p>
-                <p class="epigraph-note"><em>Yes, I know Carl Jung never actually said this. I like the saying, though, so I used it anyway.</em></p>
-            </div>
-
-            <h2 class="h2">What</h2>
-            <p>An AI safety field-builder passionate about mitigating catastrophic risk from advanced AI and ensuring that AI goes well for all of humanity. Recently, I joined <a href="https://bluedot.org/" target="_blank" rel="noopener">BlueDot</a> as a program manager to try to make the <a href="https://bluedot.org/courses/agi-strategy" target="_blank" rel="noopener">AGI Strategy Course</a> the best introduction to AI safety available anywhere!</p>
-            <p>I've previously taken part in the <a href="https://generatorresidency.org/" target="_blank" rel="noopener">Generator Residency</a>, helped run <a href="https://aialignment.mit.edu/" target="_blank" rel="noopener">MIT AI Alignment</a>, and was lead organizer for OASIS 7.0, a workshop for top university AI safety group organizers. Before that, I did research on gravitational lensing in clusters of galaxies, worked in surgical robotics for a few years, and coached a competitive math team.</p>
-            <p>Outside of my work, I love movies, climbing, music (mostly soul, jazz, hip-hop, r&b), physical media, reading, philosophy, stationery, and many other things.</p>
-            <p>I'm always happy to chat with new people and would love it if you reached out for any reason! <strong>You can see how to contact me <a href="/contact.html">here</a>.</strong> You can also <a href="/feedback" data-turbo="false">leave anonymous feedback</a> for me on Admonymous.</p>
-        </div>
-
-        <section class="note">
-            <h2 class="h2">This site…</h2>
-            <p>was created largely for the purpose of starting a <a href="/blog.html">personal blog</a>.</p>
-            <p>I believe writing about things is an incredibly effective way of developing one's own beliefs. Yet I rarely
-                found myself writing about the things I care about before making this site.</p>
-            <p>So I started this blog to give myself a place to more often write about the things I'm thinking about.</p>
-
-            <p class="recent-label">Recent posts</p>
-            <ul class="recent-list" aria-label="Recent posts">
-                {recentPosts.map((post) => (
-                    <li>
-                        <a href={postUrl(post)}>{post.data.title}</a>
-                        <span class="recent-date">{formatDate(post.data.date)}</span>
-                    </li>
-                ))}
-                {morePosts > 0 && <li class="recent-more"><a href="/blog.html">+ {morePosts} more &rarr;</a></li>}
-            </ul>
-
-            <p>There's also an <a href="/archive.html">archive</a> of various random projects of mine.</p>
-        </section>
-
-        <p class="last-updated"><em>Last updated: Sep 24, 2026</em></p>
+    <div class="headshot-frame">
+        <img src={`/headshop-900w.jpg?v=${BUILD_V}`} width="675" height="900" alt="Headshot"
+            class="content-headshot" fetchpriority="high" decoding="sync">
     </div>
 
-    <aside class="home-aside" aria-label="Elsewhere">
-        <div class="headshot-frame">
-            <img src={`/headshop-900w.jpg?v=${BUILD_V}`} width="675" height="900" alt="Headshot"
-                class="content-headshot" fetchpriority="high" decoding="sync">
+    <div>
+        <h1 class="h1">Hello, I'm <a class="h1-name" href="https://letterboxd.com/noxinh/" target="_blank" rel="noopener">Nixon</a>!</h1>
+
+        <h2 class="h2">Who</h2>
+        <p>Someone who's incredibly interested in the human condition, in all aspects.</p>
+        {/* Hover (or tap) the quote and it dissolves into the aside; both sit in one grid cell so they wrap identically. */}
+        <div class="epigraph-wrap">
+            <p class="epigraph" tabindex="0"><em>Know all the theories, master all the techniques, but as you touch a human soul, be just another human soul.</em></p>
+            <p class="epigraph-note"><em>Yes, I know Carl Jung never actually said this. I like the saying, though, so I used it anyway.</em></p>
         </div>
-        <ul class="profile-links">
-            <li><a href="https://www.linkedin.com/in/nixon-hanna/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10.5V17M8 7.5v.1M12 17v-4a2 2 0 0 1 4 0v4M12 10.5V17"/></svg><span class="label">LinkedIn</span></a></li>
-            <li><a href="https://substack.com/@noxin" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5h16M4 9.5h16M4 14h16v6l-8-3.5L4 20z"/></svg><span class="label">Substack</span></a></li>
-            <li><a href="https://letterboxd.com/noxinh/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="7" cy="12" r="4"/><circle cx="12" cy="12" r="4"/><circle cx="17" cy="12" r="4"/></svg><span class="label">Letterboxd</span></a></li>
-            <li><a href="https://www.goodreads.com/user/show/173095954-nixon-hanna" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5.5c3-1.2 6-1 9 1 3-2 6-2.2 9-1V19c-3-1.2-6-1-9 1-3-2-6-2.2-9-1z"/><path d="M12 6.5V20"/></svg><span class="label">Goodreads</span></a></li>
-            <li><a href="https://www.instagram.com/nixonh_/" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17 7h.1"/></svg><span class="label">Instagram</span></a></li>
-            <li><a href="https://curius.app/nixon-hanna" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4h12v17l-6-4.5L6 21z"/></svg><span class="label">Curius</span></a></li>
-            <li><a href="https://open.spotify.com/user/nixonhanna95" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M7.5 9.5c3-1 6.5-.9 9.5.8M8 12.5c2.5-.8 5.3-.7 7.8.6M8.6 15.3c2-.6 4-.5 5.9.5"/></svg><span class="label">Spotify</span></a></li>
+
+        <h2 class="h2">What</h2>
+        <p>An AI safety field-builder passionate about mitigating catastrophic risk from advanced AI and ensuring that AI goes well for all of humanity. Recently, I joined <a href="https://bluedot.org/" target="_blank" rel="noopener">BlueDot</a> as a program manager to try to make the <a href="https://bluedot.org/courses/agi-strategy" target="_blank" rel="noopener">AGI Strategy Course</a> the best introduction to AI safety available anywhere!</p>
+        <p>I've previously taken part in the <a href="https://generatorresidency.org/" target="_blank" rel="noopener">Generator Residency</a>, helped run <a href="https://aialignment.mit.edu/" target="_blank" rel="noopener">MIT AI Alignment</a>, and was lead organizer for OASIS 7.0, a workshop for top university AI safety group organizers. Before that, I did research on gravitational lensing in clusters of galaxies, worked in surgical robotics for a few years, and coached a competitive math team.</p>
+        <p>Outside of my work, I love movies, climbing, music (mostly soul, jazz, hip-hop, r&b), physical media, reading, philosophy, stationery, and many other things.</p>
+        <p>I'm always happy to chat with new people and would love it if you reached out for any reason! <strong>You can see how to contact me <a href="/contact.html">here</a>.</strong> You can also <a href="/feedback" data-turbo="false">leave anonymous feedback</a> for me on Admonymous.</p>
+    </div>
+
+    <section class="note">
+        <h2 class="h2">Elsewhere</h2>
+        <ul class="link-list">
+            <li><a href="https://www.linkedin.com/in/nixon-hanna/" target="_blank" rel="noopener">LinkedIn</a></li>
+            <li><a href="https://substack.com/@noxin" target="_blank" rel="noopener">Substack</a></li>
+            <li><a href="https://letterboxd.com/noxinh/" target="_blank" rel="noopener">Letterboxd</a></li>
+            <li><a href="https://www.goodreads.com/user/show/173095954-nixon-hanna" target="_blank" rel="noopener">Goodreads</a></li>
+            <li><a href="https://www.instagram.com/nixonh_/" target="_blank" rel="noopener">Instagram</a></li>
+            <li><a href="https://curius.app/nixon-hanna" target="_blank" rel="noopener">Curius</a></li>
+            <li><a href="https://open.spotify.com/user/nixonhanna95" target="_blank" rel="noopener">Spotify</a></li>
         </ul>
-    </aside>
-    </div>
+    </section>
+
+    <section class="note">
+        <h2 class="h2">This site…</h2>
+        <p>was created largely for the purpose of starting a <a href="/blog.html">personal blog</a>.</p>
+        <p>I believe writing about things is an incredibly effective way of developing one's own beliefs. Yet I rarely
+            found myself writing about the things I care about before making this site.</p>
+        <p>So I started this blog to give myself a place to more often write about the things I'm thinking about.</p>
+
+        <p class="recent-label">Recent posts</p>
+        <ul class="recent-list" aria-label="Recent posts">
+            {recentPosts.map((post) => (
+                <li>
+                    <a href={postUrl(post)}>{post.data.title}</a>
+                    <span class="recent-date">{formatDate(post.data.date)}</span>
+                </li>
+            ))}
+            {morePosts > 0 && <li class="recent-more"><a href="/blog.html">+ {morePosts} more &rarr;</a></li>}
+        </ul>
+
+        <p>There's also an <a href="/archive.html">archive</a> of various random projects of mine.</p>
+    </section>
+
+    <p class="last-updated"><em>Last updated: Sep 24, 2026</em></p>
+
 </BaseLayout>

@@ -1838,9 +1838,11 @@ main:has(#tag-personal:checked) .post[data-tags~="personal"] {
 /* ====== Framed headshot (home) ====== */
 .headshot-frame {
     position: relative;
-    width: 100%;
-    margin: 0 0 1.1rem;
+    float: right;
+    width: clamp(120px, 30%, 220px);
+    margin: .35rem 0 1rem 1.75rem;
     box-shadow: 0 1px 2px rgba(0, 0, 0, .06), 0 10px 28px -14px rgba(0, 0, 0, .35);
+    shape-outside: margin-box;
 }
 
 .headshot-frame .content-headshot {
@@ -1853,88 +1855,22 @@ main:has(#tag-personal:checked) .post[data-tags~="personal"] {
     background-color: var(--bg);
 }
 
-/* Home: text column + a right rail with the photo and profile links (Eliana Du style) */
-.home {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) 200px;
-    column-gap: 2.75rem;
-    align-items: start;
-}
-
-.home-aside {
-    padding-top: .4rem;
-}
-
-.profile-links {
+/* Home: plain list of links in the "Elsewhere" section */
+.link-list {
     list-style: none;
     margin: 0;
-    padding: 0 .15rem;
+    padding: 0;
     display: flex;
     flex-direction: column;
-    gap: .5rem;
-    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif;
-    font-size: .85rem;
-}
-
-.profile-links a {
-    display: inline-flex;
-    align-items: center;
-    gap: .6rem;
-    color: var(--muted);
-    text-decoration: none;
-}
-
-.profile-links a:hover {
-    color: var(--ink);
-}
-
-.profile-links svg {
-    width: 17px;
-    height: 17px;
-    flex: none;
-    fill: none;
-    stroke: currentColor;
-    stroke-width: 1.6;
-    stroke-linecap: round;
-    stroke-linejoin: round;
+    gap: .3rem;
 }
 
 @media (max-width:720px) {
-    .home {
-        grid-template-columns: 1fr;
-    }
-
-    /* phone: small photo beside a row of icons, above the text */
-    .home-aside {
-        order: -1;
-        display: flex;
-        align-items: center;
-        gap: 1.1rem;
-        margin-bottom: 1.4rem;
-        padding-top: 0;
-    }
-
     .headshot-frame {
-        width: 34vw;
-        min-width: 104px;
-        max-width: 140px;
-        margin: 0;
-        flex: none;
-    }
-
-    .profile-links {
-        flex-direction: row;
-        flex-wrap: wrap;
-        gap: .7rem .85rem;
-    }
-
-    .profile-links .label {
-        display: none;
-    }
-
-    .profile-links svg {
-        width: 21px;
-        height: 21px;
+        width: 38vw;
+        min-width: 110px;
+        max-width: 170px;
+        margin: 0 0 12px 14px;
     }
 }
 
