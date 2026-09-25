@@ -10,12 +10,12 @@ An [Astro](https://astro.build) static site deployed to [Cloudflare Workers](htt
 
 ## Structure
 
-- `src/pages/` — pages (`about.astro` → `/about.html`, matching the old Jekyll URLs)
+- `src/pages/` — pages (`contact.astro` → `/contact.html`, matching the old Jekyll URLs)
 - `src/pages/posts/[slug]/` — blog post pages (`/posts/<slug>/`)
 - `src/content/posts/` — blog posts in Markdown; **the filename is the URL slug**
 - `src/layouts/` — `BaseLayout` (site chrome) and `PageLayout` (simple pages)
-- `src/data/` — `media_log.yml` (Media Log page) and `tag_descriptions.yml` (tag tooltips)
-- `public/` — static assets served as-is (styles.css, theme-ui.js, fonts, images, PDFs,
+- `src/data/` — `tag_descriptions.yml` (tag tooltips)
+- `public/` — static assets served as-is (styles.css, site.js, fonts, images, PDFs,
   and the standalone pages `/meet`, `/feedback`, `/resume`, photo projects)
 - `worker/index.js` — request router: custom `/api/*` endpoints, directory indexes,
   extensionless fallbacks, and the 404 page, mirroring GitHub Pages behavior so no old URL breaks

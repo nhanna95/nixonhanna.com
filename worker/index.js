@@ -1,10 +1,10 @@
-// Static-asset router. Exact asset matches (e.g. /about.html, /styles.css) are
+// Static-asset router. Exact asset matches (e.g. /contact.html, /styles.css) are
 // served by Cloudflare before this Worker runs (html_handling: "none"); this
 // only handles the misses, mirroring how GitHub Pages served the Jekyll site:
 //   /            -> index.html
 //   /posts/x/    -> posts/x/index.html
 //   /meet        -> 301 /meet/ (directory exists)
-//   /about       -> about.html (extensionless fallback)
+//   /contact     -> contact.html (extensionless fallback)
 //   anything else -> 404.html with a 404 status
 // Custom API endpoints, keyed by "METHOD /path". Anything under /api/ never
 // collides with static assets, so requests always reach this Worker.

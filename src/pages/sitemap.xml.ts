@@ -3,10 +3,8 @@ import { SITE_URL, isoDate, getSortedPosts, postUrl } from '../lib/site';
 
 const staticPages = [
     { path: '/', changefreq: 'weekly', priority: '1.0' },
-    { path: '/about.html', changefreq: 'monthly', priority: '0.8' },
     { path: '/blog.html', changefreq: 'weekly', priority: '0.9' },
     { path: '/contact.html', changefreq: 'monthly', priority: '0.7' },
-    { path: '/media-log.html', changefreq: 'weekly', priority: '0.7' },
     { path: '/archive.html', changefreq: 'monthly', priority: '0.7' },
     { path: '/resume/', changefreq: 'monthly', priority: '0.7' },
     { path: '/meet/', changefreq: 'monthly', priority: '0.6' },
