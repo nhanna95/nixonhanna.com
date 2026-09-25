@@ -1837,6 +1837,7 @@ main:has(#tag-personal:checked) .post[data-tags~="personal"] {
 
 /* ====== Framed headshot (home) ====== */
 .headshot-frame {
+    display: block;
     position: relative;
     float: right;
     width: clamp(120px, 30%, 220px);
