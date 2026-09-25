@@ -2,11 +2,8 @@
 
 An [Astro](https://astro.build) static site deployed to [Cloudflare Workers](https://developers.cloudflare.com/workers/) (static assets + a small router Worker). Uses [Bun](https://bun.sh) as the package manager/runner, with [Tailwind CSS v4](https://tailwindcss.com) and [Svelte](https://svelte.dev) islands available.
 
-> **Migration note:** This repo was previously a Jekyll site on GitHub Pages. The old Jekyll
-> sources (`_layouts/`, `_includes/`, `_posts/`, `_config.yml`, the root `*.html` pages,
-> `Gemfile*`, `Rakefile`, `sitemap.xml`, `CNAME`) are still present for reference and can be
-> deleted once the Cloudflare deployment is live. The Jekyll build no longer works — its
-> static assets moved to `public/`.
+> **Migration note:** This repo was previously a Jekyll site on GitHub Pages. The migration is
+> complete and the Jekyll sources have been removed.
 
 ## Structure
 
@@ -84,9 +81,5 @@ bun run deploy     # astro build && wrangler deploy
 
 ### Cutover from GitHub Pages
 
-1. `npm run deploy` to Cloudflare and verify at the workers.dev URL.
-2. Move `nixonhanna.com` DNS to the Cloudflare zone (the custom domain route takes over).
-3. Delete the leftover Jekyll files and disable the GitHub Pages site.
-
-**Until DNS is moved, don't push a commit that breaks GitHub Pages** — the live site still
-builds from this repo's main branch.
+Done: DNS points to Cloudflare, and the GitHub Pages site and its Jekyll workflow are gone.
+Pushing to `main` doesn't deploy anything; only `bun run deploy` does.
