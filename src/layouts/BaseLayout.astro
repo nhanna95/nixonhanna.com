@@ -1,6 +1,6 @@
 ---
 import '../styles/tailwind.css';
-import { SITE_DESCRIPTION, BUILD_V, absoluteUrl } from '../lib/site';
+import { SITE_DESCRIPTION, BUILD_V, IS_CANONICAL_HOST, absoluteUrl } from '../lib/site';
 
 interface Props {
     title?: string;
@@ -35,6 +35,8 @@ const ogDesc = description ?? SITE_DESCRIPTION;
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={ogDesc} />
     <meta property="og:url" content={absoluteUrl(path)} />
+    {/* Preview host (nixon.fyi): keep search engines from indexing a duplicate of the site */}
+    {!IS_CANONICAL_HOST && <meta name="robots" content="noindex, nofollow" />}
     <!-- 144px og:image: Apple TN3156 — images under 150px wide may show as a small icon in Messages instead of a large preview -->
     <meta property="og:image" content={absoluteUrl('/og-link-icon.png')} />
     <meta property="og:image:type" content="image/png" />

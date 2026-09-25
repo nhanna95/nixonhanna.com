@@ -21,5 +21,18 @@
     "routes": [
         { "pattern": "nixonhanna.com", "custom_domain": true },
         { "pattern": "www.nixonhanna.com", "custom_domain": true }
-    ]
+    ],
+    "env": {
+        // Preview host: a separate Worker on nixon.fyi. Deploy with `bun run deploy:fyi`
+        // (builds with SITE_URL=https://nixon.fyi so canonical/og/sitemap URLs and the
+        // noindex meta point at the right host). Requires the nixon.fyi zone on this account.
+        "fyi": {
+            "name": "nixon-fyi",
+            "workers_dev": true,
+            "routes": [
+                { "pattern": "nixon.fyi", "custom_domain": true },
+                { "pattern": "www.nixon.fyi", "custom_domain": true }
+            ]
+        }
+    }
 }

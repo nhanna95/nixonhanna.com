@@ -73,6 +73,20 @@ deploy).
 bun run deploy     # astro build && wrangler deploy
 ```
 
+### Preview host (nixon.fyi)
+
+A second Worker (`env.fyi` in `wrangler.jsonc`) serves the `redesign` branch at
+`nixon.fyi` while `main` stays on `nixonhanna.com`. One-time: add the `nixon.fyi` zone to
+the same Cloudflare account. Then, from the branch:
+
+```bash
+bun run deploy:fyi   # SITE_URL=https://nixon.fyi astro build && wrangler deploy --env fyi
+```
+
+The preview build sets canonical/og/sitemap URLs to nixon.fyi and adds a `noindex` meta so
+search engines don't index a duplicate. To ship the redesign, merge into `main` and
+`bun run deploy` as usual.
+
 ### Cutover from GitHub Pages
 
 1. `npm run deploy` to Cloudflare and verify at the workers.dev URL.

@@ -29,7 +29,7 @@ const publicDirIndex = {
 
 // https://astro.build/config
 export default defineConfig({
-    site: 'https://nixonhanna.com',
+    site: process.env.SITE_URL ?? 'https://nixonhanna.com',
     integrations: [svelte()],
     vite: {
         plugins: [publicDirIndex, tailwindcss()],
