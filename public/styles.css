@@ -1418,6 +1418,47 @@ hr {
     text-decoration: underline;
 }
 
+/* ====== Click-to-copy text (looks like a link, copies on click) ====== */
+.copy-text {
+    position: relative;
+    display: inline;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    font: inherit;
+    color: var(--link);
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-underline-offset: .15em;
+    cursor: copy;
+}
+
+.copy-text:hover {
+    color: var(--link-hover);
+}
+
+.copy-text-done {
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + .35em);
+    transform: translateX(-50%);
+    padding: .15em .5em;
+    border-radius: 4px;
+    background: var(--ink);
+    color: var(--bg);
+    font-family: Inter, system-ui, sans-serif;
+    font-size: .75rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .2s ease;
+}
+
+.copy-text.is-copied .copy-text-done {
+    opacity: 1;
+}
+
 /* ====== Links ====== */
 a {
     color: var(--link);
