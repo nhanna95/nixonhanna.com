@@ -5,11 +5,26 @@ import tailwindcss from '@tailwindcss/vite';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { shortLinkTarget } from './worker/short-links.js';
 
 const publicDir = fileURLToPath(new URL('./public', import.meta.url));
 
+// Dev-only: answer short links (/meet, /feedback …) with the same 302 the Worker sends.
+/** @type {import('vite').Plugin} */
+const shortLinks = {
+    name: 'short-links',
+    configureServer(server) {
+        server.middlewares.use((req, res, next) => {
+            const target = shortLinkTarget(new URL(req.url ?? '/', 'http://localhost'));
+            if (!target) return next();
+            res.writeHead(302, { Location: target });
+            res.end();
+        });
+    },
+};
+
 // Dev-only: serve public/<dir>/index.html at /<dir>/ like the production server does
-// (standalone pages: /meet/, /feedback/, /resume/, photo projects).
+// (standalone pages: /resume/, photo projects).
 /** @type {import('vite').Plugin} */
 const publicDirIndex = {
     name: 'public-dir-index',
@@ -32,7 +47,7 @@ export default defineConfig({
     site: 'https://nixonhanna.com',
     integrations: [svelte()],
     vite: {
-        plugins: [publicDirIndex, tailwindcss()],
+        plugins: [shortLinks, publicDirIndex, tailwindcss()],
     },
     // 'preserve' keeps the Jekyll-era URLs working unchanged: about.astro -> /about.html,
     // posts/[slug]/index.astro -> /posts/<slug>/index.html.

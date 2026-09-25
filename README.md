@@ -16,10 +16,19 @@ An [Astro](https://astro.build) static site deployed to [Cloudflare Workers](htt
 - `src/layouts/` — `BaseLayout` (site chrome) and `PageLayout` (simple pages)
 - `src/data/` — `media_log.yml` (Media Log page) and `tag_descriptions.yml` (tag tooltips)
 - `public/` — static assets served as-is (styles.css, theme-ui.js, fonts, images, PDFs,
-  and the standalone pages `/meet`, `/feedback`, `/resume`, photo projects)
-- `worker/index.js` — request router: custom `/api/*` endpoints, directory indexes,
+  and the standalone pages `/resume`, photo projects)
+- `worker/index.js` — request router: custom `/api/*` endpoints, short links, directory indexes,
   extensionless fallbacks, and the 404 page, mirroring GitHub Pages behavior so no old URL breaks
+- `worker/short-links.js` — short links (`/meet`, `/feedback`) and their destinations
 - `wrangler.jsonc` — Cloudflare Workers config
+
+## Short links
+
+`nixonhanna.com/meet` and `/feedback` are 302 redirects answered by the Worker (and by the dev
+server). To add one, add a line to the `shortLinks` table in
+[worker/short-links.js](worker/short-links.js) and deploy. Matching ignores case and trailing
+slashes, and any sub-path or query string is passed along (`/meet/30min` →
+`cal.com/nixon-hanna/30min`).
 
 ## Tailwind, Svelte, API endpoints
 

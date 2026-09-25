@@ -1,9 +1,13 @@
+import { shortLinkTarget } from './short-links.js';
+
 // Static-asset router. Exact asset matches (e.g. /about.html, /styles.css) are
 // served by Cloudflare before this Worker runs (html_handling: "none"); this
-// only handles the misses, mirroring how GitHub Pages served the Jekyll site:
+// only handles the misses:
+//   /meet, /feedback … -> 302 to the short link's destination (short-links.js)
+// and otherwise mirrors how GitHub Pages served the Jekyll site:
 //   /            -> index.html
 //   /posts/x/    -> posts/x/index.html
-//   /meet        -> 301 /meet/ (directory exists)
+//   /resume      -> 301 /resume/ (directory exists)
 //   /about       -> about.html (extensionless fallback)
 //   anything else -> 404.html with a 404 status
 // Custom API endpoints, keyed by "METHOD /path". Anything under /api/ never
@@ -22,6 +26,9 @@ export default {
             if (handler) return handler(request, env, url);
             return Response.json({ error: 'not found' }, { status: 404 });
         }
+
+        const shortLink = shortLinkTarget(url);
+        if (shortLink) return Response.redirect(shortLink, 302);
 
         if (pathname.endsWith('/')) {
             const res = await env.ASSETS.fetch(new URL(pathname + 'index.html', url.origin));
