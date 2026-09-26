@@ -10,9 +10,11 @@ interface Props {
     /** Set for blog posts: renders og:type=article with published_time. */
     articleDate?: Date;
     mainAriaLabelledby?: string;
+    /** Extra way-back link shown next to "← hello" (e.g. blog posts → the blog index). */
+    backLink?: { href: string; label: string };
 }
 
-const { title, description, path, articleDate, mainAriaLabelledby } = Astro.props;
+const { title, description, path, articleDate, mainAriaLabelledby, backLink } = Astro.props;
 const fullTitle = title ? `${title} — Nixon Hanna` : 'Nixon Hanna';
 const ogDesc = description ?? SITE_DESCRIPTION;
 
@@ -115,8 +117,9 @@ const ogDesc = description ?? SITE_DESCRIPTION;
     <a class="skip-link" href="#main-content">Skip to main content</a>
     {/* No site nav: the home page links out to everything. Inner pages get one way back. */}
     {path !== '/' && (
-        <header class="site-header" id="site-header" aria-label="Back to the home page">
+        <header class="site-header" id="site-header" aria-label="Back links">
             <a class="nav-home" href={`${SITE_URL}/`}>&larr; hello</a>
+            {backLink && <a class="nav-home" href={backLink.href}>&larr; {backLink.label}</a>}
         </header>
     )}
 

@@ -1,5 +1,6 @@
 import type { CollectionEntry } from 'astro:content';
 import { getCollection } from 'astro:content';
+import { execSync } from 'node:child_process';
 
 // Canonical origin. Override with SITE_URL=https://nixon.fyi for the preview host (see wrangler.jsonc env.fyi).
 export const SITE_URL = (import.meta.env.SITE_URL as string | undefined) ?? 'https://nixonhanna.com';
@@ -23,6 +24,22 @@ export function formatDate(date: Date): string {
         year: 'numeric',
         timeZone: 'UTC',
     }).format(date);
+}
+
+/**
+ * When a source file last changed: the date of its last commit, or now if it has
+ * uncommitted edits. Falls back to now when git isn't available (e.g. a CI checkout without history).
+ */
+export function lastChanged(relPath: string): Date {
+    try {
+        const dirty = execSync(`git status --porcelain -- ${relPath}`, { encoding: 'utf8' }).trim() !== '';
+        if (dirty) return new Date();
+        const iso = execSync(`git log -1 --format=%cI -- ${relPath}`, { encoding: 'utf8' }).trim();
+        if (iso) return new Date(iso);
+    } catch {
+        /* fall through */
+    }
+    return new Date();
 }
 
 export function isoDate(date: Date): string {

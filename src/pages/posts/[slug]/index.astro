@@ -19,7 +19,7 @@ const readTime = readingTimeMinutes(post.body ?? '');
 const tagDescriptions = getTagDescriptions();
 ---
 
-<BaseLayout title={title} path={postUrl(post)} articleDate={date}>
+<BaseLayout title={title} path={postUrl(post)} articleDate={date} backLink={{ href: '/blog.html', label: 'blog' }}>
     <article class="entry" aria-labelledby="entry-heading">
         <header class="entry-head">
             <h1 class="h1" id="entry-heading">{title}</h1>

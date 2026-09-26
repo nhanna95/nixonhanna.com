@@ -1092,6 +1092,8 @@ body::before {
     width: 100%;
     margin: 0;
     padding: 28px 32px 0;
+    display: flex;
+    gap: 1.25rem;
     font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif;
 }
 

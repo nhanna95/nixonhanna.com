@@ -1,11 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { BUILD_V, formatDate, getSortedPosts, postUrl } from '../lib/site';
+import { BUILD_V, formatDate, getSortedPosts, lastChanged, postUrl } from '../lib/site';
 
 const RECENT_POSTS = 5;
 const posts = await getSortedPosts();
 const recentPosts = posts.slice(0, RECENT_POSTS);
 const morePosts = posts.length - recentPosts.length;
+const updated = lastChanged('src/pages/index.astro');
 ---
 
 <BaseLayout title="Hello" path="/">
@@ -35,7 +36,7 @@ const morePosts = posts.length - recentPosts.length;
 
     <section class="note">
         <h2 class="h2">This site…</h2>
-        <p>was originally created largely for the purpose of starting my <a href="/blog.html">personal blog</a>.</p>
+        <p>was originally created with the purpose of starting my <a href="/blog.html">personal blog</a>.</p>
         <p>I believe writing about things is an incredibly effective way of developing one's own beliefs. Yet, I rarely
             found myself writing about the things I care about before making this site.</p>
         <p>So I started this blog to give myself a place to more often write about the things I'm thinking about. Here are some of my recent posts:</p>
@@ -65,9 +66,9 @@ const morePosts = posts.length - recentPosts.length;
     <section class="note">
         <h2 class="h2">Before you go…</h2>
         <p>If you have any feedback or suggestions for this site, I'd love to hear them. You can <a href="/feedback" data-turbo="false">leave them anonymously</a> or <a href="/contact.html">get in touch</a> directly.</p>
-        <p>And one small ask: take a moment to think about how you could brighten your own day, or someone else's, today.</p>
+        <p>And finally, find one small way to brighten your own day, or someone else's.</p>
     </section>
 
-    <p class="last-updated"><em>Last updated: Sep 24, 2026</em></p>
+    <p class="last-updated"><em>Last updated: {formatDate(updated)}</em></p>
 
 </BaseLayout>
