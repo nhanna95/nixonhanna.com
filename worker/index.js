@@ -4,15 +4,17 @@ import { shortLinkTarget } from './short-links.js';
 // (assets.run_worker_first), so it sees every request, exact file matches included:
 //   /meet, /feedback …       -> 302 to the short link's destination, on any host (short-links.js)
 //   nixonhanna.com/<path>    -> 301 nixon.fyi/<path> (same for www., and for www.nixon.fyi)
-//   nixon.blog/              -> 301 nixon.fyi/blog.html    other paths keep their path on nixon.fyi
-//   nixon.contact/           -> 301 nixon.fyi/contact.html
-// On nixon.fyi (and any host not listed, e.g. `wrangler dev` on localhost) it serves the build
-// the way GitHub Pages served the Jekyll site:
-//   /styles.css, /blog.html  -> the file itself
+//   nixon.blog/              -> 301 nixon.fyi/blog     other paths keep their path on nixon.fyi
+//   nixon.contact/           -> 301 nixon.fyi/contact
+// Pages live at clean URLs; the .html forms 301 to them (also when redirecting from another host):
+//   /blog.html               -> 301 /blog
+//   /posts/x/index.html      -> 301 /posts/x/
+// On nixon.fyi (and any host not listed, e.g. `wrangler dev` on localhost) it serves the build:
+//   /styles.css              -> the file itself
 //   /                        -> index.html
 //   /posts/x/                -> posts/x/index.html
+//   /blog                    -> blog.html
 //   /the-good-life-room      -> 301 /the-good-life-room/ (directory exists)
-//   /contact                 -> contact.html (extensionless fallback)
 //   anything else            -> 404.html with a 404 status
 
 const CANONICAL_ORIGIN = 'https://nixon.fyi';
@@ -22,10 +24,10 @@ const redirectHosts = {
     'nixonhanna.com': null,
     'www.nixonhanna.com': null,
     'www.nixon.fyi': null,
-    'nixon.blog': '/blog.html',
-    'www.nixon.blog': '/blog.html',
-    'nixon.contact': '/contact.html',
-    'www.nixon.contact': '/contact.html',
+    'nixon.blog': '/blog',
+    'www.nixon.blog': '/blog',
+    'nixon.contact': '/contact',
+    'www.nixon.contact': '/contact',
 };
 
 // Custom API endpoints, keyed by "METHOD /path". Anything under /api/ never
@@ -55,17 +57,29 @@ export default {
         const shortLink = shortLinkTarget(url);
         if (shortLink) return Response.redirect(shortLink, 302);
 
+        const clean = cleanPath(pathname);
+
         if (Object.hasOwn(redirectHosts, url.hostname)) {
-            const target = new URL(pathname + url.search, CANONICAL_ORIGIN);
+            const target = new URL(clean + url.search, CANONICAL_ORIGIN);
             const root = redirectHosts[url.hostname];
             if (root && pathname === '/') target.pathname = root;
             return Response.redirect(target.href, 301);
         }
 
+        if (clean !== pathname) return Response.redirect(url.origin + clean + url.search, 301);
+
         const res = await serve(request, env, url);
         return withCaching(pathname, res);
     },
 };
+
+// The address a page is served at: /blog.html -> /blog, /posts/x/index.html -> /posts/x/.
+// (404.html is only ever served as the not-found page, so it keeps its name.)
+function cleanPath(pathname) {
+    if (pathname.endsWith('/index.html')) return pathname.slice(0, -'index.html'.length);
+    if (pathname.endsWith('.html') && pathname !== '/404.html') return pathname.slice(0, -'.html'.length);
+    return pathname;
+}
 
 async function serve(request, env, url) {
     const { pathname } = url;

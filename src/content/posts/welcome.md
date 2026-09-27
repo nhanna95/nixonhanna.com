@@ -33,4 +33,4 @@ Not necessarily, I do not claim to be an expert or even knowledgable on all of t
 I may use AI during the research phase of any posts, but AI will not be used in anyway for the main writing process. Meaning all brainstorming, structuring of the piece, and actual writing will be done by me or possible co-authors.
 ### Final Remarks
 
-Before I close, I should mention that all future posts will be cross-posted on [my substack](https://substack.com/@noxin), so feel free to follow me there to get an email notification when I post. I don't have much else to say other than I'm hoping to have my first couple of posts out in the next few weeks. If you have any further questions or just want to chat, please [reach out](/contact.html).
+Before I close, I should mention that all future posts will be cross-posted on [my substack](https://substack.com/@noxin), so feel free to follow me there to get an email notification when I post. I don't have much else to say other than I'm hoping to have my first couple of posts out in the next few weeks. If you have any further questions or just want to chat, please [reach out](/contact).

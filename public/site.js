@@ -16,7 +16,9 @@
         img.alt = still.alt;
         if (still.film) btn.setAttribute('data-film', still.film);
         else btn.removeAttribute('data-film');
-        placeFilm(btn, null);
+        // The new photo's credit waits the full delay again.
+        hideFilm(btn, true);
+        if (btn.matches(':hover')) placeFilm(btn, null);
         btn.setAttribute('data-index', String(next));
         if (next === 0) {
             document.documentElement.removeAttribute('data-still');
@@ -30,16 +32,34 @@
         preload(stills[(next + 1) % stills.length].src);
     }
 
-    // Film credit that follows the cursor over the still. Mouse only: on a phone a tap would pop it
-    // up and leave it stuck, since the "pointer" never leaves (styles.css also hides it without hover).
+    // Film credit that follows the cursor over the still. It appears once the pointer has stayed on the
+    // photo for FILM_DELAY ms; leaving the photo or clicking to the next one restarts the wait.
+    // Mouse only: on a phone a tap would pop it up and leave it stuck, since the "pointer" never
+    // leaves (styles.css also hides it without hover).
+    var FILM_DELAY = 1500;
     var canHover = window.matchMedia('(hover: hover)');
+    var filmTimer = null;
+
+    // `instant` skips the fade-out, so a click doesn't show the old credit fading over the new photo.
+    function hideFilm(btn, instant) {
+        clearTimeout(filmTimer);
+        filmTimer = null;
+        var label = btn.querySelector('.still-film');
+        if (!label) return;
+        if (instant) label.style.transition = 'none';
+        label.classList.remove('is-on');
+        if (instant) {
+            void label.offsetWidth; // apply the hidden state before the transition comes back
+            label.style.transition = '';
+        }
+    }
 
     function placeFilm(btn, e) {
         var label = btn.querySelector('.still-film');
         if (!label) return;
         var film = btn.getAttribute('data-film');
-        if (!film || !canHover.matches || (!e && !btn.matches(':hover'))) {
-            label.classList.remove('is-on');
+        if (!film || !canHover.matches) {
+            hideFilm(btn, false);
             return;
         }
         label.textContent = film;
@@ -53,7 +73,12 @@
             label.style.left = x + 'px';
             label.style.top = y + 'px';
         }
-        label.classList.add('is-on');
+        if (!label.classList.contains('is-on') && !filmTimer) {
+            filmTimer = setTimeout(function () {
+                filmTimer = null;
+                label.classList.add('is-on');
+            }, FILM_DELAY);
+        }
     }
 
     document.addEventListener('pointermove', function (e) {
@@ -64,10 +89,7 @@
 
     document.addEventListener('mouseout', function (e) {
         var btn = e.target.closest && e.target.closest('.still-cycle');
-        if (btn && !btn.contains(e.relatedTarget)) {
-            var label = btn.querySelector('.still-film');
-            if (label) label.classList.remove('is-on');
-        }
+        if (btn && !btn.contains(e.relatedTarget)) hideFilm(btn, false);
     });
 
     document.addEventListener('click', function (e) {

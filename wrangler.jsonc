@@ -1,10 +1,15 @@
 // Cloudflare Workers config: the built site (dist/) plus worker/index.js, which runs first on
-// every request. nixon.fyi serves the site; nixonhanna.com, nixon.blog, nixon.contact and the
-// www. hosts redirect to it (the short links /meet and /feedback work on every host).
+// every request. nixon.fyi serves the site; nixon.blog, nixon.contact and the www. hosts redirect
+// to it (the short links /meet and /feedback work on every host).
 // Deploy with: bun run deploy (runs astro build && wrangler deploy)
+//
+// nixonhanna.com is NOT routed here yet: it still serves the old site from the separate
+// `nixonhanna-com` Worker. To move it over, delete that Worker (or detach its two domains), add
+// { "pattern": "nixonhanna.com", "custom_domain": true } and the www. one below, and deploy;
+// worker/index.js already redirects both to nixon.fyi.
 {
     "$schema": "node_modules/wrangler/config-schema.json",
-    "name": "nixonhanna-com",
+    "name": "nixon-fyi",
     // Off: the custom domains are the only way in, so there's no duplicate *.workers.dev copy.
     "workers_dev": false,
     "main": "worker/index.js",
@@ -21,8 +26,6 @@
     "routes": [
         { "pattern": "nixon.fyi", "custom_domain": true },
         { "pattern": "www.nixon.fyi", "custom_domain": true },
-        { "pattern": "nixonhanna.com", "custom_domain": true },
-        { "pattern": "www.nixonhanna.com", "custom_domain": true },
         { "pattern": "nixon.blog", "custom_domain": true },
         { "pattern": "www.nixon.blog", "custom_domain": true },
         { "pattern": "nixon.contact", "custom_domain": true },

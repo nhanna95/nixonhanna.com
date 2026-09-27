@@ -5,9 +5,9 @@ import { SITE_URL, isoDate, getSortedPosts, lastChanged, postUrl } from '../lib/
 // `source` is the file whose last change dates the page (see lastChanged).
 const staticPages = [
     { path: '/', source: 'src/pages/index.astro', changefreq: 'weekly', priority: '1.0' },
-    { path: '/blog.html', source: 'src/pages/blog.astro', changefreq: 'weekly', priority: '0.9' },
-    { path: '/contact.html', source: 'src/pages/contact.astro', changefreq: 'monthly', priority: '0.7' },
-    { path: '/archive.html', source: 'src/data/archive.ts', changefreq: 'monthly', priority: '0.7' },
+    { path: '/blog', source: 'src/pages/blog.astro', changefreq: 'weekly', priority: '0.9' },
+    { path: '/contact', source: 'src/pages/contact.astro', changefreq: 'monthly', priority: '0.7' },
+    { path: '/archive', source: 'src/data/archive.ts', changefreq: 'monthly', priority: '0.7' },
     { path: '/the-river-feels-colder-this-time/', source: 'public/the-river-feels-colder-this-time/index.html', changefreq: 'yearly', priority: '0.6' },
     { path: '/the-good-life-room/', source: 'public/the-good-life-room/index.html', changefreq: 'yearly', priority: '0.6' },
 ];
@@ -20,7 +20,7 @@ export const GET: APIRoute = async () => {
         ...staticPages.map((p) => {
             let lastmod = lastChanged(p.source);
             // The blog index also changes whenever a post is published.
-            if (p.path === '/blog.html' && newestPost && newestPost > lastmod) lastmod = newestPost;
+            if (p.path === '/blog' && newestPost && newestPost > lastmod) lastmod = newestPost;
             return `  <url>
     <loc>${SITE_URL}${p.path}</loc>
     <lastmod>${isoDate(lastmod)}</lastmod>

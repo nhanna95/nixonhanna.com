@@ -46,8 +46,8 @@ export default defineConfig({
     vite: {
         plugins: [shortLinks, publicDirIndex],
     },
-    // 'preserve' keeps the Jekyll-era URLs working unchanged: blog.astro -> /blog.html,
-    // posts/[slug]/index.astro -> /posts/<slug>/index.html.
+    // 'preserve' writes blog.astro -> blog.html and posts/[slug]/index.astro -> posts/<slug>/index.html.
+    // The Worker serves them at clean URLs (/blog, /posts/<slug>/) and 301s the .html forms there.
     build: {
         format: 'preserve',
     },

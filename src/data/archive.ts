@@ -1,4 +1,4 @@
-// Archive entries, newest first. Rendered on /archive.html.
+// Archive entries, newest first. Rendered on /archive.
 export interface ArchiveItem {
     title: string;
     href: string;

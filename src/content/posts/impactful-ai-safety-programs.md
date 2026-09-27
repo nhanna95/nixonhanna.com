@@ -7,7 +7,7 @@ tags: [AI Safety, Capacity Building]
 
 I spend a decent amount of time thinking about which programs would help the AI safety (AIS) ecosystem grow in a healthy, high-impact way. Below is a short list of ideas I find genuinely important—and that I would be excited to see exist—but that I am not in a position to spearhead right now. This is starting as a bit of a brain dump, but I'd like to add a lot to this. So please let me know if you think there are any high impact programs that are missing. 
 
-If any of this resonates with you and you might want to build it, I would love to [hear from you](/contact.html). 
+If any of this resonates with you and you might want to build it, I would love to [hear from you](/contact). 
 
 Note: many of these are not solely my idea, I'm just the one listing them here.
 

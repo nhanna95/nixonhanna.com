@@ -4,7 +4,7 @@ An [Astro](https://astro.build) static site served at **nixon.fyi** from [Cloudf
 
 ## Structure
 
-- `src/pages/` — pages (`contact.astro` → `/contact.html`, matching the old Jekyll URLs)
+- `src/pages/` — pages (`contact.astro` → `/contact`; the build writes `contact.html`, the Worker serves it without the extension)
 - `src/pages/posts/[slug]/` — blog post pages (`/posts/<slug>/`)
 - `src/content/posts/` — blog posts in Markdown; **the filename is the URL slug**
 - `src/layouts/` — `BaseLayout` (site chrome) and `PageLayout` (simple pages)
@@ -21,10 +21,12 @@ An [Astro](https://astro.build) static site served at **nixon.fyi** from [Cloudf
 
 nixon.fyi serves the site. The Worker runs before static assets, so it sees every request:
 
-- `nixonhanna.com/<path>` (and `www.`) → 301 to `nixon.fyi/<path>`
-- `nixon.blog` → 301 to `nixon.fyi/blog.html`, `nixon.contact` → `nixon.fyi/contact.html`
+- `nixonhanna.com/<path>` (and `www.`) → 301 to `nixon.fyi/<path>`, once it's routed to this Worker
+  (for now it still serves the old site from the separate `nixonhanna-com` Worker; see wrangler.jsonc)
+- `nixon.blog` → 301 to `nixon.fyi/blog`, `nixon.contact` → `nixon.fyi/contact`
   (other paths on those hosts keep their path on nixon.fyi); `www.nixon.fyi` → `nixon.fyi`
 - the short links answer on every host, so `nixonhanna.com/meet` and `/feedback` still work
+- pages have clean URLs: `/blog.html` → 301 `/blog`, `/posts/x/index.html` → 301 `/posts/x/`
 
 ## Short links
 
@@ -70,9 +72,9 @@ bun run cf:dev     # production build served by wrangler dev (tests the Worker r
 
 ## Deploy
 
-One-time setup: `bunx wrangler login`, with the nixon.fyi, nixonhanna.com, nixon.blog and
-nixon.contact zones on the same Cloudflare account (the custom-domain routes in
-`wrangler.jsonc` attach on deploy).
+One-time setup: `bunx wrangler login`, with the nixon.fyi, nixon.blog and nixon.contact zones
+(and nixonhanna.com, for the cutover) on the same Cloudflare account. This deploys the `nixon-fyi`
+Worker; the custom-domain routes in `wrangler.jsonc` attach on deploy.
 
 ```bash
 bun run deploy     # astro build && wrangler deploy

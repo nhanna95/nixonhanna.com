@@ -6,7 +6,7 @@ tags: [AI Safety, Capacity Building]
 
 I believe introductory AI Safety reading groups are some of the highest-impact programs you can run. Yet there isn't a ton of time, energy, and intention being put into these programs. So I'm writing this post to distill what I have learned through the time, energy, and intention I've put into the reading group I lead.
 
-**Note:** Throughout, I will largely discuss things in the context of university groups; some things generalize, some things don't. If you want to discuss your program specifically, please [reach out](/contact.html). I'm always happy to chat.
+**Note:** Throughout, I will largely discuss things in the context of university groups; some things generalize, some things don't. If you want to discuss your program specifically, please [reach out](/contact). I'm always happy to chat.
 
 ## Who am I
 

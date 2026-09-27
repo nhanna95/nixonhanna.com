@@ -4,7 +4,7 @@ import { SITE_DESCRIPTION, BUILD_V, absoluteUrl } from '../lib/site';
 interface Props {
     title?: string;
     description?: string;
-    /** Page URL path, e.g. '/', '/blog.html', '/posts/welcome/' — used for og:url and nav active state. */
+    /** Page URL path, e.g. '/', '/blog', '/posts/welcome/' — used for the canonical link and og:url. */
     path: string;
     /** Set for blog posts: renders og:type=article with published_time. */
     articleDate?: Date;
@@ -105,7 +105,7 @@ const ogDesc = description ?? SITE_DESCRIPTION;
     <meta name="turbo-cache-control" content="no-preview">
     <script is:inline>
         (function () {
-            var urls = ['/', '/blog.html', '/contact.html', '/archive.html'];
+            var urls = ['/', '/blog', '/contact', '/archive'];
             function addPrefetch() {
                 urls.forEach(function (href) {
                     var link = document.createElement('link');

@@ -19,7 +19,7 @@ const readTime = readingTimeMinutes(post.body ?? '');
 const tagDescriptions = getTagDescriptions();
 ---
 
-<BaseLayout title={title} path={postUrl(post)} articleDate={date} backLink={{ href: '/blog.html', label: 'blog' }}>
+<BaseLayout title={title} path={postUrl(post)} articleDate={date} backLink={{ href: '/blog', label: 'blog' }}>
     <article class="entry" aria-labelledby="entry-heading">
         <header class="entry-head">
             <h1 class="h1" id="entry-heading">{title}</h1>
@@ -40,7 +40,7 @@ const tagDescriptions = getTagDescriptions();
                     <>
                         <ul class="taglist">
                             {tags.map((tag) => (
-                                <li><a href={`/blog.html#tag-${tag.toLowerCase()}`} class="tag-link"
+                                <li><a href={`/blog#tag-${tag.toLowerCase()}`} class="tag-link"
                                         data-tooltip={tagDescriptions[tag] || undefined}
                                         data-tag={tag}>{tag}</a></li>
                             ))}
@@ -83,6 +83,6 @@ const tagDescriptions = getTagDescriptions();
         )}
 
         <hr class="rule">
-        <p class="post-nav"><a href="/blog.html">← Back to Blog</a></p>
+        <p class="post-nav"><a href="/blog">← Back to Blog</a></p>
     </article>
 </BaseLayout>

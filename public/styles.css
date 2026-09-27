@@ -502,6 +502,13 @@ body::before {
     text-decoration: none;
 }
 
+/* Home "Who" / "What": quiet links (Letterboxd, LinkedIn) that look exactly like the plain headings */
+.h2-quiet,
+.h2-quiet:hover {
+    color: inherit;
+    text-decoration: none;
+}
+
 .last-updated {
     margin-bottom: 0.5rem;
 }
@@ -1025,10 +1032,9 @@ button {
     transition: opacity .15s ease;
 }
 
+/* site.js adds .is-on once the pointer has rested on the photo (FILM_DELAY) */
 .still-film.is-on {
     opacity: 1;
-    /* shows only after the pointer has rested on the photo for a moment */
-    transition-delay: .6s;
 }
 
 @media (hover: none) {

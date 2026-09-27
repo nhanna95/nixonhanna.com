@@ -28,7 +28,7 @@ const STILLS = [
             <p class="epigraph-note"><em>Yes, I know Carl Jung never actually said this. I like the saying, though, so I included it anyway.</em></p>
         </div>
 
-        <h2 class="h2">Who</h2>
+        <h2 class="h2"><a class="h2-quiet" href="https://letterboxd.com/noxinh/" target="_blank" rel="noopener">Who</a></h2>
         <p>Someone who's incredibly interested in all aspects of the human condition.</p>
 
         <figure class="still">
@@ -60,32 +60,32 @@ const STILLS = [
             })();
         </script>
 
-        <h2 class="h2">What</h2>
-        <p>An AI safety field-builder passionate about mitigating catastrophic risk from advanced AI and ensuring that AI goes well for all of humanity. I recently joined <a href="https://bluedot.org/" target="_blank" rel="noopener">BlueDot</a> as a program manager to try to make the <a href="https://bluedot.org/courses/agi-strategy" target="_blank" rel="noopener">AGI Strategy Course</a> the best introduction to AI safety available anywhere!</p>
-        <p>I've previously taken part in the <a href="https://generatorresidency.org/" target="_blank" rel="noopener">Generator Residency</a>, helped run <a href="https://aialignment.mit.edu/" target="_blank" rel="noopener">MIT AI Alignment</a>, and was lead organizer for OASIS 7.0, a workshop for top university AI safety group organizers. Before that, I did research on gravitational lensing in clusters of galaxies, worked in surgical robotics for a few years, and coached a competitive math team.</p>
+        <h2 class="h2"><a class="h2-quiet" href="https://www.linkedin.com/in/nixon-hanna/" target="_blank" rel="noopener">What</a></h2>
+        <p>An AI safety field-builder passionate about mitigating catastrophic risk from advanced AI and ensuring that AI goes well for all of humanity. I recently joined <a href="https://bluedot.org/" target="_blank" rel="noopener">BlueDot</a> as a program manager to try to make the <a href="https://bluedot.org/courses/agi-strategy" target="_blank" rel="noopener">AGI Strategy Course</a> the best introduction to AI safety available anywhere! I'm also currently mentoring some amazing individuals through <a href="https://sparai.org/" target="_blank" rel="noopener">SPAR</a> and <a href="https://pathfinder.kairos-project.org/" target="_blank" rel="noopener">Pathfinder</a>.</p>
+        <p>I've previously taken part in the <a href="https://generatorresidency.org/" target="_blank" rel="noopener">Generator Residency</a>, helped run <a href="https://aialignment.mit.edu/" target="_blank" rel="noopener">MIT AI Alignment</a>, and was lead organizer for OASIS 7.0, a workshop for top AI safety university group organizers. Before that, I did research on gravitational lensing in clusters of galaxies, worked in surgical robotics for a few years, and coached a competitive math team.</p>
         <p>Outside of my work, I spend most of my time running <a href="http://lsc.mit.edu/" target="_blank" rel="noopener">MIT's student-run movie theater</a>, climbing, and <a href="https://letterboxd.com/noxinh/" target="_blank" rel="noopener">reviewing</a> all the movies I watch. I also love music (mostly soul, jazz, hip-hop, and r&b), physical media, reading, philosophy, stationery, and many other things.</p>
-      <p>My three favorite things are movies, tile, and glass blocks.</p>
+      <p>My three favorite things, though, are movies, tile, and glass blocks.</p>
     </div>
 
     <section class="note">
         <h2 class="h2">If you want to reach out…</h2>
-        <p>you can see how to contact me <a href="/contact.html">here</a>. I'm always happy to chat with new people and would love it if you reached out for any reason! You can also <a href="/feedback" data-turbo="false">leave anonymous feedback</a> for me on Admonymous.</p>
+        <p>you can see how to do so on my <a href="/contact">contact page</a>. I'm always happy to chat with new people and would love it if you reached out for any reason! You can also <a href="/feedback" data-turbo="false">leave anonymous feedback</a> for me on Admonymous.</p>
     </section>
 
     <section class="note">
         <h2 class="h2">This site…</h2>
-        <p>was originally created with the purpose of starting my <a href="/blog.html">personal blog</a>.</p>
+        <p>was originally created with the purpose of starting my <a href="/blog">personal blog</a>.</p>
         <p>I believe writing about things is an incredibly effective way of developing one's own beliefs. Yet, I rarely
-            found myself writing about the things I care about.</p>
-        <p>So I started this blog to give myself a place to more often write about the things I'm thinking about. Here are some of my recent posts:</p>
+            found myself writing about the things I claimed to care about.</p>
+        <p>So now I have this blog as a place to more often write about the things I'm thinking about. Here are some of my recent posts, if you're interested:</p>
         <ul class="recent-list">
             {recentPosts.map((post) => (
                 <li><a href={postUrl(post)}>{post.data.title}</a> <span class="recent-date">({formatDate(post.data.date)})</span></li>
             ))}
         </ul>
-        {morePosts > 0 && <p>You can find the rest of them on the <a href="/blog.html">blog page</a>.</p>}
+        {morePosts > 0 && <p>You can find the rest of them on the <a href="/blog">blog page</a> of this site.</p>}
 
-        <p>This site also includes an <a href="/archive.html">archive</a> of various random projects of mine.</p>
+        <p>This site also includes an <a href="/archive">archive</a> of various random projects of mine.</p>
     </section>
 
     <section class="note">
@@ -103,8 +103,8 @@ const STILLS = [
 
     <section class="note">
         <h2 class="h2">Before you go…</h2>
-        <p>If you have any feedback or suggestions for this site, I'd love to hear them. You can <a href="/feedback" data-turbo="false">leave them anonymously</a> or <a href="/contact.html">get in touch</a> directly.</p>
-        <p>And finally, find one small way to brighten your own day, or someone else's.</p>
+        <p>I'd love to hear any feedback or suggestions for this site. You can <a href="/feedback" data-turbo="false">leave them anonymously</a> or <a href="/contact">get in touch</a> directly.</p>
+        <p>And finally, I ask that you find one small way to brighten your own day, or someone else's, today.</p>
     </section>
 
     <p class="last-updated"><em>Last updated: {formatDate(updated)}</em></p>
