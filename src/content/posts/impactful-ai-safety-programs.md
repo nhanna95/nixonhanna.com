@@ -2,7 +2,7 @@
 title: "AI Safety Programs I Think Would Be Impactful But Don't Have Bandwidth to Run"
 date: 2026-04-07
 update: 2026-04-08
-tags: [AI Safety, Capacity Building, Living Document]
+tags: [AI Safety, Capacity Building]
 ---
 
 I spend a decent amount of time thinking about which programs would help the AI safety (AIS) ecosystem grow in a healthy, high-impact way. Below is a short list of ideas I find genuinely important—and that I would be excited to see exist—but that I am not in a position to spearhead right now. This is starting as a bit of a brain dump, but I'd like to add a lot to this. So please let me know if you think there are any high impact programs that are missing. 

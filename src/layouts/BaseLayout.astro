@@ -17,6 +17,9 @@ interface Props {
 const { title, description, path, articleDate, mainAriaLabelledby, backLink } = Astro.props;
 const fullTitle = title ? `${title} — Nixon Hanna` : 'Nixon Hanna';
 const ogDesc = description ?? SITE_DESCRIPTION;
+// The name in the header goes home. Built pages link to the absolute SITE_URL (nixonhanna.com, or nixon.fyi on
+// the preview build) because the vanity hosts serve other pages at "/"; in dev that would jump to the live site.
+const homeHref = import.meta.env.DEV ? '/' : `${SITE_URL}/`;
 
 ---
 
@@ -100,7 +103,7 @@ const ogDesc = description ?? SITE_DESCRIPTION;
     <link rel="preload" as="font" type="font/woff2" crossorigin
         href="/fonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2" />
     <link rel="preload" as="font" type="font/woff2" crossorigin
-        href="/fonts/ebgaramond-latin.woff2" />
+        href="/fonts/newsreader-latin.woff2" />
     {path === '/' && <link rel="preload" as="image" href={`/stills/yangyang.jpg?v=${BUILD_V}`} fetchpriority="high" />}
     <link rel="stylesheet" href={`/styles.css?v=${BUILD_V}`} />
     <!-- No view-transition meta: default Turbo nav used root snapshots and caused font/headshot glitches. -->
@@ -130,11 +133,17 @@ const ogDesc = description ?? SITE_DESCRIPTION;
 
 <body>
     <a class="skip-link" href="#main-content">Skip to main content</a>
-    {/* No site nav: the home page links out to everything. Inner pages get one way back. */}
+    {/* No site nav: the home page links out to everything. Inner pages get a signature that links home,
+        plus a trail back to the blog on posts ("Nixon Hanna / blog"). */}
     {path !== '/' && (
-        <header class="site-header" id="site-header" aria-label="Back links">
-            <a class="nav-home" href={`${SITE_URL}/`}>&larr; hello</a>
-            {backLink && <a class="nav-home" href={backLink.href}>&larr; {backLink.label}</a>}
+        <header class="site-header" id="site-header" aria-label="Breadcrumb">
+            <a class="nav-home nav-sig" href={homeHref}>Nixon Hanna</a>
+            {backLink && (
+                <>
+                    <span class="crumb-sep" aria-hidden="true">/</span>
+                    <a class="nav-home" href={backLink.href}>{backLink.label}</a>
+                </>
+            )}
         </header>
     )}
 

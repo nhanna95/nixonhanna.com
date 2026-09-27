@@ -1,4 +1,4 @@
-/* Self-hosted fonts (Inter, Fraunces, Noto Serif; SIL OFL). Paths match /fonts/*.woff2 */
+/* Self-hosted fonts (Inter, Fraunces, Newsreader, Noto Serif; SIL OFL). Paths match /fonts/*.woff2 */
 /* vietnamese */
 @font-face {
     font-family: 'Fraunces';
@@ -29,22 +29,23 @@
     unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
-/* EB Garamond (SIL OFL): body text. Latin subset, variable weight 400–700, roman and italic. */
+/* Newsreader (SIL OFL): body text, dates and the home-page quote. Latin subset, variable weight 400–700
+   (optical size fixed at the text design, which halves the files), roman and italic. */
 @font-face {
-    font-family: 'EB Garamond';
+    font-family: 'Newsreader';
     font-style: normal;
     font-weight: 400 700;
     font-display: swap;
-    src: url(/fonts/ebgaramond-latin.woff2) format('woff2');
+    src: url(/fonts/newsreader-latin.woff2) format('woff2');
     unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
 @font-face {
-    font-family: 'EB Garamond';
+    font-family: 'Newsreader';
     font-style: italic;
     font-weight: 400 700;
     font-display: swap;
-    src: url(/fonts/ebgaramond-italic-latin.woff2) format('woff2');
+    src: url(/fonts/newsreader-italic-latin.woff2) format('woff2');
     unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
@@ -1140,8 +1141,6 @@ body::before {
 
     body,
     .site-header,
-    .searchbar,
-    .searchbar input,
     .callout,
     .blog-empty-feedback,
     .post,
@@ -1165,29 +1164,51 @@ body::before {
     }
 
     .nav-home {
-        transition: color 0.22s ease;
+        transition: color 0.22s ease, text-decoration-color 0.22s ease;
     }
 }
 
-/* ====== Layout (no nav; inner pages get a single way home) ====== */
+/* ====== Layout (no nav; inner pages get a signature that links home, "Nixon Hanna / blog" on posts) ====== */
 .site-header {
     width: 100%;
     margin: 0;
-    padding: 28px 32px 0;
+    padding: 18px 32px 0;
     display: flex;
-    gap: 1.25rem;
-    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif;
+    align-items: baseline;
+    gap: .55rem;
+    font-family: Newsreader, Georgia, "Times New Roman", serif;
 }
 
 .nav-home {
-    font-size: .85rem;
-    font-weight: 500;
+    display: inline-block;
+    /* 10px above and below: a 44px+ tap target without looking bigger */
+    padding: 10px 0;
+    font-size: 1.05rem;
+    font-variant-caps: all-small-caps;
+    letter-spacing: .07em;
     color: var(--muted);
-    text-decoration: none;
+    text-decoration: underline transparent 1px;
+    text-underline-offset: .28em;
 }
 
-.nav-home:hover {
+.nav-home:hover,
+.nav-home:focus-visible {
     color: var(--ink);
+    text-decoration-color: currentColor;
+}
+
+/* The signature: the name in the title face */
+.nav-sig {
+    font-family: Fraunces, Georgia, serif;
+    font-weight: 600;
+    font-size: 1.1rem;
+    font-variant-caps: normal;
+    letter-spacing: 0;
+    color: var(--ink);
+}
+
+.crumb-sep {
+    color: var(--muted);
 }
 
 .content {
@@ -1198,8 +1219,7 @@ body::before {
     display: flex;
     flex-direction: column;
     min-height: 60vh;
-    font-family: "EB Garamond", Garamond, Georgia, "Times New Roman", serif;
-    /* EB Garamond reads small, so it runs a little larger than the old Georgia fallback did */
+    font-family: Newsreader, Georgia, "Times New Roman", serif;
     font-size: 1.18rem;
     container-type: inline-size;
     container-name: site-main;
@@ -1636,15 +1656,13 @@ blockquote p:not(:last-child) {
     }
 }
 
-/* ====== Tag Filter (UNION / OR) ====== */
+/* ====== Tag filter (one tag at a time; the script in blog.astro does the filtering) ====== */
 .tag-filter {
     display: flex;
     flex-wrap: wrap;
     gap: .5rem;
     margin: 0 0 1rem 0;
     position: relative;
-    padding-right: 80px;
-    /* Make room for reset button */
 }
 
 .tag-filter-tags {
@@ -1677,156 +1695,15 @@ blockquote p:not(:last-child) {
     background: var(--surface-hover);
 }
 
-.tag-filter .reset {
-    position: absolute;
-    top: 0;
-    right: 0;
-    margin-left: 0;
-    color: var(--ink);
-    font-family: inherit;
-    font-weight: inherit;
-    -webkit-tap-highlight-color: transparent;
-    -webkit-appearance: none;
-    appearance: none;
-}
-
 /* Ensure all buttons use theme colors on iOS */
 button {
     color: var(--ink);
     -webkit-tap-highlight-color: transparent;
 }
 
-button[type="reset"],
-button.reset {
-    color: var(--ink);
-    -webkit-appearance: none;
-    appearance: none;
-}
-
 #filters input:checked+label.tag {
     border-color: var(--tag-checked-border);
     background: var(--tag-checked-bg);
-}
-
-/* When ANY checkbox is checked, start hidden… */
-main:has(#tag-css:checked, #tag-web:checked, #tag-writing:checked, #tag-career:checked, #tag-personal:checked) .post {
-    display: none;
-}
-
-/* …then show posts that match ANY selected tag (UNION) */
-main:has(#tag-css:checked) .post[data-tags~="css"] {
-    display: grid;
-}
-
-main:has(#tag-web:checked) .post[data-tags~="web"] {
-    display: grid;
-}
-
-main:has(#tag-writing:checked) .post[data-tags~="writing"] {
-    display: grid;
-}
-
-main:has(#tag-career:checked) .post[data-tags~="career"] {
-    display: grid;
-}
-
-main:has(#tag-personal:checked) .post[data-tags~="personal"] {
-    display: grid;
-}
-
-/* ====== Search ====== */
-.search-wrap {
-    display: grid;
-    place-content: start center;
-    min-height: auto;
-    margin: 0 0 16px 0;
-}
-
-.searchbar {
-    display: flex;
-    align-items: center;
-    gap: .5rem;
-    font-size: 1rem;
-    line-height: 1.4;
-    width: 100%;
-    max-width: var(--maxw);
-    border: 1px solid var(--rule);
-    border-radius: 12px;
-    padding: .6rem .8rem;
-    margin: 8px 0 20px 0;
-    background: var(--surface);
-}
-
-.searchbar .icon {
-    display: inline-flex;
-    flex-shrink: 0;
-    align-items: center;
-    justify-content: center;
-    color: var(--ink);
-    opacity: .6;
-}
-
-.searchbar .icon svg {
-    width: 1.1rem;
-    height: 1.1rem;
-    display: block;
-}
-
-.searchbar input {
-    flex: 1 1 auto;
-    width: 100%;
-    min-width: 0;
-    border: 0;
-    outline: 0;
-    font: inherit;
-    line-height: 1.4;
-    background: transparent;
-    color: var(--ink);
-    padding: .05em 0 .1em 0;
-}
-
-.searchbar input::placeholder {
-    color: var(--muted);
-}
-
-/* results area; hidden until query typed */
-.search-results.is-empty {
-    display: none;
-}
-
-/* ====== Inline Search Mode ====== */
-.inline-search {
-    display: none;
-}
-
-.content.is-search-open {
-    display: grid;
-    place-items: center;
-    min-height: 100vh;
-    padding-top: 0;
-    padding-bottom: 0;
-}
-
-.content.is-search-open>*:not(.inline-search) {
-    display: none !important;
-}
-
-.content.is-search-open>.inline-search {
-    display: grid;
-    width: 100%;
-    max-width: none;
-    min-height: 0;
-    place-content: center;
-}
-
-/* Override search page defaults when inline */
-.content.is-search-open .inline-search {
-    min-height: 0;
-}
-
-/* Remove default max-width constraint while search is open */
-.content.is-search-open>* {
-    max-width: none;
 }
 
 /* ====== Responsive ====== */
@@ -1846,16 +1723,6 @@ main:has(#tag-personal:checked) .post[data-tags~="personal"] {
     margin-bottom: 12px;
 }
 
-.blog-head .search-wrap {
-    margin: 0;
-}
-
-.blog-head .searchbar {
-    width: 100%;
-    max-width: 360px;
-    margin: 0;
-}
-
 .blog-empty-feedback {
     margin: 1.25rem 0 0;
     padding: 0.65rem 0.85rem;
@@ -1873,7 +1740,7 @@ main:has(#tag-personal:checked) .post[data-tags~="personal"] {
 
 @media (max-width:720px) {
     .site-header {
-        padding: 20px 16px 0;
+        padding: 10px 16px 0;
     }
 }
 

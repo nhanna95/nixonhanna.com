@@ -19,24 +19,11 @@ const tagDescriptions = getTagDescriptions();
 <BaseLayout title="Blog" path="/blog.html">
     <div class="blog-head">
         <h1 class="h1">Blog</h1>
-        <div class="search-wrap">
-            <form class="searchbar" role="search" aria-label="Search blog posts" onsubmit="return false;">
-                <span class="icon" aria-hidden="true">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="11" cy="11" r="8" />
-                        <path d="m21 21-4.3-4.3" />
-                    </svg>
-                </span>
-                <input id="q" type="search" placeholder="Search posts" autocomplete="off" />
-            </form>
-        </div>
     </div>
 
-    <!-- Tag Filter Bar (UNION) -->
+    <!-- Tag filter: one tag at a time (click it again to show everything) -->
     <form id="filters" class="tag-filter" aria-label="Filter posts by tag">
         <div id="filter-tag-controls" class="tag-filter-tags"></div>
-        <button type="reset" class="tag reset">Reset</button>
     </form>
 
     <div class="callout callout--notice">
@@ -50,20 +37,17 @@ const tagDescriptions = getTagDescriptions();
         <!-- Posts injected client-side from build-time data below -->
     </section>
 
-    <p id="blog-empty-feedback" class="blog-empty-feedback" role="status" aria-live="polite" hidden>No posts match your
-        search or filters. Try different keywords, adjust tags, or reset filters.</p>
+    <p id="blog-empty-feedback" class="blog-empty-feedback" role="status" aria-live="polite" hidden>No posts have that tag yet.</p>
 
     <script is:inline>
         function updateBlogListEmptyState() {
             const feedback = document.getElementById('blog-empty-feedback');
-            const q = document.getElementById('q');
             const filters = document.getElementById('filters');
             const listEl = document.getElementById('post-list');
             if (!feedback || !listEl) return;
 
-            const hasSearch = !!(q && q.value.trim());
             const hasTags = !!(filters && filters.querySelectorAll('input[type="checkbox"]:checked').length);
-            if (!hasSearch && !hasTags) {
+            if (!hasTags) {
                 feedback.hidden = true;
                 return;
             }
@@ -74,200 +58,6 @@ const tagDescriptions = getTagDescriptions();
             feedback.hidden = anyVisible;
         }
 
-        // Client-side search on blog list (searches titles, tags, and content)
-        (function () {
-            const q = document.getElementById('q');
-            const list = document.getElementById('post-list');
-            const welcome = document.getElementById('welcome-post');
-            if (!q) return;
-
-            // Store content for each post
-            const postContentCache = new Map();
-
-            // Fetch and cache content for all posts
-            function fetchPostContent(url, postElement) {
-                if (postContentCache.has(url)) return;
-
-                fetch(url)
-                    .then(r => r.ok ? r.text() : Promise.reject())
-                    .then(html => {
-                        const tmp = document.createElement('div');
-                        tmp.innerHTML = html;
-                        const entry = tmp.querySelector('article.entry') || tmp;
-                        const text = (entry.textContent || '').trim();
-                        postContentCache.set(url, text);
-                        // Store in data attribute for search
-                        postElement.setAttribute('data-content', text);
-                    })
-                    .catch(() => {
-                        // If fetch fails, just set empty content
-                        postContentCache.set(url, '');
-                        postElement.setAttribute('data-content', '');
-                    });
-            }
-
-            function filter() {
-                const term = q.value.trim().toLowerCase();
-                const welcomeSection = document.getElementById('welcome-post');
-                const listEl = document.getElementById('post-list');
-                const welcomeEl = document.getElementById('welcome-post');
-
-                if (!term) {
-                    // If no search term, show all posts and welcome section
-                    const allRows = [];
-                    if (listEl) {
-                        allRows.push(...listEl.querySelectorAll('.post'));
-                    }
-                    if (welcomeEl) {
-                        allRows.push(...welcomeEl.querySelectorAll('.post'));
-                    }
-                    allRows.forEach(r => {
-                        r.style.removeProperty('display');
-                    });
-                    // Show welcome section
-                    if (welcomeSection) {
-                        welcomeSection.style.display = '';
-                    }
-                    // Show all year headers
-                    if (listEl) {
-                        listEl.querySelectorAll('.year').forEach(h => h.style.display = '');
-                    }
-                    // Show coming soon message if no posts
-                    const comingSoonMsg = listEl?.querySelector('#coming-soon-message');
-                    if (comingSoonMsg && listEl.querySelectorAll('.post').length === 0) {
-                        comingSoonMsg.style.display = '';
-                    }
-                    updateBlogListEmptyState();
-                    return;
-                }
-
-                // Hide welcome section when searching
-                if (welcomeSection) {
-                    welcomeSection.style.display = 'none';
-                }
-
-                // Hide coming soon message when searching
-                const comingSoonMsg = listEl?.querySelector('#coming-soon-message');
-                if (comingSoonMsg) {
-                    comingSoonMsg.style.display = 'none';
-                }
-
-                // Collect all posts from post-list section only (exclude welcome)
-                const allRows = [];
-                if (listEl) {
-                    allRows.push(...listEl.querySelectorAll('.post'));
-                }
-
-                // Also show/hide year headers based on whether any posts in that year match
-                const yearHeaders = [];
-                if (listEl) {
-                    yearHeaders.push(...listEl.querySelectorAll('.year'));
-                }
-
-                allRows.forEach(r => {
-                    // Search tags, title, and content
-                    const titleEl = r.querySelector('.post-title');
-                    const title = titleEl ? (titleEl.textContent || titleEl.innerText || '').trim() : '';
-                    const tagsData = r.getAttribute('data-tags');
-                    const content = (r.getAttribute('data-content') || '').trim();
-
-                    let matches = false;
-
-                    // Check title
-                    if (title.toLowerCase().includes(term)) {
-                        matches = true;
-                    }
-
-                    // Check tags
-                    if (!matches && tagsData) {
-                        try {
-                            const tags = JSON.parse(tagsData);
-                            // Check if search term matches any tag (full or partial)
-                            matches = tags.some(tag => {
-                                // Lowercase tag for comparison
-                                const tagLower = tag.toLowerCase();
-                                // Check if search term is in tag (handles "web" matching "web development")
-                                // or if tag is in search term (handles "web development" matching "web development")
-                                return tagLower.includes(term) || term.includes(tagLower);
-                            });
-                        } catch (e) {
-                            // Fallback for old format if any exist
-                            const tagsString = tagsData.toLowerCase();
-                            matches = tagsString.includes(term);
-                        }
-                    }
-
-                    // Check content
-                    if (!matches && content) {
-                        if (content.toLowerCase().includes(term)) {
-                            matches = true;
-                        }
-                    }
-
-                    // Show/hide the post - preserve original display style
-                    if (matches) {
-                        r.style.removeProperty('display');
-                    } else {
-                        r.style.display = 'none';
-                    }
-                });
-
-                // Show/hide year headers if all their posts are hidden
-                yearHeaders.forEach(yearHeader => {
-                    let hasVisiblePost = false;
-                    let currentEl = yearHeader.nextElementSibling;
-                    while (currentEl && !currentEl.classList.contains('year')) {
-                        if (currentEl.classList.contains('post') && currentEl.style.display !== 'none') {
-                            hasVisiblePost = true;
-                            break;
-                        }
-                        currentEl = currentEl.nextElementSibling;
-                    }
-                    yearHeader.style.display = hasVisiblePost ? '' : 'none';
-                });
-                updateBlogListEmptyState();
-            }
-
-            // Wait for posts to be rendered before setting up the filter
-            // Use a more reliable approach: check periodically or wait for posts to appear
-            function setupFilterAfterPostsLoad() {
-                const listEl = document.getElementById('post-list');
-                const welcomeEl = document.getElementById('welcome-post');
-                const postsExist = (listEl && listEl.querySelectorAll('.post').length > 0) ||
-                    (welcomeEl && welcomeEl.querySelectorAll('.post').length > 0);
-
-                if (postsExist) {
-                    // Posts are loaded, set up the filter
-                    q.addEventListener('input', filter);
-                    // Also trigger filter on page load if there's a search term
-                    if (q.value.trim()) {
-                        filter();
-                    }
-                } else {
-                    // Check again after a short delay
-                    setTimeout(setupFilterAfterPostsLoad, 100);
-                }
-            }
-
-            // Start checking for posts
-            setupFilterAfterPostsLoad();
-
-            // Pre-fetch content for all posts (including welcome post)
-            setTimeout(() => {
-                const welcome = document.getElementById('welcome-post');
-                const allRows = [...list.querySelectorAll('.post')];
-                if (welcome) {
-                    allRows.push(...welcome.querySelectorAll('.post'));
-                }
-                allRows.forEach(r => {
-                    const link = r.querySelector('.post-title');
-                    if (link) {
-                        const url = link.getAttribute('href');
-                        if (url) fetchPostContent(url, r);
-                    }
-                });
-            }, 500);
-        })();
     </script>
 
     <script is:inline define:vars={{ posts, tagDescriptions }}>
@@ -459,7 +249,7 @@ const tagDescriptions = getTagDescriptions();
                 const rows = [...list.querySelectorAll('.post')];
 
                 if (selected.length === 0) {
-                    // Reset: show all posts and welcome section
+                    // No tag selected: show all posts and the welcome section
                     rows.forEach(r => r.style.display = 'grid');
                     if (welcomeSection) {
                         welcomeSection.style.display = '';
@@ -517,9 +307,16 @@ const tagDescriptions = getTagDescriptions();
                 updateBlogListEmptyState();
             }
 
-            filters.addEventListener('change', applyFilter);
-            filters.addEventListener('reset', function () {
-                setTimeout(applyFilter, 0);
+            // One tag at a time: checking a tag clears the others.
+            function selectOnly(checkbox) {
+                filters.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = cb === checkbox);
+            }
+
+            filters.addEventListener('change', function (e) {
+                if (e.target.checked) selectOnly(e.target);
+                // Keep the URL in step, so a reload (or a shared link) shows the same filter.
+                history.replaceState(history.state, '', e.target.checked ? '#' + e.target.id : location.pathname + location.search);
+                applyFilter();
             });
             applyFilter();
 
@@ -530,7 +327,7 @@ const tagDescriptions = getTagDescriptions();
                     const tagId = hash.substring(1); // Remove the #
                     const checkbox = document.getElementById(tagId);
                     if (checkbox) {
-                        checkbox.checked = true;
+                        selectOnly(checkbox);
                         applyFilter();
                         // Scroll to filters section
                         setTimeout(() => {
@@ -567,7 +364,7 @@ const tagDescriptions = getTagDescriptions();
                         const tagId = href.substring(1);
                         const checkbox = document.getElementById(tagId);
                         if (checkbox) {
-                            checkbox.checked = true;
+                            selectOnly(checkbox);
                             applyFilter();
                             window.location.hash = tagId;
                             setTimeout(() => {
