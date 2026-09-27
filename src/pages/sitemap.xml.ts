@@ -7,8 +7,6 @@ const staticPages = [
     { path: '/contact.html', changefreq: 'monthly', priority: '0.7' },
     { path: '/archive.html', changefreq: 'monthly', priority: '0.7' },
     { path: '/resume/', changefreq: 'monthly', priority: '0.7' },
-    { path: '/meet/', changefreq: 'monthly', priority: '0.6' },
-    { path: '/feedback/', changefreq: 'monthly', priority: '0.6' },
 ];
 
 export const GET: APIRoute = async () => {
