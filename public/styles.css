@@ -29,6 +29,25 @@
     unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
+/* EB Garamond (SIL OFL): body text. Latin subset, variable weight 400–700, roman and italic. */
+@font-face {
+    font-family: 'EB Garamond';
+    font-style: normal;
+    font-weight: 400 700;
+    font-display: swap;
+    src: url(/fonts/ebgaramond-latin.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+    font-family: 'EB Garamond';
+    font-style: italic;
+    font-weight: 400 700;
+    font-display: swap;
+    src: url(/fonts/ebgaramond-italic-latin.woff2) format('woff2');
+    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 /* cyrillic-ext */
 @font-face {
     font-family: 'Inter';
@@ -947,22 +966,82 @@
 /* One theme: warm paper, espresso ink, sage links, an ochre for accents (Sugar Shack / espresso crema). */
 :root {
     color-scheme: light;
-    --bg: #f3ecdf;
-    --ink: #2b241d;
-    --muted: #7a6e60;
-    --rule: #dccfbb;
-    --sidebar-bg: #f3ecdf;
+    /* Yang-Yang (default) theme: pale green-cream paper with the deep green of his shorts for links, mustard accent from his shirt */
+    --bg: #eceedd;
+    --ink: #1b2616;
+    --muted: #5c6653;
+    --rule: #d4d9c0;
+    --sidebar-bg: #eceedd;
     --maxw: 820px;
     --col: 900px;
-    --link: #556f42;
-    --link-hover: #405633;
-    --tagline: #5d6d48;
-    --accent-warm: #c4823a;
-    --tag-checked-border: #b9c7a6;
-    --tag-checked-bg: #e3e8d6;
-    --callout-bg: #ebe2d0;
-    --surface: #f9f5ec;
-    --surface-hover: #ede4d3;
+    --link: #2f6337;
+    --link-hover: #224a28;
+    --tagline: #6f5d16;
+    --accent-warm: #c9a22a;
+    --tag-checked-border: #b8c9a8;
+    --tag-checked-bg: #dfe6d0;
+    --callout-bg: #e1e5cf;
+    --surface: #f5f6ec;
+    --surface-hover: #e3e6d3;
+}
+
+/* Per-photo themes: the home-page still sets data-still on <html> (default = the base theme above, for Yang-Yang). */
+:root[data-still="balloons"] {
+    --bg: #f5e8e4;
+    --ink: #2e1a1a;
+    --muted: #7a5a57;
+    --rule: #e2c9c3;
+    --link: #962626;
+    --link-hover: #761c1c;
+    --tagline: #9a4152;
+    --accent-warm: #d17a8a;
+    --tag-checked-border: #e0b3b8;
+    --tag-checked-bg: #f3dcdf;
+    --callout-bg: #efdcd6;
+    --surface: #fbf3f0;
+    --surface-hover: #efdfd9;
+}
+
+:root[data-still="perfectdays"] {
+    --bg: #f2e7d0;
+    --ink: #2a2118;
+    --muted: #6f604c;
+    --rule: #dfcfae;
+    --link: #2f4a7a;
+    --link-hover: #213559;
+    --tagline: #7d5f24;
+    --accent-warm: #c08a2e;
+    --tag-checked-border: #b6c3d9;
+    --tag-checked-bg: #dde4ee;
+    --callout-bg: #eadcbd;
+    --surface: #f8f0de;
+    --surface-hover: #eadfc6;
+}
+
+:root[data-still="record"] {
+    /* darkroom: the only dark theme; the grain lightens the paper here instead of darkening it */
+    color-scheme: dark;
+    --bg: #131313;
+    --ink: #e8e8e8;
+    --muted: #a3a3a3;
+    --rule: #2d2d2d;
+    --link: #cdcdcd;
+    --link-hover: #ffffff;
+    --tagline: #cdcdcd;
+    --accent-warm: #6d6d6d;
+    --tag-checked-border: #4a4a4a;
+    --tag-checked-bg: #262626;
+    --callout-bg: #1e1e1e;
+    --surface: #1e1e1e;
+    --surface-hover: #282828;
+    --tex-blend: screen;
+    --tex-invert: 1;
+}
+
+/* the paper colour (also covers the overscroll area); fades when the theme changes */
+html {
+    background-color: var(--bg);
+    transition: background-color .22s ease;
 }
 
 * {
@@ -982,20 +1061,24 @@ body {
     margin: 0;
     font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif;
     color: var(--ink);
-    background: var(--bg);
+    /* transparent: the paper colour is on <html>, and the texture layer sits between it and the content */
+    background: transparent;
     line-height: 1.6;
 }
 
-/* Paper grain: a fixed, non-interactive noise layer over everything, multiplied in at low opacity */
+/* Paper grain: a fixed, non-interactive noise layer behind the content, multiplied into the paper colour.
+   (--tex-blend / --tex-invert let a dark theme lighten instead of darken.) */
 body::before {
     content: "";
     position: fixed;
     inset: 0;
-    z-index: 9000;
+    /* behind the content, above the paper colour: textures the paper, never the photos */
+    z-index: -1;
     pointer-events: none;
-    opacity: .07;
-    mix-blend-mode: multiply;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    opacity: .15;
+    mix-blend-mode: var(--tex-blend, multiply);
+    filter: invert(var(--tex-invert, 0));
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' seed='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .9 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
     background-size: 180px 180px;
 }
 
@@ -1057,7 +1140,6 @@ body::before {
 
     body,
     .site-header,
-    .headshot-frame,
     .searchbar,
     .searchbar input,
     .callout,
@@ -1116,8 +1198,9 @@ body::before {
     display: flex;
     flex-direction: column;
     min-height: 60vh;
-    font-family: Garamond, Georgia, "Times New Roman", serif;
-    font-size: 1.075rem;
+    font-family: "EB Garamond", Garamond, Georgia, "Times New Roman", serif;
+    /* EB Garamond reads small, so it runs a little larger than the old Georgia fallback did */
+    font-size: 1.18rem;
     container-type: inline-size;
     container-name: site-main;
 }
@@ -1125,11 +1208,6 @@ body::before {
 .content>* {
     max-width: none;
     width: 100%;
-}
-
-/* Home: block flow so the framed headshot can float beside the text at every size */
-.content:has(.headshot-frame) {
-    display: block;
 }
 
 /* ====== Typography ====== */
@@ -1755,7 +1833,7 @@ main:has(#tag-personal:checked) .post[data-tags~="personal"] {
 @media (max-width:980px) {
     .content {
         padding: 44px 20px 32px;
-        font-size: 1.05rem;
+        font-size: 1.15rem;
     }
 }
 
@@ -1799,34 +1877,60 @@ main:has(#tag-personal:checked) .post[data-tags~="personal"] {
     }
 }
 
-/* ====== Headshot (home): floats beside the text, square corners, soft shadow ====== */
-.headshot-frame {
-    display: block;
-    position: relative;
-    float: right;
-    width: clamp(120px, 30%, 220px);
-    margin: .35rem 0 1rem 1.75rem;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, .06), 0 10px 28px -14px rgba(0, 0, 0, .35);
-    shape-outside: margin-box;
+/* ====== Home-page still: full column width between "Who" and "What" ====== */
+.still {
+    width: 100%;
+    margin: 1.8rem 0 2.2rem;
 }
 
-.headshot-frame .content-headshot {
+.still img {
     display: block;
     width: 100%;
     height: auto;
-    aspect-ratio: 675 / 900;
-    object-fit: cover;
-    object-position: center 20%;
-    background-color: var(--bg);
 }
 
-@media (max-width:720px) {
-    .headshot-frame {
-        width: 38vw;
-        min-width: 110px;
-        max-width: 170px;
-        margin: 0 0 12px 14px;
-    }
+/* the still is a button: click to see the next photo (and theme) */
+.still-cycle {
+    display: block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+}
+
+.still-cycle {
+    position: relative;
+}
+
+/* film credit that follows the cursor: plain small text on a flat block */
+.still-film {
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 1px 5px;
+    background: var(--ink);
+    color: var(--bg);
+    font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: .72rem;
+    line-height: 1.5;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
+    /* hides at once when the pointer leaves */
+    transition: opacity .15s ease;
+}
+
+.still-film.is-on {
+    opacity: 1;
+    /* shows only after the pointer has rested on the photo for a moment */
+    transition-delay: .6s;
+}
+
+.still-cycle:focus-visible {
+    outline: 3px solid var(--link);
+    outline-offset: 4px;
 }
 
 /* Home: plain list of links in the "find me on" section */

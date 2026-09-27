@@ -27,19 +27,24 @@ export function formatDate(date: Date): string {
 }
 
 /**
- * When a source file last changed: the date of its last commit, or now if it has
- * uncommitted edits. Falls back to now when git isn't available (e.g. a CI checkout without history).
+ * The calendar day a source file last changed, in the build machine's local time zone: the day
+ * of its last commit, or today if it has uncommitted edits. Returned as UTC midnight of that day
+ * so formatDate (which formats in UTC, for front-matter dates) prints the same day. Falls back to
+ * today when git isn't available (e.g. a CI checkout without history).
  */
 export function lastChanged(relPath: string): Date {
+    const localDay = (d: Date) => d.toLocaleDateString('en-CA'); // YYYY-MM-DD in local time
+    let day = localDay(new Date());
     try {
         const dirty = execSync(`git status --porcelain -- ${relPath}`, { encoding: 'utf8' }).trim() !== '';
-        if (dirty) return new Date();
-        const iso = execSync(`git log -1 --format=%cI -- ${relPath}`, { encoding: 'utf8' }).trim();
-        if (iso) return new Date(iso);
+        if (!dirty) {
+            const committed = execSync(`git log -1 --date=format-local:%Y-%m-%d --format=%cd -- ${relPath}`, { encoding: 'utf8' }).trim();
+            if (committed) day = committed;
+        }
     } catch {
-        /* fall through */
+        /* keep today */
     }
-    return new Date();
+    return new Date(`${day}T00:00:00Z`);
 }
 
 export function isoDate(date: Date): string {

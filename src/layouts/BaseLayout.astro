@@ -56,37 +56,52 @@ const ogDesc = description ?? SITE_DESCRIPTION;
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={ogDesc} />
     <meta name="twitter:image" content={absoluteUrl('/og-link-icon.png')} />
+    <script is:inline>
+        // Theme picked from the home-page still, remembered for this visit (see public/site.js).
+        (function () {
+            try {
+                var k = sessionStorage.getItem('still');
+                if (k && /^(balloons|perfectdays|record)$/.test(k)) document.documentElement.setAttribute('data-still', k);
+            } catch (e) { }
+        })();
+    </script>
     <style is:inline>
         /* Sync with :root in styles.css: paint the page color before the stylesheet arrives */
         html {
-            background-color: #f3ecdf;
-            color: #2b241d;
+            background-color: #eceedd;
+            color: #1b2616;
         }
 
-        /* Framed headshot on the home page: sized in-document, before styles.css, to avoid a frame of unstyled image */
-        .headshot-frame {
-            float: right;
-            width: clamp(120px, 32%, 220px);
-            margin: .35rem 0 1rem 1.5rem;
+        html[data-still="balloons"] {
+            background-color: #f5e8e4;
+            color: #2e1a1a;
         }
 
-        .content-headshot {
+        html[data-still="perfectdays"] {
+            background-color: #f2e7d0;
+            color: #2a2118;
+        }
+
+        html[data-still="record"] {
+            background-color: #131313;
+            color: #e8e8e8;
+        }
+
+        /* Home-page still: paint it at its own proportions before styles.css arrives */
+        .still img {
             display: block;
             width: 100%;
             height: auto;
-            object-fit: cover;
-            aspect-ratio: 675 / 900;
         }
 
-        .content-headshot {
-            background-color: #f3ecdf;
-        }
     </style>
     <link rel="preload" as="font" type="font/woff2" crossorigin
         href="/fonts/6NUu8FyLNQOQZAnv9bYEvDiIdE9Ea92uemAk_WBq8U_9v0c2Wa0K7iN7iQcIfJD58njt0oc7qv8oRcTn.woff2" />
     <link rel="preload" as="font" type="font/woff2" crossorigin
         href="/fonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2" />
-    {path === '/' && <link rel="preload" as="image" href={`/headshop-900w.jpg?v=${BUILD_V}`} fetchpriority="high" />}
+    <link rel="preload" as="font" type="font/woff2" crossorigin
+        href="/fonts/ebgaramond-latin.woff2" />
+    {path === '/' && <link rel="preload" as="image" href={`/stills/yangyang.jpg?v=${BUILD_V}`} fetchpriority="high" />}
     <link rel="stylesheet" href={`/styles.css?v=${BUILD_V}`} />
     <!-- No view-transition meta: default Turbo nav used root snapshots and caused font/headshot glitches. -->
     <meta name="turbo-cache-control" content="no-preview">
