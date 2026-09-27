@@ -2,9 +2,8 @@ import type { CollectionEntry } from 'astro:content';
 import { getCollection } from 'astro:content';
 import { execSync } from 'node:child_process';
 
-// Canonical origin. Override with SITE_URL=https://nixon.fyi for the preview host (see wrangler.jsonc env.fyi).
-export const SITE_URL = (import.meta.env.SITE_URL as string | undefined) ?? 'https://nixonhanna.com';
-export const IS_CANONICAL_HOST = SITE_URL === 'https://nixonhanna.com';
+// Canonical origin. nixonhanna.com and the other hosts redirect here (worker/index.js).
+export const SITE_URL = 'https://nixon.fyi';
 export const SITE_TITLE = 'Nixon Hanna';
 export const SITE_DESCRIPTION = 'Personal website and blog';
 

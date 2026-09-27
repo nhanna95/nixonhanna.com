@@ -123,16 +123,10 @@ const tagDescriptions = getTagDescriptions();
                 filterTagControls.appendChild(label);
             });
 
-            // Pull out the welcome post and render it separately
-            // Check both URL and title for "welcome" to be more robust
-            const welcomePost = posts.find(p =>
-                p.url.includes('welcome') ||
-                (p.title && p.title.toLowerCase().includes('welcome'))
-            );
-            const regularPosts = posts.filter(p =>
-                !p.url.includes('welcome') &&
-                !(p.title && p.title.toLowerCase().includes('welcome'))
-            );
+            // The welcome post (src/content/posts/welcome.md) sits in its own "About My Blog" section.
+            const WELCOME_URL = '/posts/welcome/';
+            const welcomePost = posts.find(p => p.url === WELCOME_URL);
+            const regularPosts = posts.filter(p => p.url !== WELCOME_URL);
 
             if (welcomePost) {
                 const h2 = document.createElement('h2');
@@ -346,37 +340,18 @@ const tagDescriptions = getTagDescriptions();
             // Wait a bit for filters to be fully rendered
             setTimeout(selectTagFromHash, 100);
 
-            // Handle hash changes
-            window.addEventListener('hashchange', function () {
+            // Handle hash changes. Turbo re-runs this script on every visit to the blog, so swap out
+            // the previous visit's handler instead of stacking another one on window.
+            if (window.__blogHashChange) window.removeEventListener('hashchange', window.__blogHashChange);
+            window.__blogHashChange = function () {
+                if (!filters.isConnected) return; // navigated away from the blog
                 // Uncheck all first
                 filters.querySelectorAll('input[type="checkbox"]').forEach(cb => cb.checked = false);
                 applyFilter();
                 // Then select new tag
                 setTimeout(selectTagFromHash, 50);
-            });
-
-            // Handle clicks on tag links (both in post pages and blog listing)
-            document.addEventListener('click', function (e) {
-                if (e.target.classList.contains('tag-link')) {
-                    const href = e.target.getAttribute('href');
-                    if (href && href.startsWith('#tag-')) {
-                        e.preventDefault();
-                        const tagId = href.substring(1);
-                        const checkbox = document.getElementById(tagId);
-                        if (checkbox) {
-                            selectOnly(checkbox);
-                            applyFilter();
-                            window.location.hash = tagId;
-                            setTimeout(() => {
-                                const filterEl = document.getElementById('filters');
-                                if (filterEl) {
-                                    filterEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                                }
-                            }, 100);
-                        }
-                    }
-                }
-            });
+            };
+            window.addEventListener('hashchange', window.__blogHashChange);
         })();
     </script>
 </BaseLayout>

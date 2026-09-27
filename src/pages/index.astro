@@ -32,7 +32,7 @@ const STILLS = [
         <p>Someone who's incredibly interested in all aspects of the human condition.</p>
 
         <figure class="still">
-            <button type="button" class="still-cycle" aria-label="Show a different photo" data-stills={JSON.stringify(STILLS)} data-film={STILLS[0].film || undefined}>
+            <button type="button" class="still-cycle" aria-label="Show a different photo" data-stills={JSON.stringify(STILLS.map((s) => ({ ...s, src: `${s.src}?v=${BUILD_V}` })))} data-film={STILLS[0].film || undefined}>
                 <img src={`${STILLS[0].src}?v=${BUILD_V}`} width="1600" height="900" alt={STILLS[0].alt} decoding="async">
                 <span class="still-film" aria-hidden="true"></span>
             </button>

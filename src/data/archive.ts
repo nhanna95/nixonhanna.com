@@ -1,4 +1,4 @@
-// Archive entries, newest first. Rendered in full on /archive.html and as a short list on the home page.
+// Archive entries, newest first. Rendered on /archive.html.
 export interface ArchiveItem {
     title: string;
     href: string;
@@ -12,13 +12,6 @@ export interface ArchiveItem {
 
 export const archiveItems: ArchiveItem[] = [
     {
-        title: 'Locating Centers of Clusters of Galaxies with Quadruple Images',
-        href: 'https://arxiv.org/abs/2510.11356',
-        date: '2026-10',
-        label: 'Oct 2026',
-        blurb: 'Paper on a new method for estimating the gravitational centers of clusters of galaxies I developed during my freshman summer, alongside Paul L. Schechter, Michael A. McDonald, and Marceau Limousin.',
-    },
-    {
         title: 'The River Feels Colder This Time',
         href: '/the-river-feels-colder-this-time/',
         date: '2026-07',
@@ -31,6 +24,13 @@ export const archiveItems: ArchiveItem[] = [
         date: '2026-05',
         label: 'May 2026',
         blurb: 'Final project for <em>What is The Good Life? Popular Culture and Narrative</em> course; a photo of my dorm in which I analyze how a few key items reflect my view of the good life.',
+    },
+    {
+        title: 'Locating Centers of Clusters of Galaxies with Quadruple Images',
+        href: 'https://arxiv.org/abs/2510.11356',
+        date: '2025-10',
+        label: 'Oct 2025',
+        blurb: 'Paper on a new method for estimating the gravitational centers of clusters of galaxies I developed during my freshman summer, alongside Paul L. Schechter, Michael A. McDonald, and Marceau Limousin.',
     },
     {
         title: 'Nonlinear Instability in Solar Activity: Ellipticity Effects on Sunspot Oscillations',

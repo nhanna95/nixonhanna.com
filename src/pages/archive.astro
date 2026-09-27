@@ -10,7 +10,8 @@ import { archiveItems } from '../data/archive';
         {archiveItems.map((item) => (
             <li>
                 <div class="archive-item-top">
-                    <a class="archive-title" href={item.href}>{item.title}</a>
+                    {/* The photo projects are standalone pages with their own styles: load them fresh, not through Turbo */}
+                    <a class="archive-title" href={item.href} data-turbo={item.href.startsWith('/') ? 'false' : undefined}>{item.title}</a>
                     <time class="archive-date" datetime={item.date}>{item.label}</time>
                 </div>
                 <p set:html={item.blurb} />

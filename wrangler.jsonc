@@ -1,43 +1,31 @@
-// Cloudflare Workers config: static assets + a small router Worker that keeps
-// the Jekyll-era URLs (/about.html, /posts/<slug>/, /meet …) serving exactly
-// as GitHub Pages did — no redirect rewriting of .html URLs.
-// Deploy with: npm run deploy (runs astro build && wrangler deploy)
+// Cloudflare Workers config: the built site (dist/) plus worker/index.js, which runs first on
+// every request. nixon.fyi serves the site; nixonhanna.com, nixon.blog, nixon.contact and the
+// www. hosts redirect to it (the short links /meet and /feedback work on every host).
+// Deploy with: bun run deploy (runs astro build && wrangler deploy)
 {
     "$schema": "node_modules/wrangler/config-schema.json",
     "name": "nixonhanna-com",
-    // Preview URL at https://nixonhanna-com.<account>.workers.dev — optionally set to
-    // false after the custom domain is live to avoid a duplicate public URL.
-    "workers_dev": true,
+    // Off: the custom domains are the only way in, so there's no duplicate *.workers.dev copy.
+    "workers_dev": false,
     "main": "worker/index.js",
     "compatibility_date": "2026-08-29",
     "assets": {
         "directory": "./dist",
         "binding": "ASSETS",
-        // Exact matches only; worker/index.js handles directory indexes,
-        // extensionless fallbacks, and the 404 page.
+        // The Worker runs before assets so it can redirect every request on the old hosts.
+        // It also does directory indexes, extensionless fallbacks and the 404 page itself.
+        "run_worker_first": true,
         "html_handling": "none",
         "not_found_handling": "none"
     },
     "routes": [
+        { "pattern": "nixon.fyi", "custom_domain": true },
+        { "pattern": "www.nixon.fyi", "custom_domain": true },
         { "pattern": "nixonhanna.com", "custom_domain": true },
-        { "pattern": "www.nixonhanna.com", "custom_domain": true }
-    ],
-    "env": {
-        // Preview host: a separate Worker on nixon.fyi. Deploy with `bun run deploy:fyi`
-        // (builds with SITE_URL=https://nixon.fyi so canonical/og/sitemap URLs and the
-        // noindex meta point at the right host). Requires the nixon.fyi zone on this account.
-        "fyi": {
-            "name": "nixon-fyi",
-            "workers_dev": true,
-            "routes": [
-                { "pattern": "nixon.fyi", "custom_domain": true },
-                { "pattern": "www.nixon.fyi", "custom_domain": true },
-                // vanity hosts: root serves the blog / contact page (see hostRoots in worker/index.js)
-                { "pattern": "nixon.blog", "custom_domain": true },
-                { "pattern": "www.nixon.blog", "custom_domain": true },
-                { "pattern": "nixon.contact", "custom_domain": true },
-                { "pattern": "www.nixon.contact", "custom_domain": true }
-            ]
-        }
-    }
+        { "pattern": "www.nixonhanna.com", "custom_domain": true },
+        { "pattern": "nixon.blog", "custom_domain": true },
+        { "pattern": "www.nixon.blog", "custom_domain": true },
+        { "pattern": "nixon.contact", "custom_domain": true },
+        { "pattern": "www.nixon.contact", "custom_domain": true }
+    ]
 }

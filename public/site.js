@@ -30,12 +30,15 @@
         preload(stills[(next + 1) % stills.length].src);
     }
 
-    // Film credit that follows the cursor over the still.
+    // Film credit that follows the cursor over the still. Mouse only: on a phone a tap would pop it
+    // up and leave it stuck, since the "pointer" never leaves (styles.css also hides it without hover).
+    var canHover = window.matchMedia('(hover: hover)');
+
     function placeFilm(btn, e) {
         var label = btn.querySelector('.still-film');
         if (!label) return;
         var film = btn.getAttribute('data-film');
-        if (!film || (!e && !btn.matches(':hover'))) {
+        if (!film || !canHover.matches || (!e && !btn.matches(':hover'))) {
             label.classList.remove('is-on');
             return;
         }
@@ -53,7 +56,8 @@
         label.classList.add('is-on');
     }
 
-    document.addEventListener('mousemove', function (e) {
+    document.addEventListener('pointermove', function (e) {
+        if (e.pointerType !== 'mouse') return;
         var btn = e.target.closest && e.target.closest('.still-cycle');
         if (btn) placeFilm(btn, e);
     });
@@ -65,13 +69,6 @@
             if (label) label.classList.remove('is-on');
         }
     });
-
-    var firstStill = document.querySelector('.still-cycle');
-    if (firstStill) {
-        var list = JSON.parse(firstStill.getAttribute('data-stills'));
-        var at = parseInt(firstStill.getAttribute('data-index') || '0', 10);
-        if (list.length > 1) preload(list[(at + 1) % list.length].src);
-    }
 
     document.addEventListener('click', function (e) {
         var t = e.target;
@@ -114,4 +111,15 @@
             }
         }
     });
+
+    // Warm the next still, so the first click swaps instantly. Last, so a bad data-stills can't stop the
+    // handlers above from being bound. (Runs on full page loads; Turbo visits get it on the first click.)
+    try {
+        var firstStill = document.querySelector('.still-cycle');
+        if (firstStill) {
+            var list = JSON.parse(firstStill.getAttribute('data-stills'));
+            var at = parseInt(firstStill.getAttribute('data-index') || '0', 10);
+            if (list.length > 1) preload(list[(at + 1) % list.length].src);
+        }
+    } catch (e) { }
 })();

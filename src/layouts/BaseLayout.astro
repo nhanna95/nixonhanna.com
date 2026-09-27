@@ -1,6 +1,5 @@
 ---
-import '../styles/tailwind.css';
-import { SITE_DESCRIPTION, SITE_URL, BUILD_V, IS_CANONICAL_HOST, absoluteUrl } from '../lib/site';
+import { SITE_DESCRIPTION, BUILD_V, absoluteUrl } from '../lib/site';
 
 interface Props {
     title?: string;
@@ -10,16 +9,13 @@ interface Props {
     /** Set for blog posts: renders og:type=article with published_time. */
     articleDate?: Date;
     mainAriaLabelledby?: string;
-    /** Extra way-back link shown next to "← hello" (e.g. blog posts → the blog index). */
+    /** Trail link shown after the name in the header (e.g. blog posts → the blog index). */
     backLink?: { href: string; label: string };
 }
 
 const { title, description, path, articleDate, mainAriaLabelledby, backLink } = Astro.props;
 const fullTitle = title ? `${title} — Nixon Hanna` : 'Nixon Hanna';
 const ogDesc = description ?? SITE_DESCRIPTION;
-// The name in the header goes home. Built pages link to the absolute SITE_URL (nixonhanna.com, or nixon.fyi on
-// the preview build) because the vanity hosts serve other pages at "/"; in dev that would jump to the live site.
-const homeHref = import.meta.env.DEV ? '/' : `${SITE_URL}/`;
 
 ---
 
@@ -36,12 +32,12 @@ const homeHref = import.meta.env.DEV ? '/' : `${SITE_URL}/`;
     <link rel="apple-touch-icon" href="/monogram.png" />
 
     <title>{fullTitle}</title>
+    <meta name="description" content={ogDesc} />
+    {path !== '/404.html' && <link rel="canonical" href={absoluteUrl(path)} />}
     <meta property="og:site_name" content="Nixon Hanna" />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={ogDesc} />
     <meta property="og:url" content={absoluteUrl(path)} />
-    {/* Preview host (nixon.fyi): keep search engines from indexing a duplicate of the site */}
-    {!IS_CANONICAL_HOST && <meta name="robots" content="noindex, nofollow" />}
     <!-- 144px og:image: Apple TN3156 — images under 150px wide may show as a small icon in Messages instead of a large preview -->
     <meta property="og:image" content={absoluteUrl('/og-link-icon.png')} />
     <meta property="og:image:type" content="image/png" />
@@ -101,11 +97,10 @@ const homeHref = import.meta.env.DEV ? '/' : `${SITE_URL}/`;
     <link rel="preload" as="font" type="font/woff2" crossorigin
         href="/fonts/6NUu8FyLNQOQZAnv9bYEvDiIdE9Ea92uemAk_WBq8U_9v0c2Wa0K7iN7iQcIfJD58njt0oc7qv8oRcTn.woff2" />
     <link rel="preload" as="font" type="font/woff2" crossorigin
-        href="/fonts/UcC73FwrK3iLTeHuS_nVMrMxCp50SjIa1ZL7W0Q5nw.woff2" />
-    <link rel="preload" as="font" type="font/woff2" crossorigin
         href="/fonts/newsreader-latin.woff2" />
     {path === '/' && <link rel="preload" as="image" href={`/stills/yangyang.jpg?v=${BUILD_V}`} fetchpriority="high" />}
-    <link rel="stylesheet" href={`/styles.css?v=${BUILD_V}`} />
+    {/* data-turbo-track: when a deploy changes these URLs, Turbo does a full reload instead of stacking old and new */}
+    <link rel="stylesheet" href={`/styles.css?v=${BUILD_V}`} data-turbo-track="reload" />
     <!-- No view-transition meta: default Turbo nav used root snapshots and caused font/headshot glitches. -->
     <meta name="turbo-cache-control" content="no-preview">
     <script is:inline>
@@ -127,8 +122,9 @@ const homeHref = import.meta.env.DEV ? '/' : `${SITE_URL}/`;
             }
         })();
     </script>
-    <script is:inline src={`/site.js?v=${BUILD_V}`} defer></script>
-    <script is:inline src="https://cdn.jsdelivr.net/npm/@hotwired/turbo@8.0.13/dist/turbo.es2017-umd.js" defer></script>
+    <script is:inline src={`/site.js?v=${BUILD_V}`} defer data-turbo-track="reload"></script>
+    <script is:inline src="https://cdn.jsdelivr.net/npm/@hotwired/turbo@8.0.13/dist/turbo.es2017-umd.js" defer
+        integrity="sha384-QAE8+h+r6xlBOj4ycVZqyi4DCrTUWWCPCNs6B6qlN1hg5r/f+pepJsfw/Q2ZyBmg" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -137,7 +133,7 @@ const homeHref = import.meta.env.DEV ? '/' : `${SITE_URL}/`;
         plus a trail back to the blog on posts ("Nixon Hanna / blog"). */}
     {path !== '/' && (
         <header class="site-header" id="site-header" aria-label="Breadcrumb">
-            <a class="nav-home nav-sig" href={homeHref}>Nixon Hanna</a>
+            <a class="nav-home nav-sig" href="/">Nixon Hanna</a>
             {backLink && (
                 <>
                     <span class="crumb-sep" aria-hidden="true">/</span>

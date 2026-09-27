@@ -4,7 +4,7 @@ date: 2026-01-09
 substack: https://noxin.substack.com/p/people-will-sacrifice-anything-to
 tags: [Personal Advice, Reflections]
 ---
-This post was inspired by [Hamish McArthur's appearance on the Testpiece Climbing Podcast](https://youtu.be/OLF6nr9QjJ4?si=b782OQltp6WZvaVU&t=4636). The link should bring you to the section in which they discuss this phenomenon. Though, I would strongly recommend the whole episode as it's very insightful despite it technically being about climbing.
+This post was inspired by [Hamish McArthur's appearance on the Testpiece Climbing Podcast](https://youtu.be/OLF6nr9QjJ4?t=4636). The link should bring you to the section in which they discuss this phenomenon. Though, I would strongly recommend the whole episode as it's very insightful despite it technically being about climbing.
 
 Everyone seems to believe success and excellence comes from suffering: locking yourself to your desk in an academic sense or sets and reps in an athletic sense. I believe this is a misconception, an enticing one at that, though. So much so that, I believe I fell into this trap this previous semester. Ironically, doing so proved to be quite detrimental to my productivity and overall success in some sense.
 ### Evading the suffering

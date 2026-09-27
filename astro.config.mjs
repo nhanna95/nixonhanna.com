@@ -1,7 +1,5 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
-import svelte from '@astrojs/svelte';
-import tailwindcss from '@tailwindcss/vite';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -24,7 +22,7 @@ const shortLinks = {
 };
 
 // Dev-only: serve public/<dir>/index.html at /<dir>/ like the production server does
-// (standalone pages: /resume/, photo projects).
+// (standalone pages: the photo projects).
 /** @type {import('vite').Plugin} */
 const publicDirIndex = {
     name: 'public-dir-index',
@@ -44,12 +42,11 @@ const publicDirIndex = {
 
 // https://astro.build/config
 export default defineConfig({
-    site: process.env.SITE_URL ?? 'https://nixonhanna.com',
-    integrations: [svelte()],
+    site: 'https://nixon.fyi',
     vite: {
-        plugins: [shortLinks, publicDirIndex, tailwindcss()],
+        plugins: [shortLinks, publicDirIndex],
     },
-    // 'preserve' keeps the Jekyll-era URLs working unchanged: about.astro -> /about.html,
+    // 'preserve' keeps the Jekyll-era URLs working unchanged: blog.astro -> /blog.html,
     // posts/[slug]/index.astro -> /posts/<slug>/index.html.
     build: {
         format: 'preserve',

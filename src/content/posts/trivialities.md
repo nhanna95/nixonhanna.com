@@ -3,7 +3,7 @@ title: "trivialities"
 subtitle: "a struggle to resolve the conflict between happiness and altruism"
 date: 2026-04-30
 tags: [Reflections, Free Writing]
-substack: https://open.substack.com/pub/noxin/p/trivialities?utm_campaign=post-expanded-share&utm_medium=web
+substack: https://noxin.substack.com/p/trivialities
 ---
 
 it feels weird working in a space where people appear to have such a lack of romanticism about their life. i guess this is true of a lot of fields but feels especially weird when we all claim life is so valuable that we want to spend out lives ensuring it for the rest of humanity.

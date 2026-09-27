@@ -1,4 +1,4 @@
-/* Self-hosted fonts (Inter, Fraunces, Newsreader, Noto Serif; SIL OFL). Paths match /fonts/*.woff2 */
+/* Self-hosted fonts (Inter, Fraunces, Newsreader; SIL OFL). Paths match /fonts/*.woff2 */
 /* vietnamese */
 @font-face {
     font-family: 'Fraunces';
@@ -259,712 +259,8 @@
     unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
-/* cyrillic-ext */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: italic;
-    font-weight: 400;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6faw1J5X9T9RW6j9bNfFIMZhhWnFTyNZIQD1-_P3Lct_NFiQhhYQ.woff2) format('woff2');
-    unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
-}
-
-/* cyrillic */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: italic;
-    font-weight: 400;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6faw1J5X9T9RW6j9bNfFIMZhhWnFTyNZIQD1-_P3vct_NFiQhhYQ.woff2) format('woff2');
-    unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
-}
-
-/* greek-ext */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: italic;
-    font-weight: 400;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6faw1J5X9T9RW6j9bNfFIMZhhWnFTyNZIQD1-_P3Pct_NFiQhhYQ.woff2) format('woff2');
-    unicode-range: U+1F00-1FFF;
-}
-
-/* greek */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: italic;
-    font-weight: 400;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6faw1J5X9T9RW6j9bNfFIMZhhWnFTyNZIQD1-_P3zct_NFiQhhYQ.woff2) format('woff2');
-    unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
-}
-
-/* math */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: italic;
-    font-weight: 400;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6faw1J5X9T9RW6j9bNfFIMZhhWnFTyNZIQD1-_PwPct_NFiQhhYQ.woff2) format('woff2');
-    unicode-range: U+0302-0303, U+0305, U+0307-0308, U+0310, U+0312, U+0315, U+031A, U+0326-0327, U+032C, U+032F-0330, U+0332-0333, U+0338, U+033A, U+0346, U+034D, U+0391-03A1, U+03A3-03A9, U+03B1-03C9, U+03D1, U+03D5-03D6, U+03F0-03F1, U+03F4-03F5, U+2016-2017, U+2034-2038, U+203C, U+2040, U+2043, U+2047, U+2050, U+2057, U+205F, U+2070-2071, U+2074-208E, U+2090-209C, U+20D0-20DC, U+20E1, U+20E5-20EF, U+2100-2112, U+2114-2115, U+2117-2121, U+2123-214F, U+2190, U+2192, U+2194-21AE, U+21B0-21E5, U+21F1-21F2, U+21F4-2211, U+2213-2214, U+2216-22FF, U+2308-230B, U+2310, U+2319, U+231C-2321, U+2336-237A, U+237C, U+2395, U+239B-23B7, U+23D0, U+23DC-23E1, U+2474-2475, U+25AF, U+25B3, U+25B7, U+25BD, U+25C1, U+25CA, U+25CC, U+25FB, U+266D-266F, U+27C0-27FF, U+2900-2AFF, U+2B0E-2B11, U+2B30-2B4C, U+2BFE, U+3030, U+FF5B, U+FF5D, U+1D400-1D7FF, U+1EE00-1EEFF;
-}
-
-/* vietnamese */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: italic;
-    font-weight: 400;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6faw1J5X9T9RW6j9bNfFIMZhhWnFTyNZIQD1-_P3Dct_NFiQhhYQ.woff2) format('woff2');
-    unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
-}
-
-/* latin-ext */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: italic;
-    font-weight: 400;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6faw1J5X9T9RW6j9bNfFIMZhhWnFTyNZIQD1-_P3Hct_NFiQhhYQ.woff2) format('woff2');
-    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-
-/* latin */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: italic;
-    font-weight: 400;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6faw1J5X9T9RW6j9bNfFIMZhhWnFTyNZIQD1-_P3_ct_NFiQg.woff2) format('woff2');
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-/* cyrillic-ext */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: italic;
-    font-weight: 500;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6faw1J5X9T9RW6j9bNfFIMZhhWnFTyNZIQD1-_P3Lct_NFiQhhYQ.woff2) format('woff2');
-    unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
-}
-
-/* cyrillic */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: italic;
-    font-weight: 500;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6faw1J5X9T9RW6j9bNfFIMZhhWnFTyNZIQD1-_P3vct_NFiQhhYQ.woff2) format('woff2');
-    unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
-}
-
-/* greek-ext */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: italic;
-    font-weight: 500;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6faw1J5X9T9RW6j9bNfFIMZhhWnFTyNZIQD1-_P3Pct_NFiQhhYQ.woff2) format('woff2');
-    unicode-range: U+1F00-1FFF;
-}
-
-/* greek */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: italic;
-    font-weight: 500;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6faw1J5X9T9RW6j9bNfFIMZhhWnFTyNZIQD1-_P3zct_NFiQhhYQ.woff2) format('woff2');
-    unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
-}
-
-/* math */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: italic;
-    font-weight: 500;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6faw1J5X9T9RW6j9bNfFIMZhhWnFTyNZIQD1-_PwPct_NFiQhhYQ.woff2) format('woff2');
-    unicode-range: U+0302-0303, U+0305, U+0307-0308, U+0310, U+0312, U+0315, U+031A, U+0326-0327, U+032C, U+032F-0330, U+0332-0333, U+0338, U+033A, U+0346, U+034D, U+0391-03A1, U+03A3-03A9, U+03B1-03C9, U+03D1, U+03D5-03D6, U+03F0-03F1, U+03F4-03F5, U+2016-2017, U+2034-2038, U+203C, U+2040, U+2043, U+2047, U+2050, U+2057, U+205F, U+2070-2071, U+2074-208E, U+2090-209C, U+20D0-20DC, U+20E1, U+20E5-20EF, U+2100-2112, U+2114-2115, U+2117-2121, U+2123-214F, U+2190, U+2192, U+2194-21AE, U+21B0-21E5, U+21F1-21F2, U+21F4-2211, U+2213-2214, U+2216-22FF, U+2308-230B, U+2310, U+2319, U+231C-2321, U+2336-237A, U+237C, U+2395, U+239B-23B7, U+23D0, U+23DC-23E1, U+2474-2475, U+25AF, U+25B3, U+25B7, U+25BD, U+25C1, U+25CA, U+25CC, U+25FB, U+266D-266F, U+27C0-27FF, U+2900-2AFF, U+2B0E-2B11, U+2B30-2B4C, U+2BFE, U+3030, U+FF5B, U+FF5D, U+1D400-1D7FF, U+1EE00-1EEFF;
-}
-
-/* vietnamese */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: italic;
-    font-weight: 500;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6faw1J5X9T9RW6j9bNfFIMZhhWnFTyNZIQD1-_P3Dct_NFiQhhYQ.woff2) format('woff2');
-    unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
-}
-
-/* latin-ext */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: italic;
-    font-weight: 500;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6faw1J5X9T9RW6j9bNfFIMZhhWnFTyNZIQD1-_P3Hct_NFiQhhYQ.woff2) format('woff2');
-    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-
-/* latin */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: italic;
-    font-weight: 500;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6faw1J5X9T9RW6j9bNfFIMZhhWnFTyNZIQD1-_P3_ct_NFiQg.woff2) format('woff2');
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-/* cyrillic-ext */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: italic;
-    font-weight: 600;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6faw1J5X9T9RW6j9bNfFIMZhhWnFTyNZIQD1-_P3Lct_NFiQhhYQ.woff2) format('woff2');
-    unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
-}
-
-/* cyrillic */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: italic;
-    font-weight: 600;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6faw1J5X9T9RW6j9bNfFIMZhhWnFTyNZIQD1-_P3vct_NFiQhhYQ.woff2) format('woff2');
-    unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
-}
-
-/* greek-ext */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: italic;
-    font-weight: 600;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6faw1J5X9T9RW6j9bNfFIMZhhWnFTyNZIQD1-_P3Pct_NFiQhhYQ.woff2) format('woff2');
-    unicode-range: U+1F00-1FFF;
-}
-
-/* greek */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: italic;
-    font-weight: 600;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6faw1J5X9T9RW6j9bNfFIMZhhWnFTyNZIQD1-_P3zct_NFiQhhYQ.woff2) format('woff2');
-    unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
-}
-
-/* math */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: italic;
-    font-weight: 600;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6faw1J5X9T9RW6j9bNfFIMZhhWnFTyNZIQD1-_PwPct_NFiQhhYQ.woff2) format('woff2');
-    unicode-range: U+0302-0303, U+0305, U+0307-0308, U+0310, U+0312, U+0315, U+031A, U+0326-0327, U+032C, U+032F-0330, U+0332-0333, U+0338, U+033A, U+0346, U+034D, U+0391-03A1, U+03A3-03A9, U+03B1-03C9, U+03D1, U+03D5-03D6, U+03F0-03F1, U+03F4-03F5, U+2016-2017, U+2034-2038, U+203C, U+2040, U+2043, U+2047, U+2050, U+2057, U+205F, U+2070-2071, U+2074-208E, U+2090-209C, U+20D0-20DC, U+20E1, U+20E5-20EF, U+2100-2112, U+2114-2115, U+2117-2121, U+2123-214F, U+2190, U+2192, U+2194-21AE, U+21B0-21E5, U+21F1-21F2, U+21F4-2211, U+2213-2214, U+2216-22FF, U+2308-230B, U+2310, U+2319, U+231C-2321, U+2336-237A, U+237C, U+2395, U+239B-23B7, U+23D0, U+23DC-23E1, U+2474-2475, U+25AF, U+25B3, U+25B7, U+25BD, U+25C1, U+25CA, U+25CC, U+25FB, U+266D-266F, U+27C0-27FF, U+2900-2AFF, U+2B0E-2B11, U+2B30-2B4C, U+2BFE, U+3030, U+FF5B, U+FF5D, U+1D400-1D7FF, U+1EE00-1EEFF;
-}
-
-/* vietnamese */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: italic;
-    font-weight: 600;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6faw1J5X9T9RW6j9bNfFIMZhhWnFTyNZIQD1-_P3Dct_NFiQhhYQ.woff2) format('woff2');
-    unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
-}
-
-/* latin-ext */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: italic;
-    font-weight: 600;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6faw1J5X9T9RW6j9bNfFIMZhhWnFTyNZIQD1-_P3Hct_NFiQhhYQ.woff2) format('woff2');
-    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-
-/* latin */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: italic;
-    font-weight: 600;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6faw1J5X9T9RW6j9bNfFIMZhhWnFTyNZIQD1-_P3_ct_NFiQg.woff2) format('woff2');
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-/* cyrillic-ext */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: italic;
-    font-weight: 700;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6faw1J5X9T9RW6j9bNfFIMZhhWnFTyNZIQD1-_P3Lct_NFiQhhYQ.woff2) format('woff2');
-    unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
-}
-
-/* cyrillic */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: italic;
-    font-weight: 700;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6faw1J5X9T9RW6j9bNfFIMZhhWnFTyNZIQD1-_P3vct_NFiQhhYQ.woff2) format('woff2');
-    unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
-}
-
-/* greek-ext */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: italic;
-    font-weight: 700;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6faw1J5X9T9RW6j9bNfFIMZhhWnFTyNZIQD1-_P3Pct_NFiQhhYQ.woff2) format('woff2');
-    unicode-range: U+1F00-1FFF;
-}
-
-/* greek */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: italic;
-    font-weight: 700;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6faw1J5X9T9RW6j9bNfFIMZhhWnFTyNZIQD1-_P3zct_NFiQhhYQ.woff2) format('woff2');
-    unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
-}
-
-/* math */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: italic;
-    font-weight: 700;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6faw1J5X9T9RW6j9bNfFIMZhhWnFTyNZIQD1-_PwPct_NFiQhhYQ.woff2) format('woff2');
-    unicode-range: U+0302-0303, U+0305, U+0307-0308, U+0310, U+0312, U+0315, U+031A, U+0326-0327, U+032C, U+032F-0330, U+0332-0333, U+0338, U+033A, U+0346, U+034D, U+0391-03A1, U+03A3-03A9, U+03B1-03C9, U+03D1, U+03D5-03D6, U+03F0-03F1, U+03F4-03F5, U+2016-2017, U+2034-2038, U+203C, U+2040, U+2043, U+2047, U+2050, U+2057, U+205F, U+2070-2071, U+2074-208E, U+2090-209C, U+20D0-20DC, U+20E1, U+20E5-20EF, U+2100-2112, U+2114-2115, U+2117-2121, U+2123-214F, U+2190, U+2192, U+2194-21AE, U+21B0-21E5, U+21F1-21F2, U+21F4-2211, U+2213-2214, U+2216-22FF, U+2308-230B, U+2310, U+2319, U+231C-2321, U+2336-237A, U+237C, U+2395, U+239B-23B7, U+23D0, U+23DC-23E1, U+2474-2475, U+25AF, U+25B3, U+25B7, U+25BD, U+25C1, U+25CA, U+25CC, U+25FB, U+266D-266F, U+27C0-27FF, U+2900-2AFF, U+2B0E-2B11, U+2B30-2B4C, U+2BFE, U+3030, U+FF5B, U+FF5D, U+1D400-1D7FF, U+1EE00-1EEFF;
-}
-
-/* vietnamese */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: italic;
-    font-weight: 700;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6faw1J5X9T9RW6j9bNfFIMZhhWnFTyNZIQD1-_P3Dct_NFiQhhYQ.woff2) format('woff2');
-    unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
-}
-
-/* latin-ext */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: italic;
-    font-weight: 700;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6faw1J5X9T9RW6j9bNfFIMZhhWnFTyNZIQD1-_P3Hct_NFiQhhYQ.woff2) format('woff2');
-    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-
-/* latin */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: italic;
-    font-weight: 700;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6faw1J5X9T9RW6j9bNfFIMZhhWnFTyNZIQD1-_P3_ct_NFiQg.woff2) format('woff2');
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-/* cyrillic-ext */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: normal;
-    font-weight: 400;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6daw1J5X9T9RW6j9bNVls-hfgvz8JcMofYTYf3D33WsNFHuQk.woff2) format('woff2');
-    unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
-}
-
-/* cyrillic */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: normal;
-    font-weight: 400;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6daw1J5X9T9RW6j9bNVls-hfgvz8JcMofYTYf-D33WsNFHuQk.woff2) format('woff2');
-    unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
-}
-
-/* greek-ext */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: normal;
-    font-weight: 400;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6daw1J5X9T9RW6j9bNVls-hfgvz8JcMofYTYf2D33WsNFHuQk.woff2) format('woff2');
-    unicode-range: U+1F00-1FFF;
-}
-
-/* greek */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: normal;
-    font-weight: 400;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6daw1J5X9T9RW6j9bNVls-hfgvz8JcMofYTYf5D33WsNFHuQk.woff2) format('woff2');
-    unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
-}
-
-/* math */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: normal;
-    font-weight: 400;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6daw1J5X9T9RW6j9bNVls-hfgvz8JcMofYTYeGD33WsNFHuQk.woff2) format('woff2');
-    unicode-range: U+0302-0303, U+0305, U+0307-0308, U+0310, U+0312, U+0315, U+031A, U+0326-0327, U+032C, U+032F-0330, U+0332-0333, U+0338, U+033A, U+0346, U+034D, U+0391-03A1, U+03A3-03A9, U+03B1-03C9, U+03D1, U+03D5-03D6, U+03F0-03F1, U+03F4-03F5, U+2016-2017, U+2034-2038, U+203C, U+2040, U+2043, U+2047, U+2050, U+2057, U+205F, U+2070-2071, U+2074-208E, U+2090-209C, U+20D0-20DC, U+20E1, U+20E5-20EF, U+2100-2112, U+2114-2115, U+2117-2121, U+2123-214F, U+2190, U+2192, U+2194-21AE, U+21B0-21E5, U+21F1-21F2, U+21F4-2211, U+2213-2214, U+2216-22FF, U+2308-230B, U+2310, U+2319, U+231C-2321, U+2336-237A, U+237C, U+2395, U+239B-23B7, U+23D0, U+23DC-23E1, U+2474-2475, U+25AF, U+25B3, U+25B7, U+25BD, U+25C1, U+25CA, U+25CC, U+25FB, U+266D-266F, U+27C0-27FF, U+2900-2AFF, U+2B0E-2B11, U+2B30-2B4C, U+2BFE, U+3030, U+FF5B, U+FF5D, U+1D400-1D7FF, U+1EE00-1EEFF;
-}
-
-/* vietnamese */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: normal;
-    font-weight: 400;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6daw1J5X9T9RW6j9bNVls-hfgvz8JcMofYTYf1D33WsNFHuQk.woff2) format('woff2');
-    unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
-}
-
-/* latin-ext */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: normal;
-    font-weight: 400;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6daw1J5X9T9RW6j9bNVls-hfgvz8JcMofYTYf0D33WsNFHuQk.woff2) format('woff2');
-    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-
-/* latin */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: normal;
-    font-weight: 400;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6daw1J5X9T9RW6j9bNVls-hfgvz8JcMofYTYf6D33WsNFH.woff2) format('woff2');
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-/* cyrillic-ext */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: normal;
-    font-weight: 500;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6daw1J5X9T9RW6j9bNVls-hfgvz8JcMofYTYf3D33WsNFHuQk.woff2) format('woff2');
-    unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
-}
-
-/* cyrillic */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: normal;
-    font-weight: 500;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6daw1J5X9T9RW6j9bNVls-hfgvz8JcMofYTYf-D33WsNFHuQk.woff2) format('woff2');
-    unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
-}
-
-/* greek-ext */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: normal;
-    font-weight: 500;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6daw1J5X9T9RW6j9bNVls-hfgvz8JcMofYTYf2D33WsNFHuQk.woff2) format('woff2');
-    unicode-range: U+1F00-1FFF;
-}
-
-/* greek */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: normal;
-    font-weight: 500;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6daw1J5X9T9RW6j9bNVls-hfgvz8JcMofYTYf5D33WsNFHuQk.woff2) format('woff2');
-    unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
-}
-
-/* math */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: normal;
-    font-weight: 500;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6daw1J5X9T9RW6j9bNVls-hfgvz8JcMofYTYeGD33WsNFHuQk.woff2) format('woff2');
-    unicode-range: U+0302-0303, U+0305, U+0307-0308, U+0310, U+0312, U+0315, U+031A, U+0326-0327, U+032C, U+032F-0330, U+0332-0333, U+0338, U+033A, U+0346, U+034D, U+0391-03A1, U+03A3-03A9, U+03B1-03C9, U+03D1, U+03D5-03D6, U+03F0-03F1, U+03F4-03F5, U+2016-2017, U+2034-2038, U+203C, U+2040, U+2043, U+2047, U+2050, U+2057, U+205F, U+2070-2071, U+2074-208E, U+2090-209C, U+20D0-20DC, U+20E1, U+20E5-20EF, U+2100-2112, U+2114-2115, U+2117-2121, U+2123-214F, U+2190, U+2192, U+2194-21AE, U+21B0-21E5, U+21F1-21F2, U+21F4-2211, U+2213-2214, U+2216-22FF, U+2308-230B, U+2310, U+2319, U+231C-2321, U+2336-237A, U+237C, U+2395, U+239B-23B7, U+23D0, U+23DC-23E1, U+2474-2475, U+25AF, U+25B3, U+25B7, U+25BD, U+25C1, U+25CA, U+25CC, U+25FB, U+266D-266F, U+27C0-27FF, U+2900-2AFF, U+2B0E-2B11, U+2B30-2B4C, U+2BFE, U+3030, U+FF5B, U+FF5D, U+1D400-1D7FF, U+1EE00-1EEFF;
-}
-
-/* vietnamese */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: normal;
-    font-weight: 500;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6daw1J5X9T9RW6j9bNVls-hfgvz8JcMofYTYf1D33WsNFHuQk.woff2) format('woff2');
-    unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
-}
-
-/* latin-ext */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: normal;
-    font-weight: 500;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6daw1J5X9T9RW6j9bNVls-hfgvz8JcMofYTYf0D33WsNFHuQk.woff2) format('woff2');
-    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-
-/* latin */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: normal;
-    font-weight: 500;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6daw1J5X9T9RW6j9bNVls-hfgvz8JcMofYTYf6D33WsNFH.woff2) format('woff2');
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-/* cyrillic-ext */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: normal;
-    font-weight: 600;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6daw1J5X9T9RW6j9bNVls-hfgvz8JcMofYTYf3D33WsNFHuQk.woff2) format('woff2');
-    unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
-}
-
-/* cyrillic */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: normal;
-    font-weight: 600;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6daw1J5X9T9RW6j9bNVls-hfgvz8JcMofYTYf-D33WsNFHuQk.woff2) format('woff2');
-    unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
-}
-
-/* greek-ext */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: normal;
-    font-weight: 600;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6daw1J5X9T9RW6j9bNVls-hfgvz8JcMofYTYf2D33WsNFHuQk.woff2) format('woff2');
-    unicode-range: U+1F00-1FFF;
-}
-
-/* greek */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: normal;
-    font-weight: 600;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6daw1J5X9T9RW6j9bNVls-hfgvz8JcMofYTYf5D33WsNFHuQk.woff2) format('woff2');
-    unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
-}
-
-/* math */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: normal;
-    font-weight: 600;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6daw1J5X9T9RW6j9bNVls-hfgvz8JcMofYTYeGD33WsNFHuQk.woff2) format('woff2');
-    unicode-range: U+0302-0303, U+0305, U+0307-0308, U+0310, U+0312, U+0315, U+031A, U+0326-0327, U+032C, U+032F-0330, U+0332-0333, U+0338, U+033A, U+0346, U+034D, U+0391-03A1, U+03A3-03A9, U+03B1-03C9, U+03D1, U+03D5-03D6, U+03F0-03F1, U+03F4-03F5, U+2016-2017, U+2034-2038, U+203C, U+2040, U+2043, U+2047, U+2050, U+2057, U+205F, U+2070-2071, U+2074-208E, U+2090-209C, U+20D0-20DC, U+20E1, U+20E5-20EF, U+2100-2112, U+2114-2115, U+2117-2121, U+2123-214F, U+2190, U+2192, U+2194-21AE, U+21B0-21E5, U+21F1-21F2, U+21F4-2211, U+2213-2214, U+2216-22FF, U+2308-230B, U+2310, U+2319, U+231C-2321, U+2336-237A, U+237C, U+2395, U+239B-23B7, U+23D0, U+23DC-23E1, U+2474-2475, U+25AF, U+25B3, U+25B7, U+25BD, U+25C1, U+25CA, U+25CC, U+25FB, U+266D-266F, U+27C0-27FF, U+2900-2AFF, U+2B0E-2B11, U+2B30-2B4C, U+2BFE, U+3030, U+FF5B, U+FF5D, U+1D400-1D7FF, U+1EE00-1EEFF;
-}
-
-/* vietnamese */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: normal;
-    font-weight: 600;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6daw1J5X9T9RW6j9bNVls-hfgvz8JcMofYTYf1D33WsNFHuQk.woff2) format('woff2');
-    unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
-}
-
-/* latin-ext */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: normal;
-    font-weight: 600;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6daw1J5X9T9RW6j9bNVls-hfgvz8JcMofYTYf0D33WsNFHuQk.woff2) format('woff2');
-    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-
-/* latin */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: normal;
-    font-weight: 600;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6daw1J5X9T9RW6j9bNVls-hfgvz8JcMofYTYf6D33WsNFH.woff2) format('woff2');
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
-/* cyrillic-ext */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: normal;
-    font-weight: 700;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6daw1J5X9T9RW6j9bNVls-hfgvz8JcMofYTYf3D33WsNFHuQk.woff2) format('woff2');
-    unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
-}
-
-/* cyrillic */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: normal;
-    font-weight: 700;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6daw1J5X9T9RW6j9bNVls-hfgvz8JcMofYTYf-D33WsNFHuQk.woff2) format('woff2');
-    unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
-}
-
-/* greek-ext */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: normal;
-    font-weight: 700;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6daw1J5X9T9RW6j9bNVls-hfgvz8JcMofYTYf2D33WsNFHuQk.woff2) format('woff2');
-    unicode-range: U+1F00-1FFF;
-}
-
-/* greek */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: normal;
-    font-weight: 700;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6daw1J5X9T9RW6j9bNVls-hfgvz8JcMofYTYf5D33WsNFHuQk.woff2) format('woff2');
-    unicode-range: U+0370-0377, U+037A-037F, U+0384-038A, U+038C, U+038E-03A1, U+03A3-03FF;
-}
-
-/* math */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: normal;
-    font-weight: 700;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6daw1J5X9T9RW6j9bNVls-hfgvz8JcMofYTYeGD33WsNFHuQk.woff2) format('woff2');
-    unicode-range: U+0302-0303, U+0305, U+0307-0308, U+0310, U+0312, U+0315, U+031A, U+0326-0327, U+032C, U+032F-0330, U+0332-0333, U+0338, U+033A, U+0346, U+034D, U+0391-03A1, U+03A3-03A9, U+03B1-03C9, U+03D1, U+03D5-03D6, U+03F0-03F1, U+03F4-03F5, U+2016-2017, U+2034-2038, U+203C, U+2040, U+2043, U+2047, U+2050, U+2057, U+205F, U+2070-2071, U+2074-208E, U+2090-209C, U+20D0-20DC, U+20E1, U+20E5-20EF, U+2100-2112, U+2114-2115, U+2117-2121, U+2123-214F, U+2190, U+2192, U+2194-21AE, U+21B0-21E5, U+21F1-21F2, U+21F4-2211, U+2213-2214, U+2216-22FF, U+2308-230B, U+2310, U+2319, U+231C-2321, U+2336-237A, U+237C, U+2395, U+239B-23B7, U+23D0, U+23DC-23E1, U+2474-2475, U+25AF, U+25B3, U+25B7, U+25BD, U+25C1, U+25CA, U+25CC, U+25FB, U+266D-266F, U+27C0-27FF, U+2900-2AFF, U+2B0E-2B11, U+2B30-2B4C, U+2BFE, U+3030, U+FF5B, U+FF5D, U+1D400-1D7FF, U+1EE00-1EEFF;
-}
-
-/* vietnamese */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: normal;
-    font-weight: 700;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6daw1J5X9T9RW6j9bNVls-hfgvz8JcMofYTYf1D33WsNFHuQk.woff2) format('woff2');
-    unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
-}
-
-/* latin-ext */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: normal;
-    font-weight: 700;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6daw1J5X9T9RW6j9bNVls-hfgvz8JcMofYTYf0D33WsNFHuQk.woff2) format('woff2');
-    unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-
-/* latin */
-@font-face {
-    font-family: 'Noto Serif';
-    font-style: normal;
-    font-weight: 700;
-    font-stretch: 100%;
-    font-display: optional;
-    src: url(/fonts/ga6daw1J5X9T9RW6j9bNVls-hfgvz8JcMofYTYf6D33WsNFH.woff2) format('woff2');
-    unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-
 /* ====== Base ====== */
-/* One theme: warm paper, espresso ink, sage links, an ochre for accents (Sugar Shack / espresso crema). */
+/* Four themes: this base one (Yang-Yang) and one per home-page still ([data-still] blocks below). */
 :root {
     color-scheme: light;
     /* Yang-Yang (default) theme: pale green-cream paper with the deep green of his shorts for links, mustard accent from his shirt */
@@ -972,12 +268,9 @@
     --ink: #1b2616;
     --muted: #5c6653;
     --rule: #d4d9c0;
-    --sidebar-bg: #eceedd;
-    --maxw: 820px;
     --col: 900px;
     --link: #2f6337;
     --link-hover: #224a28;
-    --tagline: #6f5d16;
     --accent-warm: #c9a22a;
     --tag-checked-border: #b8c9a8;
     --tag-checked-bg: #dfe6d0;
@@ -994,7 +287,6 @@
     --rule: #e2c9c3;
     --link: #962626;
     --link-hover: #761c1c;
-    --tagline: #9a4152;
     --accent-warm: #d17a8a;
     --tag-checked-border: #e0b3b8;
     --tag-checked-bg: #f3dcdf;
@@ -1010,7 +302,6 @@
     --rule: #dfcfae;
     --link: #2f4a7a;
     --link-hover: #213559;
-    --tagline: #7d5f24;
     --accent-warm: #c08a2e;
     --tag-checked-border: #b6c3d9;
     --tag-checked-bg: #dde4ee;
@@ -1028,7 +319,6 @@
     --rule: #2d2d2d;
     --link: #cdcdcd;
     --link-hover: #ffffff;
-    --tagline: #cdcdcd;
     --accent-warm: #6d6d6d;
     --tag-checked-border: #4a4a4a;
     --tag-checked-bg: #262626;
@@ -1043,14 +333,13 @@
 html {
     background-color: var(--bg);
     transition: background-color .22s ease;
+    scroll-behavior: smooth;
+    /* nothing may widen the page sideways (e.g. a tooltip near the edge on a phone) */
+    overflow-x: clip;
 }
 
 * {
     box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
 }
 
 html,
@@ -1096,13 +385,13 @@ body::before {
     letter-spacing: 0.02em;
     text-decoration: none;
     background: var(--link);
-    color: #fff;
+    color: var(--bg);
     border-radius: 4px;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
 }
 
 .skip-link:hover {
-    color: #fff;
+    color: var(--bg);
 }
 
 .skip-link:focus,
@@ -1118,49 +407,15 @@ body::before {
     outline-offset: 4px;
 }
 
-/* Theme cross-fade when using View Transitions API */
-@media (prefers-reduced-motion: no-preference) {
-
-    ::view-transition-old(root),
-    ::view-transition-new(root) {
-        animation-duration: 0.38s;
-        animation-timing-function: ease;
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-
-    ::view-transition-old(root),
-    ::view-transition-new(root) {
-        animation-duration: 0.001ms !important;
-    }
-}
-
-/* Smooth color surfaces when theme changes (complements view transitions) */
+/* Cross-fade the colours when the home-page still switches theme */
 @media (prefers-reduced-motion: no-preference) {
 
     body,
-    .site-header,
-    .callout,
-    .blog-empty-feedback,
-    .post,
-    blockquote,
-    .tag-filter .tag,
-    .taglist li {
-        transition:
-            background-color 0.22s ease,
-            color 0.22s ease,
-            border-color 0.22s ease;
-    }
-
     .content {
         transition:
             background-color 0.22s ease,
             color 0.22s ease,
-            border-color 0.22s ease,
-            margin-left 0.28s cubic-bezier(0.22, 1, 0.36, 1),
-            padding 0.28s cubic-bezier(0.22, 1, 0.36, 1),
-            font-size 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+            border-color 0.22s ease;
     }
 
     .nav-home {
@@ -1221,8 +476,6 @@ body::before {
     min-height: 60vh;
     font-family: Newsreader, Georgia, "Times New Roman", serif;
     font-size: 1.18rem;
-    container-type: inline-size;
-    container-name: site-main;
 }
 
 .content>* {
@@ -1257,31 +510,11 @@ body::before {
     margin-top: 2rem;
 }
 
-.last-updated+.h2 {
-    margin-top: 0.75rem;
-}
-
 .lead {
     font-size: 1.125rem;
 }
 
-.last-updated+.lead {
-    margin-bottom: 1.25rem;
-    line-height: 1.65;
-}
-
-.last-updated+.lead+.h2 {
-    margin-top: 0.75rem;
-}
-
 /* ====== Rules & footer ====== */
-.rule {
-    border: 0;
-    height: 1px;
-    background: var(--rule);
-    margin: 2rem 0;
-}
-
 hr {
     border: 0;
     height: 1px;
@@ -1299,6 +532,8 @@ hr {
 .post-list {
     display: block;
     --post-row-pad-inline: 0.75rem;
+    /* closes the list below its last visible row (a :last-of-type rule missed rows hidden by the filter) */
+    border-bottom: 1px solid var(--rule);
 }
 
 .post {
@@ -1313,16 +548,12 @@ hr {
 }
 
 .post:hover {
-    background-color: rgba(0, 0, 0, 0.02);
+    background-color: color-mix(in srgb, var(--ink) 3%, transparent);
 }
 
 .post-head {
     display: block;
     padding-left: var(--post-row-pad-inline);
-}
-
-.post:last-of-type {
-    border-bottom: 1px solid var(--rule);
 }
 
 .post-title {
@@ -1332,8 +563,7 @@ hr {
 
 .post-title:hover,
 .post-title:active,
-.post-title:focus,
-.post-title:visited {
+.post-title:focus {
     color: inherit;
     text-decoration: underline;
 }
@@ -1342,11 +572,6 @@ hr {
     color: var(--muted);
     white-space: nowrap;
     padding-right: var(--post-row-pad-inline);
-}
-
-.post-updated {
-    color: var(--muted);
-    font-size: 0.9em;
 }
 
 .post-readtime {
@@ -1370,7 +595,7 @@ hr {
     padding-left: var(--post-row-pad-inline);
 }
 
-/* On mobile, override taglist to be inline with date */
+/* On mobile, keep the tags under the title column rather than across the date */
 @media (max-width:720px) {
     .taglist {
         grid-column: auto;
@@ -1437,7 +662,18 @@ hr {
     transition-delay: 0.12s;
 }
 
+@media (hover: none) {
+    [data-tooltip]::after {
+        display: none;
+    }
+}
+
 /* ====== Entry (single post) ====== */
+.entry img {
+    max-width: 100%;
+    height: auto;
+}
+
 .entry-head {
     margin-bottom: 1rem;
 }
@@ -1571,7 +807,7 @@ a.button {
     display: inline-block;
     padding: 0.5rem 1.25rem;
     background: var(--link);
-    color: white;
+    color: var(--bg);
     text-decoration: none;
     border-radius: 6px;
     font-weight: 500;
@@ -1580,7 +816,7 @@ a.button {
 
 a.button:hover {
     background: var(--link-hover);
-    color: white;
+    color: var(--bg);
 }
 
 /* ====== Blockquotes ====== */
@@ -1623,7 +859,7 @@ blockquote p:not(:last-child) {
     transition: opacity .3s ease;
 }
 
-.epigraph:focus {
+.epigraph:focus:not(:focus-visible) {
     outline: none;
 }
 
@@ -1706,6 +942,11 @@ button {
     background: var(--tag-checked-bg);
 }
 
+#filters input:focus-visible+label.tag {
+    outline: 2px solid var(--link);
+    outline-offset: 2px;
+}
+
 /* ====== Responsive ====== */
 @media (max-width:980px) {
     .content {
@@ -1718,8 +959,6 @@ button {
 .blog-head {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 16px;
     margin-bottom: 12px;
 }
 
@@ -1765,9 +1004,6 @@ button {
     border: 0;
     background: none;
     cursor: pointer;
-}
-
-.still-cycle {
     position: relative;
 }
 
@@ -1793,6 +1029,12 @@ button {
     opacity: 1;
     /* shows only after the pointer has rested on the photo for a moment */
     transition-delay: .6s;
+}
+
+@media (hover: none) {
+    .still-film {
+        display: none;
+    }
 }
 
 .still-cycle:focus-visible {
@@ -1827,29 +1069,6 @@ button {
 }
 
 /* ====== Footnotes ====== */
-/* Superscript footnote reference (the clickable number in text) */
-sup[id^="fnref"] {
-    font-size: 0.75em;
-    line-height: 0;
-    vertical-align: super;
-    position: relative;
-    top: -0.5em;
-}
-
-sup[id^="fnref"] a.footnote {
-    text-decoration: none;
-    color: var(--link);
-    font-weight: 500;
-    padding: 0 0.1em;
-    border-radius: 2px;
-    transition: background-color 0.2s ease, color 0.2s ease;
-}
-
-sup[id^="fnref"] a.footnote:hover {
-    color: var(--link-hover);
-    background-color: rgba(10, 164, 0, 0.1);
-}
-
 /* Footnotes section container - separated from main content */
 .footnotes {
     margin-top: 4rem;
@@ -1888,19 +1107,6 @@ sup[id^="fnref"] a.footnote:hover {
     margin-bottom: 0;
 }
 
-/* Back reference link (the ↩ or return arrow) */
-.footnotes li a.reversefootnote {
-    text-decoration: none;
-    color: var(--link);
-    margin-left: 0.25em;
-    font-size: 0.9em;
-}
-
-.footnotes li a.reversefootnote:hover {
-    color: var(--link-hover);
-    text-decoration: underline;
-}
-
 /* Paragraphs inside footnotes */
 .footnotes li p {
     display: inline;
@@ -1910,17 +1116,6 @@ sup[id^="fnref"] a.footnote:hover {
 .footnotes li p:not(:last-child) {
     margin-bottom: 0.5em;
     display: block;
-}
-
-/* Same-document view transitions (Turbo + meta view-transition) */
-@media (prefers-reduced-motion: no-preference) {
-    @supports (view-transition-name: none) {
-
-        ::view-transition-old(root),
-        ::view-transition-new(root) {
-            animation-duration: 0.12s;
-        }
-    }
 }
 
 /* Archive: title and date on one row (date right-aligned; wraps on narrow viewports) */
@@ -1964,20 +1159,11 @@ sup[id^="fnref"] a.footnote:hover {
     white-space: nowrap;
 }
 
-.archive-meta {
-    display: block;
-    margin: 0.3rem 0 0;
-    font-size: 0.92rem;
-    color: var(--muted);
-    line-height: 1.45;
-}
-
 .archive-list>li>p {
     margin-top: 0.45rem;
 }
-/* ====== Footnotes (remark-gfm markup compatibility) ======
-   Astro/remark renders footnotes with data-attributes instead of kramdown's
-   .footnote/.reversefootnote classes. Mirror the kramdown rules above. */
+/* ====== Footnote links ======
+   Astro's markdown (remark-gfm) marks the reference and back-links with data attributes. */
 sup:has(> a[data-footnote-ref]) {
     font-size: 0.75em;
     line-height: 0;
@@ -1997,7 +1183,7 @@ a[data-footnote-ref] {
 
 a[data-footnote-ref]:hover {
     color: var(--link-hover);
-    background-color: rgba(10, 164, 0, 0.1);
+    background-color: color-mix(in srgb, var(--link) 12%, transparent);
 }
 
 .footnotes li a[data-footnote-backref] {

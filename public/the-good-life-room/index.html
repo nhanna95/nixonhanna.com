@@ -3,6 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Standalone page: Turbo on the main site must load it fresh, not swap it into the current page -->
+  <meta name="turbo-visit-control" content="reload" />
   <title>The Good Life: Room — Nixon Hanna</title>
   <style>
     :root {
@@ -331,7 +333,7 @@
         src: "cutouts/laptop.png",
         bbox: [47.99, 45.658, 6.65, 9.737],
         title: "Laptop",
-        html: `<p>Ironically the one item that goes against my love for physical media is the one that gives me the most turmoil.</p><p>I have two windows open: my time tracker and my recent <a href="https://www.nixonhanna.com/posts/trivialities/">blog post</a> about my struggle to balance altruism with my own happiness. I started my time tracker due to the same issue. I'm still uncertain about whether tracking my time in such a Lockean manner is really compatible with my original goal of increasing my altruism as the result of the love ethic I claim to live by.</p>`,
+        html: `<p>Ironically the one item that goes against my love for physical media is the one that gives me the most turmoil.</p><p>I have two windows open: my time tracker and my recent <a href="/posts/trivialities/">blog post</a> about my struggle to balance altruism with my own happiness. I started my time tracker due to the same issue. I'm still uncertain about whether tracking my time in such a Lockean manner is really compatible with my original goal of increasing my altruism as the result of the love ethic I claim to live by.</p>`,
         scale: 1.7
       },
       {
@@ -380,9 +382,12 @@
       const [x, y, w, hgt] = h.bbox;
       const scale = h.scale || 1.7;
 
-      const hot = document.createElement("button");
-      hot.type = "button";
+      // A focusable div, not a <button>: the tooltip can hold links, and links inside a button are
+      // invalid HTML (Firefox won't follow them). Focus still opens the tooltip via :focus-within.
+      const hot = document.createElement("div");
+      hot.tabIndex = 0;
       hot.className = "hotspot";
+      hot.setAttribute("role", "group");
       hot.setAttribute("aria-label", h.title);
       hot.style.left   = x + "%";
       hot.style.top    = y + "%";

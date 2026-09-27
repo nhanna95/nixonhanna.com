@@ -1,27 +1,33 @@
 import type { APIRoute } from 'astro';
-import { SITE_URL, isoDate, getSortedPosts, postUrl } from '../lib/site';
+import { SITE_URL, isoDate, getSortedPosts, lastChanged, postUrl } from '../lib/site';
 
+// Every indexable page: the Astro pages, the standalone photo projects in public/, and the posts.
+// `source` is the file whose last change dates the page (see lastChanged).
 const staticPages = [
-    { path: '/', changefreq: 'weekly', priority: '1.0' },
-    { path: '/blog.html', changefreq: 'weekly', priority: '0.9' },
-    { path: '/contact.html', changefreq: 'monthly', priority: '0.7' },
-    { path: '/archive.html', changefreq: 'monthly', priority: '0.7' },
-    { path: '/resume/', changefreq: 'monthly', priority: '0.7' },
+    { path: '/', source: 'src/pages/index.astro', changefreq: 'weekly', priority: '1.0' },
+    { path: '/blog.html', source: 'src/pages/blog.astro', changefreq: 'weekly', priority: '0.9' },
+    { path: '/contact.html', source: 'src/pages/contact.astro', changefreq: 'monthly', priority: '0.7' },
+    { path: '/archive.html', source: 'src/data/archive.ts', changefreq: 'monthly', priority: '0.7' },
+    { path: '/the-river-feels-colder-this-time/', source: 'public/the-river-feels-colder-this-time/index.html', changefreq: 'yearly', priority: '0.6' },
+    { path: '/the-good-life-room/', source: 'public/the-good-life-room/index.html', changefreq: 'yearly', priority: '0.6' },
 ];
 
 export const GET: APIRoute = async () => {
-    const buildDate = isoDate(new Date());
     const posts = await getSortedPosts();
+    const newestPost = posts[0]?.data.date;
 
     const urls = [
-        ...staticPages.map(
-            (p) => `  <url>
+        ...staticPages.map((p) => {
+            let lastmod = lastChanged(p.source);
+            // The blog index also changes whenever a post is published.
+            if (p.path === '/blog.html' && newestPost && newestPost > lastmod) lastmod = newestPost;
+            return `  <url>
     <loc>${SITE_URL}${p.path}</loc>
-    <lastmod>${buildDate}</lastmod>
+    <lastmod>${isoDate(lastmod)}</lastmod>
     <changefreq>${p.changefreq}</changefreq>
     <priority>${p.priority}</priority>
-  </url>`,
-        ),
+  </url>`;
+        }),
         ...posts.map(
             (post) => `  <url>
     <loc>${SITE_URL}${postUrl(post)}</loc>

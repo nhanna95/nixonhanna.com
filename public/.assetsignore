@@ -1,0 +1,2 @@
+# Files in dist/ that wrangler must not upload as public assets
+**/.DS_Store
