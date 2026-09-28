@@ -58,7 +58,7 @@ export function renderNow(data) {
         clauses.push(`watched ${link(movie.url, movie.title)}${year}${movie.stars ? `, which I gave ${esc(movie.stars)},` : ''}`);
     }
     if (book) clauses.push(`finished reading ${link(book.url, book.title)}${by(book.author)}`);
-    if (song) clauses.push(`listened to ${link(song.url, song.title)}${by(song.artist)}`);
+    if (song) clauses.push(`listened to ${link(song.url, cleanTrackTitle(song.title))}${by(song.artist)}`);
     if (!clauses.length) return '';
     return `I ${joinClauses(clauses)}.`;
 }
@@ -70,6 +70,23 @@ function joinClauses(clauses) {
     const head = clauses.slice(0, -1);
     if (head.length === 1) return `${head[0]} and ${last}`;
     return `${head.map((c) => (c.endsWith(',') ? c : `${c},`)).join(' ')} and ${last}`;
+}
+
+// Spotify names versions in the title: "Smooth Operator - Single Version", "Help! - Remastered 2009",
+// "Song (Live at Wembley)". In a sentence the plain title reads better, so drop trailing " - …",
+// "(…)" or "[…]" parts that name a version. Anything else (e.g. "(feat. …)", "Part 2") stays.
+const VERSION_TAG = /\b(remaster(ed)?|version|edit|mix|mono|stereo|live|demo|radio|single|deluxe|bonus|re-?recorded|anniversary)\b/i;
+
+export function cleanTrackTitle(name) {
+    let title = String(name);
+    for (;;) {
+        const dash = title.lastIndexOf(' - ');
+        const paren = title.match(/\s*[([]([^()[\]]*)[)\]]$/);
+        if (paren && VERSION_TAG.test(paren[1])) title = title.slice(0, paren.index);
+        else if (dash > 0 && VERSION_TAG.test(title.slice(dash + 3))) title = title.slice(0, dash);
+        else break;
+    }
+    return title.trim() || String(name);
 }
 
 function esc(s) {
