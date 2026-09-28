@@ -3,6 +3,8 @@ import { SITE_DESCRIPTION, BUILD_V, absoluteUrl } from '../lib/site';
 
 interface Props {
     title?: string;
+    /** Exact tab (and link-preview) title, instead of "<title> — Nixon Hanna". */
+    tabTitle?: string;
     description?: string;
     /** Page URL path, e.g. '/', '/blog', '/posts/welcome/' — used for the canonical link and og:url. */
     path: string;
@@ -13,8 +15,8 @@ interface Props {
     backLink?: { href: string; label: string };
 }
 
-const { title, description, path, articleDate, mainAriaLabelledby, backLink } = Astro.props;
-const fullTitle = title ? `${title} — Nixon Hanna` : 'Nixon Hanna';
+const { title, tabTitle, description, path, articleDate, mainAriaLabelledby, backLink } = Astro.props;
+const fullTitle = tabTitle ?? (title ? `${title} — Nixon Hanna` : 'Nixon Hanna');
 const ogDesc = description ?? SITE_DESCRIPTION;
 
 ---
