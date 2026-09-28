@@ -28,10 +28,10 @@ const ogDesc = description ?? SITE_DESCRIPTION;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
 
-    <!-- Favicon for browsers and Google Search -->
-    <link rel="icon" href="/favicon.ico" type="image/x-icon" />
-    <link rel="icon" href="/monogram.png" type="image/png" />
-    <link rel="apple-touch-icon" href="/monogram.png" />
+    <!-- Tab icon: a square crop of the Yang-Yang still (Yi Yi). ?v= so browsers drop a cached old icon after a deploy -->
+    <link rel="icon" href={`/favicon.ico?v=${BUILD_V}`} sizes="32x32" />
+    <link rel="icon" href={`/icon.png?v=${BUILD_V}`} type="image/png" sizes="192x192" />
+    <link rel="apple-touch-icon" href={`/apple-touch-icon.png?v=${BUILD_V}`} />
 
     <title>{fullTitle}</title>
     <meta name="description" content={ogDesc} />
@@ -41,7 +41,7 @@ const ogDesc = description ?? SITE_DESCRIPTION;
     <meta property="og:description" content={ogDesc} />
     <meta property="og:url" content={absoluteUrl(path)} />
     <!-- 144px og:image: Apple TN3156 — images under 150px wide may show as a small icon in Messages instead of a large preview -->
-    <meta property="og:image" content={absoluteUrl('/og-link-icon.png')} />
+    <meta property="og:image" content={absoluteUrl(`/og-link-icon.png?v=${BUILD_V}`)} />
     <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="144" />
     <meta property="og:image:height" content="144" />
@@ -56,7 +56,7 @@ const ogDesc = description ?? SITE_DESCRIPTION;
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content={fullTitle} />
     <meta name="twitter:description" content={ogDesc} />
-    <meta name="twitter:image" content={absoluteUrl('/og-link-icon.png')} />
+    <meta name="twitter:image" content={absoluteUrl(`/og-link-icon.png?v=${BUILD_V}`)} />
     <script is:inline>
         // Theme picked from the home-page still, remembered for this visit (see public/site.js).
         (function () {
