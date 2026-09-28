@@ -28,7 +28,8 @@ const ogDesc = description ?? SITE_DESCRIPTION;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
 
-    <!-- Tab icon: a square crop of the Yang-Yang still (Yi Yi). ?v= so browsers drop a cached old icon after a deploy -->
+    <!-- Tab icon: a tight, extra-contrast crop of the Yang-Yang still (Yi Yi) so it reads at 16px; the home-screen and
+         link-preview icons use a wider crop. ?v= so browsers drop a cached old icon after a deploy -->
     <link rel="icon" href={`/favicon.ico?v=${BUILD_V}`} sizes="32x32" />
     <link rel="icon" href={`/icon.png?v=${BUILD_V}`} type="image/png" sizes="192x192" />
     <link rel="apple-touch-icon" href={`/apple-touch-icon.png?v=${BUILD_V}`} />
