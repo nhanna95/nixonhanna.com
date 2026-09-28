@@ -39,7 +39,8 @@ passed along (`/meet/30min` → `cal.com/nixon-hanna/30min`).
 The home page's last-watched film, last-read book and last-played song come from
 [worker/now.js](worker/now.js). The Worker fills the section in as it serves `/` (so it arrives
 with the page), caches the data in KV (`NOW_KV`, refreshed in the background every 5 minutes), and
-also serves it at `/api/now`. In `astro dev` the page fetches `/api/now` itself.
+also serves it at `/api/now`. In `astro dev` the page fetches `/api/now` itself, which the dev server
+proxies to the live nixon.fyi (the Spotify connection only exists there).
 
 - **Letterboxd** (latest diary entry + rating) and **Goodreads** (latest finished book on the
   "read" shelf): public RSS, no setup.

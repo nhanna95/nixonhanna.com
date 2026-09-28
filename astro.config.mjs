@@ -22,8 +22,8 @@ const shortLinks = {
     },
 };
 
-// Dev-only: answer /api/* (e.g. /api/now for "Lately…") by running the real Worker in-process,
-// with an in-memory stand-in for its KV namespace (so Spotify isn't connected in dev).
+// Dev-only: answer /api/* by running the real Worker in-process, with an in-memory stand-in for
+// its KV namespace. /api/now ("Most recently…") is fetched from the live site instead (see below).
 const memKV = new Map();
 const devWorkerEnv = {
     NOW_KV: {
@@ -51,6 +51,21 @@ const devApiWorker = {
     configureServer(server) {
         server.middlewares.use(async (req, res, next) => {
             if (!req.url?.startsWith('/api/')) return next();
+            // /api/now comes from the live site: only it holds the Spotify connection, and a second
+            // copy of the token here would get rotated out from under it. Offline, fall through to
+            // the in-process Worker below (film and book, no song).
+            if (req.url.startsWith('/api/now')) {
+                try {
+                    const live = await fetch('https://nixon.fyi/api/now', { signal: AbortSignal.timeout(5000) });
+                    if (live.ok) {
+                        res.setHeader('Content-Type', 'application/json');
+                        res.end(await live.text());
+                        return;
+                    }
+                } catch {
+                    // offline: use the local Worker
+                }
+            }
             try {
                 const request = new Request(`http://${req.headers.host ?? 'localhost'}${req.url}`, { method: req.method });
                 const response = await worker.fetch(request, devWorkerEnv, { waitUntil() {} });
