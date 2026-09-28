@@ -3,6 +3,7 @@ import { defineConfig } from 'astro/config';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import worker from './worker/index.js';
 import { shortLinkTarget } from './worker/short-links.js';
 
 const publicDir = fileURLToPath(new URL('./public', import.meta.url));
@@ -17,6 +18,48 @@ const shortLinks = {
             if (!target) return next();
             res.writeHead(302, { Location: target });
             res.end();
+        });
+    },
+};
+
+// Dev-only: answer /api/* (e.g. /api/now for "Lately…") by running the real Worker in-process,
+// with an in-memory stand-in for its KV namespace (so Spotify isn't connected in dev).
+const memKV = new Map();
+const devWorkerEnv = {
+    NOW_KV: {
+        async get(key, type) {
+            const entry = memKV.get(key);
+            if (!entry) return null;
+            if (entry.expiresAt && Date.now() > entry.expiresAt) {
+                memKV.delete(key);
+                return null;
+            }
+            return type === 'json' ? JSON.parse(entry.value) : entry.value;
+        },
+        async put(key, value, opts) {
+            memKV.set(key, { value, expiresAt: opts?.expirationTtl ? Date.now() + opts.expirationTtl * 1000 : null });
+        },
+        async delete(key) {
+            memKV.delete(key);
+        },
+    },
+};
+
+/** @type {import('vite').Plugin} */
+const devApiWorker = {
+    name: 'dev-api-worker',
+    configureServer(server) {
+        server.middlewares.use(async (req, res, next) => {
+            if (!req.url?.startsWith('/api/')) return next();
+            try {
+                const request = new Request(`http://${req.headers.host ?? 'localhost'}${req.url}`, { method: req.method });
+                const response = await worker.fetch(request, devWorkerEnv, { waitUntil() {} });
+                res.statusCode = response.status;
+                response.headers.forEach((value, key) => res.setHeader(key, value));
+                res.end(Buffer.from(await response.arrayBuffer()));
+            } catch (err) {
+                next(err);
+            }
         });
     },
 };
@@ -44,7 +87,7 @@ const publicDirIndex = {
 export default defineConfig({
     site: 'https://nixon.fyi',
     vite: {
-        plugins: [shortLinks, publicDirIndex],
+        plugins: [shortLinks, devApiWorker, publicDirIndex],
     },
     // 'preserve' writes blog.astro -> blog.html and posts/[slug]/index.astro -> posts/<slug>/index.html.
     // The Worker serves them at clean URLs (/blog, /posts/<slug>/) and 301s the .html forms there.

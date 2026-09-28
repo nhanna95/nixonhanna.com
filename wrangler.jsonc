@@ -19,6 +19,14 @@
         "html_handling": "none",
         "not_found_handling": "none"
     },
+    // "Most recently…" on the home page (worker/now.js): the Spotify app's client ID (public; the
+    // PKCE sign-in needs no secret) and a KV namespace for cached feed data and Spotify tokens.
+    "vars": {
+        "SPOTIFY_CLIENT_ID": "7a6a86d0a91241d386fb31ab08dc9b96"
+    },
+    "kv_namespaces": [
+        { "binding": "NOW_KV", "id": "74a36f9dcd1141009aefe01ea4375d96" }
+    ],
     "routes": [
         { "pattern": "nixon.fyi", "custom_domain": true },
         { "pattern": "www.nixon.fyi", "custom_domain": true },

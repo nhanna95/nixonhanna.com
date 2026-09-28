@@ -1,4 +1,5 @@
 import { shortLinkTarget } from './short-links.js';
+import { handleNow, handleSpotifyCallback, handleSpotifyLogin, nowData, renderNow } from './now.js';
 
 // One Worker answers every hostname in wrangler.jsonc. It runs before static assets
 // (assets.run_worker_first), so it sees every request, exact file matches included:
@@ -11,7 +12,7 @@ import { shortLinkTarget } from './short-links.js';
 //   /posts/x/index.html      -> 301 /posts/x/
 // On nixon.fyi (and any host not listed, e.g. `wrangler dev` on localhost) it serves the build:
 //   /styles.css              -> the file itself
-//   /                        -> index.html
+//   /                        -> index.html, with the "Lately…" section filled in (now.js)
 //   /posts/x/                -> posts/x/index.html
 //   /blog                    -> blog.html
 //   /the-good-life-room      -> 301 /the-good-life-room/ (directory exists)
@@ -34,6 +35,9 @@ const redirectHosts = {
 // collides with static assets.
 const apiRoutes = {
     'GET /api/health': () => Response.json({ ok: true }),
+    'GET /api/now': handleNow,
+    'GET /api/spotify/login': handleSpotifyLogin,
+    'GET /api/spotify/callback': handleSpotifyCallback,
 };
 
 // Build output under /_astro/ is content-hashed, so it never changes under the same name;
@@ -44,13 +48,13 @@ const cacheRules = [
 ];
 
 export default {
-    async fetch(request, env) {
+    async fetch(request, env, ctx) {
         const url = new URL(request.url);
         const { pathname } = url;
 
         if (pathname.startsWith('/api/')) {
             const handler = apiRoutes[`${request.method} ${pathname}`];
-            if (handler) return handler(request, env, url);
+            if (handler) return handler(request, env, url, ctx);
             return Response.json({ error: 'not found' }, { status: 404 });
         }
 
@@ -68,6 +72,8 @@ export default {
 
         if (clean !== pathname) return Response.redirect(url.origin + clean + url.search, 301);
 
+        if (pathname === '/') return home(env, url, ctx);
+
         const res = await serve(request, env, url);
         return withCaching(pathname, res);
     },
@@ -79,6 +85,30 @@ function cleanPath(pathname) {
     if (pathname.endsWith('/index.html')) return pathname.slice(0, -'index.html'.length);
     if (pathname.endsWith('.html') && pathname !== '/404.html') return pathname.slice(0, -'.html'.length);
     return pathname;
+}
+
+// The home page with "Lately…" filled in. Fetched without the browser's If-None-Match, and sent
+// without an ETag, because the section changes while index.html doesn't. If the data isn't
+// available the section stays hidden (the page's own script then tries /api/now).
+async function home(env, url, ctx) {
+    const page = await env.ASSETS.fetch(new URL('/index.html', url.origin));
+    if (!page.ok) return notFound(env, url);
+    let html = '';
+    try {
+        html = renderNow(await nowData(env, ctx));
+    } catch {
+        // never let the section break the home page
+    }
+    const res = html
+        ? new HTMLRewriter()
+            .on('#lately', { element: (el) => el.removeAttribute('hidden') })
+            .on('#lately .now-line', { element: (el) => el.setInnerContent(html, { html: true }) })
+            .transform(page)
+        : page;
+    const out = new Response(res.body, res);
+    out.headers.delete('ETag');
+    out.headers.set('Cache-Control', 'no-cache');
+    return out;
 }
 
 async function serve(request, env, url) {

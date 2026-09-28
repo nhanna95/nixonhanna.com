@@ -34,6 +34,25 @@ add one, add a line to the `shortLinks` table in [worker/short-links.js](worker/
 and deploy. Matching ignores case and trailing slashes, and any sub-path or query string is
 passed along (`/meet/30min` → `cal.com/nixon-hanna/30min`).
 
+## "Most recently…" (home page)
+
+The home page's last-watched film, last-read book and last-played song come from
+[worker/now.js](worker/now.js). The Worker fills the section in as it serves `/` (so it arrives
+with the page), caches the data in KV (`NOW_KV`, refreshed in the background every 5 minutes), and
+also serves it at `/api/now`. In `astro dev` the page fetches `/api/now` itself.
+
+- **Letterboxd** (latest diary entry + rating) and **Goodreads** (latest finished book on the
+  "read" shelf): public RSS, no setup.
+- **Spotify** (last played track): connected once through Spotify's PKCE sign-in, so there's no
+  client secret anywhere. The app lives at developer.spotify.com/dashboard (redirect URI
+  `https://nixon.fyi/api/spotify/callback`); its public client ID is `SPOTIFY_CLIENT_ID` in
+  `wrangler.jsonc` vars. To connect, visit `https://nixon.fyi/api/spotify/login` and approve; the
+  refresh token is stored in KV. To reconnect later:
+  `bunx wrangler kv key delete --namespace-id 74a36f9dcd1141009aefe01ea4375d96 "spotify:refresh_token"`,
+  then visit the login URL again. Spotify refresh tokens last 180 days, so expect to reconnect
+  about twice a year (the song line quietly disappears when the connection lapses). Spotify's
+  2026 rules also require the app owner's account to have Premium.
+
 ## API endpoints and Markdown
 
 - **Custom endpoints**: add handlers to the `apiRoutes` table in

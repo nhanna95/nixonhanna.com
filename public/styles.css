@@ -513,6 +513,11 @@ body::before {
     margin-bottom: 0.5rem;
 }
 
+/* Home "Most recently…" stays out of the layout until the Worker (or its script) fills it in */
+#lately[hidden] {
+    display: none;
+}
+
 .note+.last-updated {
     margin-top: 2rem;
 }

@@ -67,6 +67,24 @@ const STILLS = [
       <p>My three favorite things, though, are movies, tile, and glass blocks.</p>
     </div>
 
+    {/* Filled in by the Worker as it serves this page (worker/now.js); hidden until there's something to show. */}
+    <section class="note" id="lately" hidden>
+        <h2 class="h2">Most recently…</h2>
+        <p class="now-line"></p>
+    </section>
+    <script is:inline>
+        // In `astro dev` (or if the Worker couldn't fill it in), fetch the sentence here instead.
+        (function () {
+            var section = document.getElementById('lately');
+            if (!section || !section.hidden) return;
+            fetch('/api/now').then(function (r) { return r.ok ? r.json() : null; }).then(function (data) {
+                if (!data || !data.html) return;
+                section.querySelector('.now-line').innerHTML = data.html;
+                section.hidden = false;
+            }).catch(function () { });
+        })();
+    </script>
+
     <section class="note">
         <h2 class="h2">If you want to reach out…</h2>
         <p>you can see how to do so on my <a href="/contact">contact page</a>. I'm always happy to chat with new people and would love it if you reached out for any reason! You can also <a href="/feedback" data-turbo="false">leave anonymous feedback</a> for me on Admonymous.</p>
